@@ -21,16 +21,16 @@ import {
 const SOCIAL_LINKS = [
   {
     name: "Facebook",
-    url: "https://facebook.com",
+    url: "https://www.facebook.com/profile.php?id=61580460622260",
     icon: <FaFacebookF />,
     color: "hover:bg-[#1877f2]",
   },
-  {
-    name: "Instagram",
-    url: "https://instagram.com",
-    icon: <FaInstagram />,
-    color: "hover:bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]",
-  },
+  // {
+  //   name: "Instagram",
+  //   url: "https://instagram.com",
+  //   icon: <FaInstagram />,
+  //   color: "hover:bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]",
+  // },
   {
     name: "Lichess",
     url: "https://lichess.org",
@@ -45,13 +45,13 @@ const SOCIAL_LINKS = [
   },
   {
     name: "WhatsApp",
-    url: "https://wa.me/258840000000",
+    url: "https://wa.me/258862288823",
     icon: <FaWhatsapp />,
     color: "hover:bg-[#25d366]",
   },
   {
     name: "YouTube",
-    url: "https://youtube.com",
+    url: "https://www.youtube.com/@RealChessMahotas",
     icon: <FaYoutube />,
     color: "hover:bg-[#ff0000]",
   },
@@ -112,19 +112,19 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <span className="text-yellow-500">📞</span>
                 <a
-                  href="tel:+258840000000"
+                  href="tel:+258840265198"
                   className="hover:text-yellow-400 transition"
                 >
-                  +258 84 000 0000
+                  +258 84 026 5198 / 86 228 8823
                 </a>
               </p>
               <p className="flex items-center gap-2">
                 <span className="text-yellow-500">✉️</span>
                 <a
-                  href="mailto:contato@realchess.co.mz"
+                  href="mailto:realchessmahotas@gmail.com"
                   className="hover:text-yellow-400 transition"
                 >
-                  contato@realchess.co.mz
+                  realchessmahotas@gmail.com
                 </a>
               </p>
             </div>

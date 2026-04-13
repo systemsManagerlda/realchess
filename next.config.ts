@@ -7,12 +7,18 @@ const nextConfig: NextConfig = {
   images: {
     // Qualidades de imagem suportadas
     qualities: [75, 90],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+      },
+    ],
     
     // Formatos otimizados
     formats: ['image/avif', 'image/webp'],
     
     // Domínios permitidos (adicione se usar imagens externas)
-    // domains: ['example.com'],
+    // domains: ["drive.google.com"],
     
     // Configuração de dispositivo para imagens responsivas
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

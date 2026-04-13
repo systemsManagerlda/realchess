@@ -1,4 +1,4 @@
-// components/Header.tsx (versão com autenticação)
+// components/Header.tsx (versão com autenticação real)
 "use client";
 
 import Link from "next/link";
@@ -26,23 +26,58 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState<string>("");
+  const [userMatricula, setUserMatricula] = useState("");
   const pathname = usePathname();
   const router = useRouter();
 
-  // Check if user is logged in (simulated)
+  // Verificar autenticação real do usuário
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const name = localStorage.getItem("userName");
-    if (token) {
-      // setIsLoggedIn(true);
-      // setUserName(name || "Membro");
-    }
+    const checkAuth = () => {
+      const membroId = localStorage.getItem("membroId");
+      const nome = localStorage.getItem("nomeCompleto");
+      const tipo = localStorage.getItem("tipoMembro");
+      const matricula = localStorage.getItem("matricula");
+      
+      if (membroId && nome) {
+        setIsLoggedIn(true);
+        setUserName(nome);
+        setUserType(tipo || "aluno");
+        setUserMatricula(matricula || "");
+      } else {
+        setIsLoggedIn(false);
+        setUserName("");
+        setUserType("");
+        setUserMatricula("");
+      }
+    };
+
+    checkAuth();
+
+    // Escutar mudanças no localStorage (quando login/ logout ocorrer em outra aba)
+    window.addEventListener("storage", checkAuth);
+    
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+    };
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
+    // Remover todos os dados do usuário
+    localStorage.removeItem("membroId");
+    localStorage.removeItem("matricula");
+    localStorage.removeItem("nomeCompleto");
+    localStorage.removeItem("tipoMembro");
+    localStorage.removeItem("email");
+    localStorage.removeItem("rememberMe");
+    localStorage.removeItem("savedUsername");
+    
     setIsLoggedIn(false);
+    setUserName("");
+    setUserType("");
+    setUserMatricula("");
+    
+    // Redirecionar para home
     router.push("/");
   };
 
@@ -57,7 +92,8 @@ export default function Header() {
 
   // Close mobile menu when route changes
   useEffect(() => {
-    // setIsMenuOpen(false);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMenuOpen(false);
   }, [pathname]);
 
   // Prevent body scroll when mobile menu is open
@@ -77,6 +113,30 @@ export default function Header() {
     return pathname.startsWith(path);
   };
 
+  // Obter itens do menu baseado no status de login
+  const getMenuItems = () => {
+    if (isLoggedIn) {
+      // Quando logado, mostra apenas o Dashboard
+      return [{ name: "Dashboard", path: "/dashboard" }];
+    }
+    // Quando não logado, mostra todos os itens
+    return MENU_ITEMS;
+  };
+
+  // Obter texto do botão baseado no tipo de usuário
+  const getDashboardButtonText = () => {
+    switch (userType) {
+      case "formador":
+        return "Dashboard Formador";
+      case "administrador":
+        return "Painel Admin";
+      default:
+        return "Meu Dashboard";
+    }
+  };
+
+  const menuItems = getMenuItems();
+
   return (
     <>
       <header
@@ -85,8 +145,8 @@ export default function Header() {
           transition-all duration-300
           ${
             isScrolled
-              ? "bg-linear-to-r from-gray-900/95 to-gray-800/95 backdrop-blur-md shadow-2xl"
-              : "bg-linear-to-r from-gray-900 to-gray-800 shadow-lg"
+              ? "bg-gradient-to-r from-gray-900/95 to-gray-800/95 backdrop-blur-md shadow-2xl"
+              : "bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg"
           }
         `}
       >
@@ -94,7 +154,7 @@ export default function Header() {
           <div className="flex justify-between items-center h-16 md:h-20">
             {/* Logo */}
             <Link
-              href="/"
+              href={isLoggedIn ? "/dashboard" : "/"}
               className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-lg"
               aria-label="Real Chess Club - Página inicial"
             >
@@ -127,7 +187,7 @@ export default function Header() {
               className="hidden md:flex items-center space-x-1 lg:space-x-2"
               aria-label="Navegação principal"
             >
-              {MENU_ITEMS.map((item) => {
+              {menuItems.map((item) => {
                 const isActive = isActiveRoute(item.path);
                 return (
                   <Link
@@ -153,19 +213,31 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Desktop Auth Button - Versão com autenticação */}
+            {/* Desktop Auth Button - Versão com autenticação real */}
             <div className="hidden md:block">
               {isLoggedIn ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-300 text-sm">
-                    Olá,{" "}
-                    <span className="text-yellow-400 font-semibold">
-                      {userName}
+                <div className="flex items-center gap-4">
+                  {/* User Info */}
+                  <div className="flex flex-col items-end">
+                    <span className="text-gray-300 text-sm">
+                      Olá,{" "}
+                      <span className="text-yellow-400 font-semibold">
+                        {userName.split(" ")[0]}
+                      </span>
                     </span>
-                  </span>
+                    <span className="text-xs text-gray-500">
+                      {userType === "aluno" ? "🎓 Aluno" : 
+                       userType === "formador" ? "👨‍🏫 Formador" : 
+                       userType === "administrador" ? "👑 Admin" : "🎯 Membro"}
+                      {userMatricula && ` • ${userMatricula}`}
+                    </span>
+                  </div>
+                  
+                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-semibold transition-all duration-300"
+                    aria-label="Sair do sistema"
                   >
                     Sair
                   </button>
@@ -185,52 +257,54 @@ export default function Header() {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden relative w-10 h-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={isMenuOpen}
-            >
-              <div className="relative w-6 h-6 mx-auto">
-                <span
-                  className={`
-                    absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
-                    transition-all duration-300 transform -translate-y-2
-                    ${isMenuOpen ? "rotate-45 translate-y-0" : ""}
-                  `}
-                />
-                <span
-                  className={`
-                    absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
-                    transition-all duration-300
-                    ${isMenuOpen ? "opacity-0" : ""}
-                  `}
-                />
-                <span
-                  className={`
-                    absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
-                    transition-all duration-300 transform translate-y-2
-                    ${isMenuOpen ? "-rotate-45 translate-y-0" : ""}
-                  `}
-                />
-              </div>
-            </button>
+            {/* Mobile Menu Button - só mostra se não estiver logado ou se tiver menu pra mostrar */}
+            {(!isLoggedIn || menuItems.length > 0) && (
+              <button
+                className="md:hidden relative w-10 h-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+                aria-expanded={isMenuOpen}
+              >
+                <div className="relative w-6 h-6 mx-auto">
+                  <span
+                    className={`
+                      absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
+                      transition-all duration-300 transform -translate-y-2
+                      ${isMenuOpen ? "rotate-45 translate-y-0" : ""}
+                    `}
+                  />
+                  <span
+                    className={`
+                      absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
+                      transition-all duration-300
+                      ${isMenuOpen ? "opacity-0" : ""}
+                    `}
+                  />
+                  <span
+                    className={`
+                      absolute left-0 top-1/2 w-6 h-0.5 bg-white rounded-full 
+                      transition-all duration-300 transform translate-y-2
+                      ${isMenuOpen ? "-rotate-45 translate-y-0" : ""}
+                    `}
+                  />
+                </div>
+              </button>
+            )}
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
+      {/* Mobile Menu Overlay - só mostra se tiver itens no menu */}
+      {isMenuOpen && menuItems.length > 0 && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setIsMenuOpen(false)}
             aria-hidden="true"
           />
-          <div className="absolute top-16 right-0 bottom-0 w-64 bg-linear-to-b from-gray-900 to-gray-800 shadow-2xl animate-slide-in-right">
+          <div className="absolute top-16 right-0 bottom-0 w-64 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl animate-slide-in-right">
             <nav className="flex flex-col p-4" aria-label="Menu mobile">
-              {MENU_ITEMS.map((item) => {
+              {menuItems.map((item) => {
                 const isActive = isActiveRoute(item.path);
                 return (
                   <Link
@@ -254,14 +328,29 @@ export default function Header() {
               <div className="border-t border-gray-700 my-4" />
               {isLoggedIn ? (
                 <>
-                  <div className="px-4 py-2 text-gray-300 text-sm">
-                    Olá,{" "}
-                    <span className="text-yellow-400 font-semibold">
-                      {userName}
-                    </span>
+                  <div className="px-4 py-2">
+                    <p className="text-gray-300 text-sm">
+                      Olá,{" "}
+                      <span className="text-yellow-400 font-semibold">
+                        {userName.split(" ")[0]}
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {userType === "aluno" ? "🎓 Aluno" : 
+                       userType === "formador" ? "👨‍🏫 Formador" : 
+                       userType === "administrador" ? "👑 Admin" : "🎯 Membro"}
+                    </p>
+                    {userMatricula && (
+                      <p className="text-xs text-gray-600 mt-1">
+                        Matrícula: {userMatricula}
+                      </p>
+                    )}
                   </div>
                   <button
-                    onClick={handleLogout}
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
                     className="w-full bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300"
                   >
                     Sair
@@ -272,6 +361,7 @@ export default function Header() {
                   <button
                     className="w-full bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     aria-label="Entrar ou registrar no clube"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     Entrar / Registrar
                   </button>
@@ -281,6 +371,20 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes slide-in-right {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        .animate-slide-in-right {
+          animation: slide-in-right 0.3s ease-out;
+        }
+      `}</style>
     </>
   );
 }
