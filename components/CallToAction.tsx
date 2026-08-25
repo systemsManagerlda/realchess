@@ -31,7 +31,7 @@ export default function CallToAction() {
       ref={sectionRef}
       className="relative py-24 overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Background Pattern */}
+      {/* Padrão de Fundo */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -40,7 +40,7 @@ export default function CallToAction() {
         }} />
       </div>
 
-      {/* Animated Chess Pieces Background */}
+      {/* Peças de Xadrez Animadas no Fundo */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 text-8xl animate-float">♔</div>
         <div className="absolute bottom-10 right-10 text-8xl animate-float-delayed">♕</div>
@@ -49,7 +49,7 @@ export default function CallToAction() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
+        {/* Distintivo */}
         <div className={`
           inline-block mb-6 transition-all duration-700 transform
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -60,7 +60,7 @@ export default function CallToAction() {
           </span>
         </div>
 
-        {/* Main Title */}
+        {/* Título Principal */}
         <h2 className={`
           text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-700 delay-100 transform
           bg-gradient-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent
@@ -69,7 +69,7 @@ export default function CallToAction() {
           Faça parte da nossa história!
         </h2>
 
-        {/* Description */}
+        {/* Descrição */}
         <p className={`
           text-xl md:text-2xl mb-10 text-gray-300 max-w-3xl mx-auto transition-all duration-700 delay-200 transform
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -77,7 +77,7 @@ export default function CallToAction() {
           Junte-se ao Real Chess Club e comece sua jornada no mundo do xadrez em Moçambique
         </p>
 
-        {/* CTA Buttons */}
+        {/* Botões de Acção */}
         <div className={`
           flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-300 transform
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -133,18 +133,18 @@ export default function CallToAction() {
           </Link>
         </div>
 
-        {/* Stats Row */}
+        {/* Linha de Estatísticas */}
         <div className={`
           mt-16 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 md:gap-16
           transition-all duration-700 delay-400 transform
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
         `}>
           <div className="text-center">
-            <div className="text-3xl font-bold text-yellow-500">100+</div>
+            <div className="text-3xl font-bold text-yellow-500">20+</div>
             <div className="text-sm text-gray-400 mt-1">Membros Activos</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-yellow-500">50+</div>
+            <div className="text-3xl font-bold text-yellow-500">5+</div>
             <div className="text-sm text-gray-400 mt-1">Torneios/Ano</div>
           </div>
           <div className="text-center">
@@ -157,7 +157,7 @@ export default function CallToAction() {
           </div>
         </div>
 
-        {/* Trust Badge */}
+        {/* Selo de Confiança */}
         <div className="mt-8">
           <p className="text-xs text-gray-500">
             🏆 Clube oficialmente filiado à Federação Moçambicana de Xadrez

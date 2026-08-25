@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
+import TipOfTheDay from "@/components/TipOfTheDay";
 
 interface Match {
   date: string;
@@ -46,10 +47,10 @@ export default function Partidas() {
   const recentMatches: Match[] = [
     { 
       date: "2025-01-15", 
-      white: "João Silva", 
-      black: "Maria Santos", 
-      result: "0-1", 
-      moves: "45",
+      white: "Lourenço Augusto Jangua", 
+      black: "Lucas Coutinho Marcelino", 
+      result: "1-0", 
+      moves: "52",
       tournament: "Torneio Rápido de Verão",
       pgn: `1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 
 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 
@@ -68,10 +69,10 @@ export default function Partidas() {
     },
     { 
       date: "2025-01-14", 
-      white: "Pedro Oliveira", 
-      black: "Carlos Mendes", 
-      result: "0-1", 
-      moves: "32",
+      white: "Afonso Octávio Macuacua", 
+      black: "Jubílio Mahassule", 
+      result: "1/2-1/2", 
+      moves: "38",
       tournament: "Circuito Mahotas",
       pgn: `1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 
 4. Qc2 O-O 5. a3 Bxc3+ 6. Qxc3 b6 
@@ -86,10 +87,10 @@ export default function Partidas() {
     },
     { 
       date: "2025-01-13", 
-      white: "Ana Costa", 
-      black: "Roberto Silva", 
+      white: "Xavier Samusson Zandamela", 
+      black: "Bernardo Eduardo", 
       result: "1-0", 
-      moves: "24",
+      moves: "28",
       tournament: "Campeonato Nacional",
       pgn: `1. e4 c5 2. Nf3 d6 3. d4 cxd4 
 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 
@@ -99,6 +100,24 @@ export default function Partidas() {
 16. gxf6 Nhxf6 17. Bh3 Rc4 18. Na5 Rh4 
 19. Be6+ Kh8 20. Nc6 Qe8 21. Rhg1 Nc5 
 22. Bxc5 dxc5 23. Qg5 Rh5 24. Qxg7#`
+    },
+    { 
+      date: "2025-01-12", 
+      white: "Miguel Godi Nhumaio", 
+      black: "Lídia Sozinho", 
+      result: "0-1", 
+      moves: "34",
+      tournament: "Torneio Rápido de Verão",
+      pgn: `1. e4 c5 2. Nf3 d6 3. d4 cxd4 
+4. Nxd4 Nf6 5. Nc3 a6 6. Be2 e5 
+7. Nb3 Be7 8. O-O O-O 9. Be3 Be6 
+10. Nd5 Nxd5 11. exd5 Bd7 12. a4 Nd7 
+13. Nd2 f5 14. f3 Bf6 15. c3 Rc8 
+16. Qd2 g6 17. Rae1 Qe7 18. b4 h5 
+19. Bf2 h4 20. Ne4 Bg5 21. Nxg5 Qxg5 
+22. h3 Qf4 23. Bd3 Rfe8 24. Bc4 Bxc4 
+25. bxc5 dxc5 26. Rxe5 Rxe5 27. Qxf4 Rxe1+ 
+28. Kh2 Rxf4 29. g3 hxg3+ 30. Kxg3 Rxf3+`
     },
   ];
 
@@ -112,7 +131,7 @@ export default function Partidas() {
       setCurrentMove(0);
       setGame(new Chess());
     } catch (error) {
-      console.error("Error loading PGN:", error);
+      console.error("Erro ao carregar PGN:", error);
     }
   };
 
@@ -175,7 +194,7 @@ export default function Partidas() {
   const tutorials = [
     { title: "Abertura Italiana", duration: "15 min", level: "Iniciante", description: "Aprenda os conceitos básicos da abertura italiana.", category: "Aberturas" },
     { title: "Finais de Peões", duration: "20 min", level: "Intermediário", description: "Domine os conceitos fundamentais de finais de peões.", category: "Finais" },
-    { title: "Ataque ao Rei", duration: "25 min", level: "Avançado", description: "Técnicas avançadas para executar ataques decisivos.", category: "Tática" },
+    { title: "Ataque ao Rei", duration: "25 min", level: "Avançado", description: "Técnicas avançadas para executar ataques decisivos.", category: "Táctica" },
     { title: "Estratégia de Centro", duration: "18 min", level: "Intermediário", description: "Como controlar e utilizar o centro do tabuleiro.", category: "Estratégia" },
   ];
 
@@ -183,7 +202,7 @@ export default function Partidas() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-gradient-to-b from-gray-900 to-gray-950 min-h-screen pt-20">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -192,14 +211,14 @@ export default function Partidas() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-20 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 right-20 text-7xl animate-float-delayed">♕</div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-8 sm:mb-12">
             <div className={`
               inline-block mb-4 sm:mb-6 transition-all duration-700
@@ -225,13 +244,13 @@ export default function Partidas() {
               text-gray-300 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-4 transition-all duration-700 delay-200
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Analise partidas recentes, estude táticas e melhore seu jogo com nossos tutoriais exclusivos
+              Analise partidas recentes, estude tácticas e melhore o seu jogo com os nossos tutoriais exclusivos
             </p>
           </div>
 
-          {/* Grid Principal - Responsivo */}
+          {/* Grelha Principal - Responsivo */}
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
-            {/* Recent Matches */}
+            {/* Partidas Recentes */}
             <div className={`
               bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20
               transition-all duration-700 delay-300
@@ -283,7 +302,7 @@ export default function Partidas() {
               </div>
             </div>
 
-            {/* Live Stream */}
+            {/* Transmissões ao Vivo */}
             <div className={`
               bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20
               transition-all duration-700 delay-400
@@ -307,7 +326,7 @@ export default function Partidas() {
                       </div>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Torneio Rápido de Verão</h3>
-                    <p className="text-gray-400 text-sm sm:text-base mb-3 sm:mb-4">Final: João Silva vs Maria Santos</p>
+                    <p className="text-gray-400 text-sm sm:text-base mb-3 sm:mb-4">Final: Lourenço Augusto Jangua vs Lucas Coutinho Marcelino</p>
                     <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">📅 20 de Fevereiro às 14:00</p>
                     <button className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
                       <span>🔴</span>
@@ -319,7 +338,7 @@ export default function Partidas() {
             </div>
           </div>
 
-          {/* Tutorials - Grid Responsivo */}
+          {/* Tutoriais - Grelha Responsiva */}
           <div className={`
             bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20 mb-8 sm:mb-12
             transition-all duration-700 delay-500
@@ -359,24 +378,12 @@ export default function Partidas() {
             </div>
           </div>
 
-          {/* Tip of the Day */}
+          {/* Dica do Dia */}
           <div className={`
-            relative overflow-hidden rounded-2xl p-4 sm:p-8 bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30
             transition-all duration-700 delay-600
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
           `}>
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-transparent" />
-            <div className="relative flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-              <div className="text-4xl sm:text-5xl">💡</div>
-              <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Dica do Dia</h2>
-                <p className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">
-                  &quot;Controle o centro do tabuleiro nas primeiras jogadas. 
-                  Isso dá mais mobilidade às suas peças e limita as opções do adversário!&quot;
-                </p>
-                <p className="text-yellow-500 text-xs sm:text-sm mt-3 sm:mt-4">- GM Garry Kasparov</p>
-              </div>
-            </div>
+            <TipOfTheDay />
           </div>
         </div>
 
@@ -384,7 +391,7 @@ export default function Partidas() {
         {selectedMatch && (
   <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 z-50">
     <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl w-full max-w-full md:max-w-4xl max-h-[95vh] overflow-y-auto border border-white/20 shadow-2xl animate-fade-in-up">
-      {/* Header fixo */}
+      {/* Cabeçalho fixo */}
       <div className="sticky top-0 bg-gradient-to-b from-gray-900 to-gray-950 z-10 px-4 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-white/20">
         <div className="flex items-center justify-between">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Análise da Partida</h2>

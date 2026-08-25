@@ -105,7 +105,7 @@ export default function FeaturedEvents() {
       ref={sectionRef}
       className="relative py-24 overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Background Pattern */}
+      {/* Padrão de Fundo */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -114,7 +114,7 @@ export default function FeaturedEvents() {
         }} />
       </div>
 
-      {/* Animated Chess Pieces Background */}
+      {/* Peças de Xadrez Animadas no Fundo */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 text-8xl animate-float">♔</div>
         <div className="absolute bottom-10 right-10 text-8xl animate-float-delayed">♕</div>
@@ -123,7 +123,7 @@ export default function FeaturedEvents() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* Cabeçalho */}
         <div className="text-center mb-16">
           <div className={`
             inline-block mb-6 transition-all duration-700 transform
@@ -154,7 +154,7 @@ export default function FeaturedEvents() {
           </p>
         </div>
 
-        {/* Tournaments Grid */}
+        {/* Grade de Torneios */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {TOURNAMENTS.map((tournament, index) => {
             const statusConfig = STATUS_CONFIG[tournament.status];
@@ -174,7 +174,7 @@ export default function FeaturedEvents() {
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Status Badge */}
+                {/* Distintivo de Estado */}
                 <div className="absolute top-4 right-4 z-10">
                   <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border ${statusConfig.color}`}>
                     <span>{statusConfig.icon}</span>
@@ -182,7 +182,7 @@ export default function FeaturedEvents() {
                   </span>
                 </div>
 
-                {/* Featured Badge for Main Tournament */}
+                {/* Distintivo de Destaque para o Torneio Principal */}
                 {index === 0 && (
                   <div className="absolute top-4 left-4 z-10">
                     <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-red-500/20 text-red-400 backdrop-blur-sm border border-red-500/30">
@@ -192,9 +192,9 @@ export default function FeaturedEvents() {
                   </div>
                 )}
 
-                {/* Content */}
+                {/* Conteúdo */}
                 <div className="p-6">
-                  {/* Prize */}
+                  {/* Prêmio */}
                   <div className="mb-4">
                     <div className="text-3xl font-bold text-yellow-500">
                       {formatPrize(tournament.prize)}
@@ -202,19 +202,19 @@ export default function FeaturedEvents() {
                     <div className="text-xs text-gray-400 mt-1">em prêmios</div>
                   </div>
 
-                  {/* Title */}
+                  {/* Título */}
                   <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-400 transition-colors duration-300">
                     {tournament.name}
                   </h3>
 
-                  {/* Description */}
+                  {/* Descrição */}
                   {tournament.description && (
                     <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">
                       {tournament.description}
                     </p>
                   )}
 
-                  {/* Details */}
+                  {/* Detalhes */}
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center gap-2 text-gray-300 text-sm">
                       <svg className="w-4 h-4 flex-shrink-0 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +255,7 @@ export default function FeaturedEvents() {
                     )}
                   </div>
 
-                  {/* Action Button */}
+                  {/* Botão de Acção */}
                   <Link href={isOpen ? "/eventos" : "#"}>
                     <button
                       className={`
@@ -290,10 +290,10 @@ export default function FeaturedEvents() {
                   </Link>
                 </div>
 
-                {/* Animated Border */}
+                {/* Borda Animada */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 
-                {/* Hover Glow Effect */}
+                {/* Efeito de Brilho ao Pairar */}
                 {isHovered && (
                   <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/10 to-transparent" />
@@ -304,7 +304,7 @@ export default function FeaturedEvents() {
           })}
         </div>
 
-        {/* View All Events Button */}
+        {/* Botão Ver Todos os Eventos */}
         <div className={`
           text-center mt-12 transition-all duration-700 delay-400
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -332,14 +332,14 @@ export default function FeaturedEvents() {
           </Link>
         </div>
 
-        {/* Info Note */}
+        {/* Nota Informativa */}
         <div className={`
           mt-12 text-center transition-all duration-700 delay-500
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
         `}>
           <p className="text-sm text-gray-400 flex items-center justify-center gap-2">
             <span>ℹ️</span>
-            <span>Torneios sujeitos a alterações. Consulte o regulamento completo no ato da inscrição.</span>
+            <span>Torneios sujeitos a alterações. Consulte o regulamento completo no acto da inscrição.</span>
           </p>
         </div>
       </div>

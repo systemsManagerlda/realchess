@@ -34,7 +34,7 @@ export default function Recursos() {
     { 
       id: 1, 
       user: "Admin", 
-      text: "Bem-vindo ao fórum do Real Chess Club! Fique à vontade para discutir sobre xadrez, tirar dúvidas e compartilhar conhecimento.", 
+      text: "Bem-vindo ao fórum do Real Chess Club! Fique à vontade para discutir sobre xadrez, tirar dúvidas e partilhar conhecimento.", 
       timestamp: new Date(),
       isAdmin: true 
     }
@@ -112,7 +112,7 @@ export default function Recursos() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -121,14 +121,14 @@ export default function Recursos() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-20 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 right-20 text-7xl animate-float-delayed">♕</div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-12">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -154,11 +154,11 @@ export default function Recursos() {
               text-gray-300 max-w-2xl mx-auto text-lg transition-all duration-700 delay-200
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Downloads, fórum de discussão e loja oficial - tudo o que você precisa para evoluir no xadrez
+              Downloads, fórum de discussão e loja oficial - tudo o que precisa para evoluir no xadrez
             </p>
           </div>
 
-          {/* Tabs Navigation */}
+          {/* Navegação de Tabs */}
           <div className={`
             flex flex-wrap gap-2 mb-8 border-b border-white/20 pb-4
             transition-all duration-700 delay-300
@@ -196,7 +196,7 @@ export default function Recursos() {
             </button>
           </div>
 
-          {/* Forum Tab */}
+          {/* Tab Fórum */}
           {activeTab === "forum" && (
             <div className={`
               bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20
@@ -208,7 +208,7 @@ export default function Recursos() {
                   <span className="text-3xl">💬</span>
                   Fórum de Discussão
                 </h2>
-                <p className="text-gray-400 text-sm mt-1">Troque ideias, tire dúvidas e compartilhe conhecimento</p>
+                <p className="text-gray-400 text-sm mt-1">Troque ideias, tire dúvidas e partilhe conhecimento</p>
               </div>
               
               <div className="bg-black/20 p-6 h-96 overflow-y-auto">
@@ -236,7 +236,7 @@ export default function Recursos() {
                     type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Digite sua mensagem..."
+                    placeholder="Digite a sua mensagem..."
                     className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
                   />
                   <button 
@@ -250,7 +250,7 @@ export default function Recursos() {
             </div>
           )}
 
-          {/* Downloads Tab */}
+          {/* Tab Downloads */}
           {activeTab === "downloads" && (
             <div className={`
               bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20
@@ -290,13 +290,13 @@ export default function Recursos() {
             </div>
           )}
 
-          {/* Loja Tab */}
+          {/* Tab Loja */}
           {activeTab === "loja" && (
             <div className={`
               transition-all duration-700 delay-400
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              {/* Category Filter */}
+              {/* Filtro de Categorias */}
               <div className="flex flex-wrap gap-2 mb-6">
                 <button
                   onClick={() => setSelectedCategory("todos")}
@@ -350,7 +350,7 @@ export default function Recursos() {
                 </button>
               </div>
 
-              {/* Products Grid */}
+              {/* Grelha de Produtos */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product, index) => (
                   <div
@@ -367,7 +367,7 @@ export default function Recursos() {
                         </h3>
                         {product.inStock && (
                           <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full">
-                            Em estoque
+                            Em stock
                           </span>
                         )}
                       </div>

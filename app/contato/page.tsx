@@ -30,9 +30,9 @@ export default function Contato() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Simular envio do formulário
     setTimeout(() => {
-      alert("✅ Mensagem enviada com sucesso! Entraremos em contato em breve.");
+      alert("✅ Mensagem enviada com sucesso! Entraremos em contacto em breve.");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setIsSubmitting(false);
     }, 1000);
@@ -87,19 +87,19 @@ export default function Contato() {
   const faqs = [
     {
       question: "Como posso me tornar membro do clube?",
-      answer: "Para se tornar membro, basta preencher o formulário de inscrição na área de membros ou visitar nossa sede no Bairro das Mahotas. Oferecemos diferentes planos de associação com benefícios exclusivos."
+      answer: "Para se tornar membro, basta preencher o formulário de inscrição na área de membros ou visitar a nossa sede no Bairro das Mahotas. Oferecemos diferentes planos de associação com benefícios exclusivos."
     },
     {
       question: "Preciso ter um rating para participar dos torneios?",
-      answer: "Não! Nossos torneios são abertos para todos os níveis. Temos categorias específicas para iniciantes, intermediários e avançados, além de torneios abertos para todos os participantes."
+      answer: "Não! Os nossos torneios são abertos para todos os níveis. Temos categorias específicas para iniciantes, intermediários e avançados, além de torneios abertos para todos os participantes."
     },
     {
       question: "O clube oferece aulas para iniciantes?",
-      answer: "Sim! Temos um programa completo de formação para iniciantes, com aulas teóricas e práticas ministradas por nossos treinadores experientes. As aulas acontecem às terças e quintas-feiras."
+      answer: "Sim! Temos um programa completo de formação para iniciantes, com aulas teóricas e práticas ministradas pelos nossos treinadores experientes. As aulas acontecem às terças e quintas-feiras."
     },
     {
       question: "Como funciona a mensalidade?",
-      answer: "A mensalidade é de 500 MT para membros regulares, com desconto para estudantes e famílias. O pagamento pode ser feito na sede ou via transferência bancária. Consulte nossos planos anuais com desconto especial."
+      answer: "A mensalidade é de 500 MT para membros regulares, com desconto para estudantes e famílias. O pagamento pode ser feito na sede ou via transferência bancária. Consulte os nossos planos anuais com desconto especial."
     },
   ];
 
@@ -107,7 +107,7 @@ export default function Contato() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -116,7 +116,7 @@ export default function Contato() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 right-20 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 left-20 text-7xl animate-float-delayed">♕</div>
@@ -124,7 +124,7 @@ export default function Contato() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-12">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -140,7 +140,7 @@ export default function Contato() {
               bg-linear-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Entre em Contato
+              Entre em Contacto
             </h1>
             <div className={`
               w-24 h-1 bg-yellow-500 mx-auto mb-6 rounded-full transition-all duration-700 delay-150
@@ -150,13 +150,13 @@ export default function Contato() {
               text-gray-300 max-w-2xl mx-auto text-lg transition-all duration-700 delay-200
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Estamos aqui para responder suas dúvidas, receber sugestões e ajudar você 
+              Estamos aqui para responder às suas dúvidas, receber sugestões e ajudar você 
               a fazer parte da nossa comunidade de xadrez
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {/* Contact Form */}
+            {/* Formulário de Contacto */}
             <div className={`
               bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
               transition-all duration-700 delay-300
@@ -177,7 +177,7 @@ export default function Contato() {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
-                    placeholder="Seu nome completo"
+                    placeholder="O seu nome completo"
                   />
                 </div>
                 
@@ -221,7 +221,7 @@ export default function Contato() {
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors resize-none"
-                    placeholder="Digite sua mensagem aqui..."
+                    placeholder="Digite a sua mensagem aqui..."
                   />
                 </div>
                 
@@ -235,7 +235,7 @@ export default function Contato() {
               </form>
             </div>
 
-            {/* Contact Info */}
+            {/* Informações de Contacto */}
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
                 <div
@@ -272,7 +272,7 @@ export default function Contato() {
             </div>
           </div>
 
-          {/* Map Section */}
+          {/* Secção do Mapa */}
           <div className={`
             mb-16 transition-all duration-700 delay-500
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -286,9 +286,9 @@ export default function Contato() {
                 <p className="text-gray-400 text-sm mt-1">Bairro das Mahotas, Maputo - Moçambique</p>
               </div>
               <div className="h-96 bg-gray-800 relative">
-                {/* Embed Google Maps */}
+                {/* Incorporar Google Maps */}
                 <iframe
-                  title="Real Chess Club Location"
+                  title="Real Chess Club Localização"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14373.895023527562!2d32.5611912!3d-25.9695285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ee5929c1bd0e695%3A0x9a4d8a5a5a5a5a5a!2sMahotas%2C%20Maputo%2C%20Mo%C3%A7ambique!5e0!3m2!1spt!2s!4v1700000000000!5m2!1spt!2s"
                   width="100%"
                   height="100%"
@@ -303,14 +303,14 @@ export default function Contato() {
             </div>
           </div>
 
-          {/* FAQ Section */}
+          {/* Secção FAQ */}
           <div className={`
             mb-12 transition-all duration-700 delay-600
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
           `}>
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-white mb-2">Perguntas Frequentes</h2>
-              <p className="text-gray-400">Tire suas dúvidas sobre o clube</p>
+              <p className="text-gray-400">Tire as suas dúvidas sobre o clube</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {faqs.map((faq, index) => (
@@ -329,7 +329,7 @@ export default function Contato() {
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Redes Sociais */}
           <div className={`
             text-center transition-all duration-700 delay-700
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -350,7 +350,7 @@ export default function Contato() {
             </div>
           </div>
 
-          {/* Trust Badge */}
+          {/* Selo de Confiança */}
           <div className={`
             mt-12 text-center transition-all duration-700 delay-800
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}

@@ -12,7 +12,7 @@ interface HeroImage {
 const HERO_IMAGES: HeroImage[] = [
   { src: "/images/heropage1.jpg", alt: "Real Chess Club - Ambiente principal" },
   { src: "/images/heropage2.jpg", alt: "Real Chess Club - Torneio em andamento" },
-  { src: "/images/heropage3.jpg", alt: "Real Chess Club - Membros jogando" },
+  { src: "/images/heropage3.jpg", alt: "Real Chess Club - Membros a jogar" },
 ];
 
 const SLIDE_INTERVAL = 5000;
@@ -28,7 +28,7 @@ export default function Hero() {
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
-    // Resume autoplay after 10 seconds of inactivity
+    // Retomar reprodução automática após 10 segundos de inactividade
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
@@ -41,7 +41,7 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen max-h-200 min-h-150 overflow-hidden">
-      {/* Background Images */}
+      {/* Imagens de Fundo */}
       {HERO_IMAGES.map((image, index) => (
         <div
           key={index}
@@ -65,7 +65,7 @@ export default function Hero() {
         </div>
       ))}
 
-      {/* Content Overlay */}
+      {/* Sobreposição de Conteúdo */}
       <div className="absolute inset-0 z-20 flex items-center justify-center px-4">
         <div className="text-center text-white max-w-4xl mx-auto">
           <div className="animate-fade-in-up">
@@ -75,7 +75,7 @@ export default function Hero() {
             </h1>
             <div className="w-24 h-1 bg-yellow-500 mx-auto my-6 rounded-full" />
             <p className="text-lg md:text-2xl lg:text-3xl mb-8 text-gray-200 font-light">
-              Mais que um clube, uma família enxadrista
+              Mais do que um clube, uma família enxadrista
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
@@ -95,14 +95,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Navigation Dots */}
+      {/* Pontos de Navegação */}
       <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center gap-3">
         {HERO_IMAGES.map((_, index) => (
           <button
             key={index}
             className="group relative transition-all duration-300 focus:outline-none"
             onClick={() => goToSlide(index)}
-            aria-label={`Ir para slide ${index + 1}`}
+            aria-label={`Ir para o slide ${index + 1}`}
             aria-current={index === currentIndex ? "true" : "false"}
           >
             <div
@@ -116,7 +116,7 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Botões de Navegação */}
       <button
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
         onClick={() => goToSlide((currentIndex - 1 + HERO_IMAGES.length) % HERO_IMAGES.length)}

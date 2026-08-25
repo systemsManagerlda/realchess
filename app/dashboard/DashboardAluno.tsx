@@ -148,7 +148,7 @@ export default function DashboardAluno() {
   const [editingPerfil, setEditingPerfil] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentData, setPaymentData] = useState({
-    valor: 250,
+    valor: 100,
     formaPagamento: "M-Pesa",
     referencia: "",
   });
@@ -312,12 +312,12 @@ export default function DashboardAluno() {
       const result = await response.json();
 
       if (result.returnCode === 200) {
-        showNotification("success", "Perfil atualizado com sucesso!");
+        showNotification("success", "Perfil actualizado com sucesso!");
         setEditingPerfil(false);
       } else {
         showNotification(
           "error",
-          result.returnMsg || "Erro ao atualizar perfil",
+          result.returnMsg || "Erro ao actualizar perfil",
         );
       }
     } catch (error) {
@@ -353,7 +353,7 @@ export default function DashboardAluno() {
         showNotification("success", "Pagamento registrado com sucesso!");
         setShowPaymentModal(false);
         setPaymentData({
-          valor: 250,
+          valor: 100,
           formaPagamento: "M-Pesa",
           referencia: "",
         });
@@ -527,7 +527,7 @@ export default function DashboardAluno() {
       aberturas: "Aberturas",
       meio_jogo: "Meio Jogo",
       finais: "Finais",
-      tatica: "Tática",
+      tatica: "Táctica",
       estrategia: "Estratégia",
       analise_partidas: "Análise de Partidas",
       historia_xadrez: "História do Xadrez",
@@ -551,7 +551,7 @@ export default function DashboardAluno() {
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 pt-20 flex items-center justify-center">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-yellow-500 border-t-transparent"></div>
-            <p className="mt-4 text-gray-400">Carregando seu dashboard...</p>
+            <p className="mt-4 text-gray-400">Carregando o seu dashboard...</p>
           </div>
         </div>
         <Footer />
@@ -735,7 +735,7 @@ export default function DashboardAluno() {
                       {dashboardData.dadosPessoais.nome.split(" ")[0]}!
                     </h1>
                     <p className="text-gray-300">
-                      Continue evoluindo no xadrez. Hoje é um ótimo dia para
+                      Continue evoluindo no xadrez. Hoje é um óptimo dia para
                       aprender algo novo!
                     </p>
                   </div>
@@ -759,7 +759,7 @@ export default function DashboardAluno() {
                       <p className="text-2xl font-bold text-white">
                         {dashboardData.dadosPessoais.rating.pontuacao}
                       </p>
-                      <p className="text-sm text-gray-400">Pontuação atual</p>
+                      <p className="text-sm text-gray-400">Pontuação actual</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20 hover:border-yellow-500/50 transition-all">
                       <div className="flex items-center justify-between mb-2">
@@ -1112,7 +1112,7 @@ export default function DashboardAluno() {
                           Finais
                         </option>
                         <option value="tatica" className="text-black">
-                          Tática
+                          Táctica
                         </option>
                         <option value="estrategia" className="text-black">
                           Estratégia
@@ -1345,7 +1345,7 @@ export default function DashboardAluno() {
                       <p>
                         • Cota mensal:{" "}
                         <span className="text-yellow-500 font-semibold">
-                          250 MZN
+                          100 MZN
                         </span>
                       </p>
                       <p>
@@ -1386,7 +1386,7 @@ export default function DashboardAluno() {
                   </div>
 
                   <div className="bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 rounded-xl p-6 border border-yellow-500/30 text-center">
-                    <p className="text-gray-400 text-sm mb-2">Rating Atual</p>
+                    <p className="text-gray-400 text-sm mb-2">Rating Actual</p>
                     <p className="text-5xl font-bold text-white">
                       {dashboardData.dadosPessoais.rating.pontuacao}
                     </p>
@@ -1627,8 +1627,7 @@ export default function DashboardAluno() {
                           <div>
                             <p className="text-gray-400 text-sm">Endereço</p>
                             <p className="text-white">
-                              {perfilData?.endereco &&
-                                `${perfilData.endereco}, `}
+                              {perfilData?.endereco && `${perfilData.endereco}, `}
                               {perfilData?.bairro && `${perfilData.bairro}, `}
                               {perfilData?.cidade}, {perfilData?.provincia}
                             </p>

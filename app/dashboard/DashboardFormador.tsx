@@ -748,7 +748,7 @@ export default function DashboardFormador() {
       aberturas: "Aberturas",
       meio_jogo: "Meio Jogo",
       finais: "Finais",
-      tatica: "Tática",
+      tatica: "Táctica",
       estrategia: "Estratégia",
       analise_partidas: "Análise de Partidas",
       historia_xadrez: "História do Xadrez",
@@ -878,7 +878,7 @@ export default function DashboardFormador() {
                 <div className="space-y-6">
                   <div className="bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 rounded-2xl p-6 border border-yellow-500/30">
                     <h1 className="text-2xl font-bold text-white mb-2">Olá, Professor {dashboardData.dadosPessoais.nome.split(" ")[0]}!</h1>
-                    <p className="text-gray-300">Continue inspirando e ensinando xadrez. Seu trabalho é fundamental para o clube!</p>
+                    <p className="text-gray-300">Continue inspirando e ensinando xadrez. O seu trabalho é fundamental para o clube!</p>
                     <p className="text-xs text-gray-400 mt-2">Último acesso: {new Date().toLocaleString()}</p>
                   </div>
 
@@ -895,7 +895,7 @@ export default function DashboardFormador() {
                         <TbSchool className="w-6 h-6 text-yellow-500" />
                       </div>
                       <p className="text-2xl font-bold text-white">{dashboardData.turmas.atuais.length}</p>
-                      <p className="text-sm text-gray-400">Turmas Ativas</p>
+                      <p className="text-sm text-gray-400">Turmas Activas</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20 hover:border-yellow-500/50 transition-all">
                       <div className="flex items-center justify-between mb-2">
@@ -981,7 +981,7 @@ export default function DashboardFormador() {
                     </div>
                   </div>
 
-                  {/* Turmas Atuais */}
+                  {/* Turmas Actuais */}
                   <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                     <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <TbSchool className="w-5 h-5 text-yellow-500" />
@@ -1406,7 +1406,7 @@ export default function DashboardFormador() {
                       <option value="aberturas" className="text-black">Aberturas</option>
                       <option value="meio_jogo" className="text-black">Meio Jogo</option>
                       <option value="finais" className="text-black">Finais</option>
-                      <option value="tatica" className="text-black">Tática</option>
+                      <option value="tatica" className="text-black">Táctica</option>
                       <option value="estrategia" className="text-black">Estratégia</option>
                       <option value="analise_partidas" className="text-black">Análise de Partidas</option>
                       <option value="historia_xadrez" className="text-black">História do Xadrez</option>
@@ -1773,7 +1773,7 @@ export default function DashboardFormador() {
                         <option value="mate_em_3">Mate em 3</option>
                         <option value="ganho_peca">Ganho de Peça</option>
                         <option value="defesa">Defesa</option>
-                        <option value="tatica">Tática</option>
+                        <option value="tatica">Táctica</option>
                         <option value="estrategia">Estratégia</option>
                       </select>
                       <select

@@ -10,8 +10,8 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { value: "10+", label: "Títulos Conquistados", suffix: "🏆" },
-  { value: "100+", label: "Membros Ativos", suffix: "👥" },
+  { value: "3+", label: "Títulos Conquistados", suffix: "🏆" },
+  { value: "20+", label: "Membros Activos", suffix: "👥" },
   { value: "5", label: "Anos de Tradição", suffix: "📅" },
 ];
 
@@ -27,7 +27,7 @@ const FEATURES = [
     icon: "♟️",
   },
   {
-    title: "Comunidade Ativa",
+    title: "Comunidade Activa",
     description: "Ambiente acolhedor para networking, amizades e crescimento no xadrez.",
     icon: "🤝",
   },
@@ -61,7 +61,7 @@ export default function Introduction() {
       ref={sectionRef}
       className="relative py-24 overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Background Pattern */}
+      {/* Padrão de Fundo */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -70,7 +70,7 @@ export default function Introduction() {
         }} />
       </div>
 
-      {/* Animated Chess Pieces Background */}
+      {/* Peças de Xadrez Animadas no Fundo */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 text-8xl animate-float">♔</div>
         <div className="absolute bottom-10 right-10 text-8xl animate-float-delayed">♕</div>
@@ -79,7 +79,7 @@ export default function Introduction() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* Cabeçalho */}
         <div className="text-center mb-16">
           <div className={`
             inline-block mb-6 transition-all duration-700 transform
@@ -107,14 +107,14 @@ export default function Introduction() {
           `}>
             Localizado no <span className="font-semibold text-yellow-400">Bairro das Mahotas, Maputo</span>, 
             o Real Chess Club é um dos mais tradicionais clubes de xadrez de Moçambique,
-            dedicado a promover o esporte em todo o país. Com mais de 100 membros
-            ativos e uma estrutura completa, oferecemos treinamento de qualidade,
+            dedicado a promover o desporto em todo o país. Com mais de 100 membros
+            activos e uma estrutura completa, oferecemos treinamento de qualidade,
             torneios regulares e um ambiente acolhedor para todos os apaixonados
             pelo xadrez moçambicano.
           </p>
         </div>
 
-        {/* Stats Grid */}
+        {/* Grade de Estatísticas */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
           {STATS.map((stat, index) => {
             const isHovered = hoveredCard === index;
@@ -142,7 +142,7 @@ export default function Introduction() {
                   <div className="text-gray-300 font-medium">{stat.label}</div>
                 </div>
 
-                {/* Hover Glow Effect */}
+                {/* Efeito de Brilho ao Pairar */}
                 {isHovered && (
                   <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/5 to-transparent rounded-2xl" />
@@ -153,7 +153,7 @@ export default function Introduction() {
           })}
         </div>
 
-        {/* Features Grid */}
+        {/* Grade de Funcionalidades */}
         <div className="grid md:grid-cols-3 gap-8">
           {FEATURES.map((feature, index) => {
             const isHovered = hoveredCard === index + 3;
@@ -184,10 +184,10 @@ export default function Introduction() {
                   </p>
                 </div>
 
-                {/* Animated Border */}
+                {/* Borda Animada */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 
-                {/* Hover Glow Effect */}
+                {/* Efeito de Brilho ao Pairar */}
                 {isHovered && (
                   <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/10 to-transparent rounded-2xl" />
@@ -198,7 +198,7 @@ export default function Introduction() {
           })}
         </div>
 
-        {/* Location Card */}
+        {/* Cartão de Localização */}
         <div className={`
           mt-20 max-w-2xl mx-auto transition-all duration-700 delay-400
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -241,7 +241,7 @@ export default function Introduction() {
           </div>
         </div>
 
-        {/* Call to Action */}
+        {/* Chamada para Acção */}
         <div className={`
           mt-16 text-center transition-all duration-700 delay-500
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -267,7 +267,7 @@ export default function Introduction() {
           </button>
         </div>
 
-        {/* Trust Badge */}
+        {/* Selo de Confiança */}
         <div className={`
           mt-12 text-center transition-all duration-700 delay-600
           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}

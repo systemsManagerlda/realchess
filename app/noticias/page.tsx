@@ -37,13 +37,13 @@ export default function Noticias() {
     },
     {
       id: 2,
-      title: "Dica de Xadrez: Como melhorar seu rating",
+      title: "Dica de Xadrez: Como melhorar o seu rating",
       date: "2025-01-18",
       category: "Dicas",
-      excerpt: "Confira 5 dicas essenciais para elevar seu rating e se tornar um jogador mais forte. Desde estudo de aberturas até análise de partidas.",
+      excerpt: "Confira 5 dicas essenciais para elevar o seu rating e se tornar um jogador mais forte. Desde estudo de aberturas até análise de partidas.",
       author: "GM Carlos Silva",
       readTime: "5 min",
-      content: "1. Estude finais diariamente... 2. Analise suas partidas..."
+      content: "1. Estude finais diariamente... 2. Analise as suas partidas..."
     },
     {
       id: 3,
@@ -60,7 +60,7 @@ export default function Noticias() {
       title: "Real Chess Club promove torneio beneficente",
       date: "2025-01-12",
       category: "Eventos do Clube",
-      excerpt: "Nosso clube realizará um torneio beneficente em fevereiro para arrecadar fundos para escolas locais em Maputo.",
+      excerpt: "O nosso clube realizará um torneio beneficente em fevereiro para arrecadar fundos para escolas locais em Maputo.",
       author: "Diretoria do Clube",
       readTime: "2 min",
       content: "O evento acontecerá no dia 15 de fevereiro..."
@@ -70,7 +70,7 @@ export default function Noticias() {
       title: "Novo curso de xadrez para iniciantes",
       date: "2025-01-10",
       category: "Eventos do Clube",
-      excerpt: "Estão abertas as inscrições para o novo curso de xadrez para iniciantes. Aulas começam em março.",
+      excerpt: "Estão abertas as inscrições para o novo curso de xadrez para iniciantes. As aulas começam em março.",
       author: "Coordenação Pedagógica",
       readTime: "2 min",
       content: "O curso terá duração de 3 meses..."
@@ -114,7 +114,7 @@ export default function Noticias() {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      alert(`✅ Inscrição realizada com sucesso! Você receberá nossas novidades em ${email}`);
+      alert(`✅ Inscrição realizada com sucesso! Você receberá as nossas novidades em ${email}`);
       setEmail("");
     }
   };
@@ -123,7 +123,7 @@ export default function Noticias() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -132,14 +132,14 @@ export default function Noticias() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 right-20 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 left-20 text-7xl animate-float-delayed">♕</div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-12">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -170,9 +170,9 @@ export default function Noticias() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main Content */}
+            {/* Conteúdo Principal */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Category Filter */}
+              {/* Filtro de Categorias */}
               <div className={`
                 flex flex-wrap gap-2 mb-6 transition-all duration-700 delay-300
                 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -194,7 +194,7 @@ export default function Noticias() {
                 ))}
               </div>
 
-              {/* Articles */}
+              {/* Artigos */}
               {filteredNews.map((article, index) => (
                 <article
                   key={article.id}
@@ -207,7 +207,7 @@ export default function Noticias() {
                   style={{ animationDelay: `${300 + index * 100}ms` }}
                 >
                   <div className="p-6">
-                    {/* Category and Date */}
+                    {/* Categoria e Data */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-2">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getCategoryColor(article.category)}`}>
@@ -218,17 +218,17 @@ export default function Noticias() {
                       <span className="text-sm text-gray-500">{formatDate(article.date)}</span>
                     </div>
 
-                    {/* Title */}
+                    {/* Título */}
                     <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-yellow-400 transition-colors">
                       {article.title}
                     </h2>
 
-                    {/* Excerpt */}
+                    {/* Resumo */}
                     <p className="text-gray-300 mb-4 leading-relaxed">
                       {article.excerpt}
                     </p>
 
-                    {/* Author and Read More */}
+                    {/* Autor e Leia Mais */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center">
@@ -245,12 +245,12 @@ export default function Noticias() {
                     </div>
                   </div>
 
-                  {/* Animated Border */}
+                  {/* Borda Animada */}
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-yellow-500 via-yellow-600 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 </article>
               ))}
 
-              {/* Load More Button */}
+              {/* Botão Carregar Mais */}
               {filteredNews.length >= 6 && (
                 <div className="text-center pt-6">
                   <button className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300">
@@ -263,12 +263,12 @@ export default function Noticias() {
               )}
             </div>
 
-            {/* Sidebar */}
+            {/* Barra Lateral */}
             <div className={`
               space-y-6 transition-all duration-700 delay-400
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              {/* Categories Card */}
+              {/* Cartão de Categorias */}
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                 <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <span className="w-1 h-5 bg-yellow-500 rounded-full"></span>
@@ -298,7 +298,7 @@ export default function Noticias() {
                 </div>
               </div>
 
-              {/* Newsletter Card */}
+              {/* Cartão de Newsletter */}
               <div className="bg-linear-to-br from-yellow-600/20 to-orange-600/20 rounded-2xl p-6 border border-yellow-500/30">
                 <h2 className="text-xl font-bold text-white mb-2">Newsletter</h2>
                 <p className="text-gray-300 text-sm mb-4">
@@ -307,7 +307,7 @@ export default function Noticias() {
                 <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                   <input
                     type="email"
-                    placeholder="Seu melhor email"
+                    placeholder="O seu melhor email"
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -321,11 +321,11 @@ export default function Noticias() {
                   </button>
                 </form>
                 <p className="text-xs text-gray-500 mt-3 text-center">
-                  ✨ Não enviamos spam. Você pode cancelar a qualquer momento.
+                  ✨ Não enviamos spam. Pode cancelar a qualquer momento.
                 </p>
               </div>
 
-              {/* Featured Post */}
+              {/* Destaque da Semana */}
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                 <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <span className="text-2xl">⭐</span>
@@ -336,14 +336,14 @@ export default function Noticias() {
                     Dica do Mestre
                   </h3>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    &quot;Analise suas partidas perdidas com mais atenção do que as vencidas. 
+                    &quot;Analise as suas partidas perdidas com mais atenção do que as vencidas. 
                     É nos erros que mais aprendemos!&quot;
                   </p>
                   <p className="text-xs text-gray-500">- GM Carlos Silva</p>
                 </div>
               </div>
 
-              {/* Social Links */}
+              {/* Redes Sociais */}
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                 <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <span className="text-2xl">🔗</span>

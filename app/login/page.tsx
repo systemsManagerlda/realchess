@@ -140,7 +140,7 @@ export default function Login() {
           }
         }, 1500);
       } else {
-        setErrorMessage(result.returnMsg || "Erro ao fazer login. Verifique suas credenciais.");
+        setErrorMessage(result.returnMsg || "Erro ao fazer login. Verifique as suas credenciais.");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -170,7 +170,7 @@ export default function Login() {
     }
 
     if (!registerData.acceptTerms) {
-      setErrorMessage("❌ Você precisa aceitar os Termos de Uso e Política de Privacidade.");
+      setErrorMessage("❌ Precisa de aceitar os Termos de Uso e Política de Privacidade.");
       setIsSubmitting(false);
       return;
     }
@@ -251,7 +251,7 @@ export default function Login() {
       const result = await response.json();
 
       if (result.returnCode === 201) {
-        setSuccessMessage("✅ Cadastro realizado com sucesso! Bem-vindo ao Real Chess Club. Você já pode fazer login.");
+        setSuccessMessage("✅ Cadastro realizado com sucesso! Bem-vindo ao Real Chess Club. Já pode fazer login.");
         
         // Limpar formulário
         setRegisterData({
@@ -329,7 +329,7 @@ export default function Login() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 min-h-screen mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -338,7 +338,7 @@ export default function Login() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-20 text-7xl animate-float"><TbChessKing /></div>
           <div className="absolute bottom-20 right-20 text-7xl animate-float-delayed"><TbChessQueen /></div>
@@ -346,7 +346,7 @@ export default function Login() {
         </div>
 
         <div className="relative max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-8">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -362,7 +362,7 @@ export default function Login() {
               bg-linear-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              {isLogin ? "Bem-vindo de Volta" : "Crie sua Conta"}
+              {isLogin ? "Bem-vindo de Volta" : "Crie a sua Conta"}
             </h1>
             <div className={`
               w-24 h-1 bg-yellow-500 mx-auto mb-4 rounded-full transition-all duration-700 delay-150
@@ -373,12 +373,12 @@ export default function Login() {
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
               {isLogin 
-                ? "Acesse sua conta para participar de torneios e eventos" 
+                ? "Aceda à sua conta para participar de torneios e eventos" 
                 : "Preencha os dados abaixo para se tornar membro do clube"}
             </p>
           </div>
 
-          {/* Messages */}
+          {/* Mensagens */}
           {errorMessage && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm text-center">
               {errorMessage}
@@ -391,13 +391,13 @@ export default function Login() {
             </div>
           )}
 
-          {/* Form Card */}
+          {/* Cartão do Formulário */}
           <div className={`
             bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
             transition-all duration-700 delay-300
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
           `}>
-            {/* Toggle Buttons */}
+            {/* Botões de Alternância */}
             <div className="flex gap-2 mb-6">
               <button
                 onClick={() => {
@@ -429,7 +429,7 @@ export default function Login() {
               </button>
             </div>
 
-            {/* Login Form */}
+            {/* Formulário de Login */}
             {isLogin && (
               <form onSubmit={handleLoginSubmit} className="space-y-5">
                 <div>
@@ -441,7 +441,7 @@ export default function Login() {
                     value={loginData.username}
                     onChange={handleChange}
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
-                    placeholder="Seu nome de usuário"
+                    placeholder="O seu nome de usuário"
                   />
                 </div>
 
@@ -493,7 +493,7 @@ export default function Login() {
               </form>
             )}
 
-            {/* Register Form */}
+            {/* Formulário de Registo */}
             {!isLogin && (
               <form onSubmit={handleRegisterSubmit} className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                 <div>
@@ -505,7 +505,7 @@ export default function Login() {
                     value={registerData.nomeCompleto}
                     onChange={handleChange}
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
-                    placeholder="Seu nome completo"
+                    placeholder="O seu nome completo"
                   />
                 </div>
 
@@ -724,7 +724,7 @@ export default function Login() {
               </form>
             )}
 
-            {/* Divider */}
+            {/* Divisor */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/20"></div>
@@ -734,7 +734,7 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Social Login */}
+            {/* Login Social */}
             <div className="space-y-3">
               <button
                 className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300"
@@ -757,7 +757,7 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Info Note */}
+          {/* Nota Informativa */}
           <div className={`
             mt-6 text-center transition-all duration-700 delay-400
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -766,7 +766,7 @@ export default function Login() {
               Ao criar uma conta, você concorda em receber comunicações sobre eventos, torneios e novidades do clube.
             </p>
             <p className="text-xs text-gray-500 mt-2">
-              Cota mensal: <span className="text-yellow-500 font-semibold">250 MZN</span> - Pague após o cadastro
+              Cota mensal: <span className="text-yellow-500 font-semibold">100 MZN</span> - Pague após o cadastro
             </p>
           </div>
         </div>

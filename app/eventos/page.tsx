@@ -68,7 +68,7 @@ export default function Eventos() {
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("✅ Inscrição realizada com sucesso! Em breve você receberá mais informações por email.");
+    alert("✅ Inscrição realizada com sucesso! Em breve receberá mais informações por email.");
     setSelectedEvent(null);
     setFormData({ name: "", email: "", rating: "" });
   };
@@ -85,7 +85,7 @@ export default function Eventos() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -95,7 +95,7 @@ export default function Eventos() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-12">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -127,9 +127,9 @@ export default function Eventos() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Events List */}
+            {/* Lista de Eventos */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Upcoming Events */}
+              {/* Próximos Eventos */}
               <div>
                 <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                   <span className="w-1 h-6 bg-yellow-500 rounded-full"></span>
@@ -147,7 +147,7 @@ export default function Eventos() {
                       `}
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      {/* Prize Badge */}
+                      {/* Distintivo de Prêmio */}
                       {event.prize && (
                         <div className="absolute top-4 right-4">
                           <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
@@ -199,14 +199,14 @@ export default function Eventos() {
                         Inscrever-se
                       </button>
 
-                      {/* Animated Border */}
+                      {/* Borda Animada */}
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-yellow-500 via-yellow-600 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Past Events */}
+              {/* Eventos Passados */}
               <div>
                 <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                   <span className="w-1 h-6 bg-yellow-500 rounded-full"></span>
@@ -246,7 +246,7 @@ export default function Eventos() {
               </div>
             </div>
 
-            {/* Sidebar - Calendar */}
+            {/* Barra Lateral - Calendário */}
             <div className={`
               lg:col-span-1 transition-all duration-700 delay-300
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -266,11 +266,11 @@ export default function Eventos() {
                   ))}
                 </div>
 
-                {/* Info Box */}
+                {/* Caixa de Informação */}
                 <div className="mt-8 p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/30">
                   <p className="text-yellow-400 text-sm font-semibold mb-2">ℹ️ Informações</p>
                   <p className="text-gray-300 text-xs">
-                    Torneios sujeitos a alterações. Consulte o regulamento completo no ato da inscrição.
+                    Torneios sujeitos a alterações. Consulte o regulamento completo no acto da inscrição.
                   </p>
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function Eventos() {
           </div>
         </div>
 
-        {/* Registration Modal */}
+        {/* Modal de Inscrição */}
         {selectedEvent && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <div className="bg-linear-to-b from-gray-900 to-gray-950 rounded-2xl p-8 max-w-md w-full border border-white/20 shadow-2xl animate-fade-in-up">

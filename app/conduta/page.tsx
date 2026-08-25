@@ -19,29 +19,29 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 1º - Missão e Valores",
-          content: "O Código de Conduta do Real Chess Club fundamenta-se nos valores do xadrez: respeito, disciplina, integridade e fair play. Este código estabelece as diretrizes éticas que devem nortear a conduta de todos os membros, colaboradores e visitantes, visando manter um ambiente harmonioso, respeitoso e propício ao desenvolvimento do esporte."
+          content: "O Código de Conduta do Real Chess Club fundamenta-se nos valores do xadrez: respeito, disciplina, integridade e fair play. Este código estabelece as directrizes éticas que devem nortear a conduta de todos os membros, colaboradores e visitantes, visando manter um ambiente harmonioso, respeitoso e propício ao desenvolvimento do desporto."
         },
         {
           title: "Art. 2º - Abrangência",
-          content: "Este Código aplica-se a todos os membros do Clube, independentemente de categoria, bem como a treinadores, voluntários, visitantes e participantes de eventos promovidos pelo Real Chess Club, dentro ou fora das dependências do Clube, durante atividades oficiais ou eventos sociais relacionados."
+          content: "Este Código aplica-se a todos os membros do Clube, independentemente de categoria, bem como a treinadores, voluntários, visitantes e participantes de eventos promovidos pelo Real Chess Club, dentro ou fora das dependências do Clube, durante actividades oficiais ou eventos sociais relacionados."
         }
       ]
     },
     {
       id: "conduta-esportiva",
-      title: "CAPÍTULO II - DA CONDUTA ESPORTIVA",
+      title: "CAPÍTULO II - DA CONDUTA DESPORTIVA",
       subsections: [
         {
           title: "Art. 3º - Fair Play",
-          content: "O fair play é o princípio fundamental do xadrez. Todo membro deve: I - Respeitar as regras do jogo e as decisões da arbitragem; II - Tratar adversários, árbitros e organizadores com cortesia e respeito; III - Jogar com honestidade, abstendo-se de qualquer forma de trapaça ou manipulação; IV - Apertar as mãos antes e após as partidas, demonstrando espírito esportivo; V - Aceitar vitórias e derrotas com dignidade e humildade."
+          content: "O fair play é o princípio fundamental do xadrez. Todo membro deve: I - Respeitar as regras do jogo e as decisões da arbitragem; II - Tratar adversários, árbitros e organizadores com cortesia e respeito; III - Jogar com honestidade, abstendo-se de qualquer forma de trapaça ou manipulação; IV - Apertar as mãos antes e após as partidas, demonstrando espírito desportivo; V - Aceitar vitórias e derrotas com dignidade e humildade."
         },
         {
           title: "Art. 4º - Conduta Durante as Partidas",
-          content: "Durante as partidas, é obrigatório: I - Manter silêncio absoluto durante os lances; II - Não utilizar qualquer tipo de assistência externa (celulares, anotações, etc.); III - Registrar corretamente os lances quando exigido pelo regulamento; IV - Não abandonar a sala de jogo sem autorização do árbitro; V - Vestir-se adequadamente conforme o código de vestimenta estabelecido para competições oficiais."
+          content: "Durante as partidas, é obrigatório: I - Manter silêncio absoluto durante os lances; II - Não utilizar qualquer tipo de assistência externa (celulares, anotações, etc.); III - Registrar correctamente os lances quando exigido pelo regulamento; IV - Não abandonar a sala de jogo sem autorização do árbitro; V - Vestir-se adequadamente conforme o código de vestimenta estabelecido para competições oficiais."
         },
         {
           title: "Art. 5º - Conduta Antidesportiva",
-          content: "São consideradas condutas antidesportivas: I - Ofensas verbais ou gestuais a adversários ou árbitros; II - Provocações ou comemorações exageradas; III - Atrasos injustificados nas partidas; IV - Abandono de partida sem justificativa; V - Manipulação de resultados; VI - Qualquer forma de assédio ou intimidação. Infrações serão penalizadas conforme a gravidade, podendo resultar em advertência, suspensão ou exclusão."
+          content: "São consideradas condutas antidesportivas: I - Ofensas verbais ou gestuais a adversários ou árbitros; II - Provocações ou comemorações exageradas; III - Atrasos injustificados nas partidas; IV - Abandono de partida sem justificativa; V - Manipulação de resultados; VI - Qualquer forma de assédio ou intimidação. As infracções serão penalizadas conforme a gravidade, podendo resultar em advertência, suspensão ou exclusão."
         }
       ]
     },
@@ -51,15 +51,15 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 6º - Respeito e Inclusão",
-          content: "O Real Chess Club é um espaço inclusivo e acolhedor. É vedada qualquer forma de: I - Discriminação por raça, cor, gênero, orientação sexual, religião, origem ou condição social; II - Assédio moral ou sexual; III - Bullying ou intimidação; IV - Comentários ou piadas de cunho ofensivo; V - Exclusão ou tratamento diferenciado sem justificativa técnica."
+          content: "O Real Chess Club é um espaço inclusivo e acolhedor. É vedada qualquer forma de: I - Discriminação por raça, cor, género, orientação sexual, religião, origem ou condição social; II - Assédio moral ou sexual; III - Bullying ou intimidação; IV - Comentários ou piadas de cunho ofensivo; V - Exclusão ou tratamento diferenciado sem justificativa técnica."
         },
         {
           title: "Art. 7º - Conduta nas Dependências",
-          content: "Nas dependências do Clube, todos devem: I - Manter comportamento adequado e respeitoso; II - Zelar pela limpeza e conservação dos espaços; III - Utilizar os equipamentos corretamente; IV - Não fumar ou consumir bebidas alcoólicas em áreas não autorizadas; V - Não portar ou fazer uso de substâncias ilícitas; VI - Estacionar veículos nas áreas designadas."
+          content: "Nas dependências do Clube, todos devem: I - Manter comportamento adequado e respeitoso; II - Zelar pela limpeza e conservação dos espaços; III - Utilizar os equipamentos correctamente; IV - Não fumar ou consumir bebidas alcoólicas em áreas não autorizadas; V - Não portar ou fazer uso de substâncias ilícitas; VI - Estacionar veículos nas áreas designadas."
         },
         {
           title: "Art. 8º - Comunicação e Redes Sociais",
-          content: "Ao se comunicar em nome do Clube ou sobre suas atividades, os membros devem: I - Utilizar linguagem respeitosa e adequada; II - Não divulgar informações internas sem autorização; III - Não fazer declarações que possam prejudicar a imagem do Clube; IV - Evitar conflitos públicos nas redes sociais; V - Manter a confidencialidade de dados de outros membros."
+          content: "Ao se comunicar em nome do Clube ou sobre as suas actividades, os membros devem: I - Utilizar linguagem respeitosa e adequada; II - Não divulgar informações internas sem autorização; III - Não fazer declarações que possam prejudicar a imagem do Clube; IV - Evitar conflitos públicos nas redes sociais; V - Manter a confidencialidade de dados de outros membros."
         }
       ]
     },
@@ -69,15 +69,15 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 9º - Treinadores e Educadores",
-          content: "Os treinadores e educadores devem: I - Tratar todos os membros com igualdade e respeito; II - Não estabelecer relacionamentos inadequados com alunos; III - Manter sigilo sobre informações pessoais dos membros; IV - Atualizar-se continuamente em conhecimentos técnicos e pedagógicos; V - Promover o desenvolvimento integral dos membros; VI - Servir como exemplos de conduta ética e esportiva."
+          content: "Os treinadores e educadores devem: I - Tratar todos os membros com igualdade e respeito; II - Não estabelecer relacionamentos inadequados com alunos; III - Manter sigilo sobre informações pessoais dos membros; IV - Actualizar-se continuamente em conhecimentos técnicos e pedagógicos; V - Promover o desenvolvimento integral dos membros; VI - Servir como exemplos de conduta ética e desportiva."
         },
         {
           title: "Art. 10º - Dirigentes e Administradores",
-          content: "Os dirigentes e administradores devem: I - Atuar com transparência e responsabilidade; II - Gerir os recursos do Clube com integridade; III - Evitar conflitos de interesse; IV - Tratar todos os membros com imparcialidade; V - Prestar contas regularmente; VI - Cumprir e fazer cumprir este Código de Conduta."
+          content: "Os dirigentes e administradores devem: I - Actuar com transparência e responsabilidade; II - Gerir os recursos do Clube com integridade; III - Evitar conflitos de interesse; IV - Tratar todos os membros com imparcialidade; V - Prestar contas regularmente; VI - Cumprir e fazer cumprir este Código de Conduta."
         },
         {
           title: "Art. 11º - Árbitros e Organizadores",
-          content: "Os árbitros e organizadores devem: I - Atuar com imparcialidade e justiça; II - Conhecer profundamente as regras do xadrez; III - Tratar todos os participantes com respeito; IV - Tomar decisões fundamentadas e consistentes; V - Manter a ordem e a disciplina durante os eventos."
+          content: "Os árbitros e organizadores devem: I - Actuar com imparcialidade e justiça; II - Conhecer profundamente as regras do xadrez; III - Tratar todos os participantes com respeito; IV - Tomar decisões fundamentadas e consistentes; V - Manter a ordem e a disciplina durante os eventos."
         }
       ]
     },
@@ -87,7 +87,7 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 12º - Dos Membros",
-          content: "Todo membro do Real Chess Club tem a responsabilidade de: I - Conhecer e cumprir este Código de Conduta; II - Reportar violações à Diretoria; III - Cooperar em investigações internas; IV - Contribuir para um ambiente saudável e acolhedor; V - Representar o Clube com dignidade em eventos externos; VI - Pagar pontualmente suas obrigações financeiras."
+          content: "Todo membro do Real Chess Club tem a responsabilidade de: I - Conhecer e cumprir este Código de Conduta; II - Reportar violações à Direcção; III - Cooperar em investigações internas; IV - Contribuir para um ambiente saudável e acolhedor; V - Representar o Clube com dignidade em eventos externos; VI - Pagar pontualmente as suas obrigações financeiras."
         },
         {
           title: "Art. 13º - Do Clube",
@@ -101,15 +101,15 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 14º - Canais de Denúncia",
-          content: "O Clube disponibiliza os seguintes canais para denúncias: I - E-mail: ouvidoria@realchess.co.mz; II - Telefone: +258 84 000 0000; III - Caixa de sugestões na sede; IV - Contato direto com a Diretoria. Todas as denúncias serão tratadas com sigilo e seriedade."
+          content: "O Clube disponibiliza os seguintes canais para denúncias: I - E-mail: ouvidoria@realchess.co.mz; II - Telefone: +258 84 000 0000; III - Caixa de sugestões na sede; IV - Contacto directo com a Direcção. Todas as denúncias serão tratadas com sigilo e seriedade."
         },
         {
           title: "Art. 15º - Procedimento",
-          content: "Ao receber uma denúncia, o Clube adotará os seguintes procedimentos: I - Registro formal da denúncia; II - Análise preliminar de admissibilidade; III - Investigação conduzida por comissão específica; IV - Oitiva do denunciado com garantia de ampla defesa; V - Deliberação com aplicação de penalidade se cabível; VI - Comunicação do resultado às partes envolvidas."
+          content: "Ao receber uma denúncia, o Clube adoptará os seguintes procedimentos: I - Registo formal da denúncia; II - Análise preliminar de admissibilidade; III - Investigação conduzida por comissão específica; IV - Oitiva do denunciado com garantia de ampla defesa; V - Deliberação com aplicação de penalidade se cabível; VI - Comunicação do resultado às partes envolvidas."
         },
         {
-          title: "Art. 16º - Proteção ao Denunciante",
-          content: "O Clube assegura proteção a denunciantes de boa-fé, garantindo: I - Anonimato se solicitado; II - Proibição de retaliação; III - Acompanhamento durante o processo; IV - Medidas para evitar exposição indevida. Denúncias comprovadamente falsas ou maliciosas serão tratadas como infração disciplinar."
+          title: "Art. 16º - Protecção ao Denunciante",
+          content: "O Clube assegura protecção a denunciantes de boa-fé, garantindo: I - Anonimato se solicitado; II - Proibição de retaliação; III - Acompanhamento durante o processo; IV - Medidas para evitar exposição indevida. Denúncias comprovadamente falsas ou maliciosas serão tratadas como infracção disciplinar."
         }
       ]
     },
@@ -118,16 +118,16 @@ export default function Conduta() {
       title: "CAPÍTULO VII - DAS PENALIDADES",
       subsections: [
         {
-          title: "Art. 17º - Graus de Infração",
-          content: "As infrações são classificadas em: I - Leves: desrespeitos pontuais, pequenas negligências; II - Médias: condutas repetidas, desrespeitos significativos; III - Graves: violações de princípios fundamentais, discriminação, assédio, trapaça; IV - Gravíssimas: condutas criminosas, violência, corrupção, danos graves ao Clube."
+          title: "Art. 17º - Graus de Infracção",
+          content: "As infracções são classificadas em: I - Leves: desrespeitos pontuais, pequenas negligências; II - Médias: condutas repetidas, desrespeitos significativos; III - Graves: violações de princípios fundamentais, discriminação, assédio, trapaça; IV - Gravíssimas: condutas criminosas, violência, corrupção, danos graves ao Clube."
         },
         {
           title: "Art. 18º - Penalidades Aplicáveis",
-          content: "Conforme a gravidade da infração, poderão ser aplicadas: I - Advertência verbal; II - Advertência por escrito; III - Suspensão de atividades por período determinado; IV - Multa; V - Suspensão do direito de participação em torneios; VI - Suspensão do direito de usar as dependências; VII - Exclusão do quadro social; VIII - Proibição de frequentar o Clube."
+          content: "Conforme a gravidade da infracção, poderão ser aplicadas: I - Advertência verbal; II - Advertência por escrito; III - Suspensão de actividades por período determinado; IV - Multa; V - Suspensão do direito de participação em torneios; VI - Suspensão do direito de usar as dependências; VII - Exclusão do quadro social; VIII - Proibição de frequentar o Clube."
         },
         {
           title: "Art. 19º - Reincidência",
-          content: "A reincidência será considerada agravante na aplicação de penalidades. Em caso de reincidência em infração grave, o membro poderá ser excluído sumariamente do quadro social, mediante decisão da Diretoria após processo administrativo que garanta ampla defesa."
+          content: "A reincidência será considerada agravante na aplicação de penalidades. Em caso de reincidência em infracção grave, o membro poderá ser excluído sumariamente do quadro social, mediante decisão da Direcção após processo administrativo que garanta ampla defesa."
         }
       ]
     },
@@ -137,7 +137,7 @@ export default function Conduta() {
       subsections: [
         {
           title: "Art. 20º - Alterações",
-          content: "Este Código de Conduta poderá ser alterado por decisão da Assembleia Geral, convocada especificamente para este fim, com aprovação de 2/3 dos membros efetivos presentes. Alterações significativas serão comunicadas a todos os membros com antecedência mínima de 30 dias."
+          content: "Este Código de Conduta poderá ser alterado por decisão da Assembleia Geral, convocada especificamente para este fim, com aprovação de 2/3 dos membros efectivos presentes. Alterações significativas serão comunicadas a todos os membros com antecedência mínima de 30 dias."
         },
         {
           title: "Art. 21º - Conhecimento e Aceitação",
@@ -145,7 +145,7 @@ export default function Conduta() {
         },
         {
           title: "Art. 22º - Vigência",
-          content: "Este Código de Conduta entra em vigor na data de sua aprovação pela Assembleia Geral, revogadas as disposições em contrário. As normas aqui estabelecidas aplicam-se imediatamente a todos os membros e frequentadores do Real Chess Club."
+          content: "Este Código de Conduta entra em vigor na data da sua aprovação pela Assembleia Geral, revogadas as disposições em contrário. As normas aqui estabelecidas aplicam-se imediatamente a todos os membros e frequentadores do Real Chess Club."
         }
       ]
     }
@@ -155,7 +155,7 @@ export default function Conduta() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -164,14 +164,14 @@ export default function Conduta() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 right-20 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 left-20 text-7xl animate-float-delayed">♕</div>
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-12">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -197,7 +197,7 @@ export default function Conduta() {
               text-gray-300 max-w-2xl mx-auto text-lg transition-all duration-700 delay-200
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Princípios e diretrizes que norteiam nossa convivência e prática do xadrez
+              Princípios e directrizes que norteiam a nossa convivência e prática do xadrez
             </p>
             <div className={`
               mt-4 inline-block px-4 py-2 bg-white/10 rounded-lg text-sm text-gray-400
@@ -208,7 +208,7 @@ export default function Conduta() {
             </div>
           </div>
 
-          {/* Table of Contents */}
+          {/* Índice */}
           <div className={`
             bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 mb-8
             transition-all duration-700 delay-300
@@ -231,7 +231,7 @@ export default function Conduta() {
             </div>
           </div>
 
-          {/* Conduta Content */}
+          {/* Conteúdo da Conduta */}
           <div className="space-y-8">
             {sections.map((section, index) => (
               <div
@@ -268,7 +268,7 @@ export default function Conduta() {
             ))}
           </div>
 
-          {/* Commitment Statement */}
+          {/* Declaração de Compromisso */}
           <div className={`
             mt-8 bg-yellow-500/10 rounded-2xl p-6 border border-yellow-500/30 text-center
             transition-all duration-700 delay-800
@@ -276,7 +276,7 @@ export default function Conduta() {
           `}>
             <div className="flex items-center justify-center gap-3 mb-3">
               <span className="text-2xl">🤝</span>
-              <h3 className="text-lg font-bold text-white">Nosso Compromisso</h3>
+              <h3 className="text-lg font-bold text-white">O Nosso Compromisso</h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Como membros do Real Chess Club, comprometemo-nos a zelar pela excelência ética, 
@@ -284,7 +284,7 @@ export default function Conduta() {
             </p>
           </div>
 
-          {/* Back to Top Button */}
+          {/* Botão Voltar ao Topo */}
           <div className={`
             mt-8 text-center transition-all duration-700 delay-900
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -300,7 +300,7 @@ export default function Conduta() {
             </a>
           </div>
 
-          {/* Related Links */}
+          {/* Links Relacionados */}
           <div className={`
             mt-12 pt-8 border-t border-white/20 text-center
             transition-all duration-700 delay-1000
@@ -322,7 +322,7 @@ export default function Conduta() {
             </div>
           </div>
 
-          {/* Trust Badge */}
+          {/* Selo de Confiança */}
           <div className={`
             mt-8 text-center transition-all duration-700 delay-1100
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}

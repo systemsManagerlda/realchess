@@ -30,11 +30,20 @@ export default function Membros() {
   const isVisible = true;
 
   const [members] = useState<Member[]>([
-    { id: 1, name: "João Silva", rating: 2100, joinedDate: "2022-01-15", wins: 45, losses: 12, draws: 8, title: "Candidato a Mestre" },
-    { id: 2, name: "Maria Santos", rating: 1950, joinedDate: "2022-03-20", wins: 38, losses: 15, draws: 10, title: "Mestre Nacional" },
-    { id: 3, name: "Pedro Oliveira", rating: 1850, joinedDate: "2023-01-10", wins: 25, losses: 20, draws: 7, title: "Classe A" },
-    { id: 4, name: "Ana Costa", rating: 1750, joinedDate: "2023-06-15", wins: 18, losses: 12, draws: 5, title: "Classe B" },
-    { id: 5, name: "Carlos Mendes", rating: 1650, joinedDate: "2024-01-20", wins: 12, losses: 8, draws: 3, title: "Classe C" },
+    { id: 1, name: "Lourenço Augusto Jangua", rating: 0, joinedDate: "2021-03-15", wins: 52, losses: 18, draws: 10, title: "Mestre Nacional" },
+    { id: 2, name: "Lucas Coutinho Marcelino", rating: 0, joinedDate: "2021-05-20", wins: 48, losses: 15, draws: 12, title: "Candidato a Mestre" },
+    { id: 3, name: "Afonso Octávio Macuacua", rating: 0, joinedDate: "2022-01-10", wins: 42, losses: 20, draws: 8, title: "Classe A" },
+    { id: 4, name: "Jubílio Mahassule", rating: 0, joinedDate: "2022-03-15", wins: 38, losses: 22, draws: 10, title: "Treinadora Principal" },
+    { id: 5, name: "Xavier Samusson Zandamela", rating: 0, joinedDate: "2022-06-20", wins: 35, losses: 18, draws: 7, title: "Treinadora Principal" },
+    { id: 6, name: "Bernardo Eduardo", rating: 0, joinedDate: "2022-08-10", wins: 30, losses: 15, draws: 5, title: "Coach Juvenil" },
+    { id: 7, name: "Miguel Godi Nhumaio", rating: 0, joinedDate: "2023-01-15", wins: 28, losses: 20, draws: 8, title: "Classe B" },
+    { id: 8, name: "Lídia Sozinho", rating: 0, joinedDate: "2023-03-20", wins: 25, losses: 18, draws: 6, title: "Classe B" },
+    { id: 9, name: "Egídio Chongue", rating: 0, joinedDate: "2023-06-10", wins: 22, losses: 25, draws: 5, title: "Classe C" },
+    { id: 10, name: "Eminêncio da Cruz Alexandre", rating: 0, joinedDate: "2023-08-15", wins: 20, losses: 22, draws: 4, title: "Classe C" },
+    { id: 11, name: "Acácio António Júnior", rating: 0, joinedDate: "2024-01-10", wins: 18, losses: 20, draws: 3, title: "Classe D" },
+    { id: 12, name: "Bruno Artur Cardoso", rating: 0, joinedDate: "2024-02-15", wins: 15, losses: 18, draws: 2, title: "Coach Juvenil" },
+    { id: 13, name: "Stelio Uamusse", rating: 0, joinedDate: "2024-03-20", wins: 12, losses: 15, draws: 3, title: "Classe D" },
+    { id: 14, name: "Luís Manuel Cossa", rating: 0, joinedDate: "2024-04-10", wins: 10, losses: 12, draws: 2, title: "Iniciante" },
   ]);
 
   const [loginData, setLoginData] = useState({
@@ -73,7 +82,7 @@ export default function Membros() {
     }
     
     if (!registerData.acceptTerms) {
-      alert("❌ Você precisa aceitar os Termos de Uso e Política de Privacidade.");
+      alert("❌ Precisa de aceitar os Termos de Uso e Política de Privacidade.");
       return;
     }
     
@@ -112,6 +121,7 @@ export default function Membros() {
     if (rating >= 2000) return "text-yellow-400";
     if (rating >= 1800) return "text-blue-400";
     if (rating >= 1600) return "text-green-400";
+    if (rating >= 1500) return "text-purple-400";
     return "text-gray-400";
   };
 
@@ -127,7 +137,7 @@ export default function Membros() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-gradient-to-b from-gray-900 to-gray-950 min-h-screen pt-20">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -136,7 +146,7 @@ export default function Membros() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces */}
+        {/* Peças de Xadrez Animadas */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-20 text-7xl animate-float"><TbChessKing /></div>
           <div className="absolute bottom-20 right-20 text-7xl animate-float-delayed"><TbChessQueen /></div>
@@ -144,7 +154,7 @@ export default function Membros() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-8 sm:mb-12">
             <div className={`
               inline-block mb-4 sm:mb-6 transition-all duration-700
@@ -170,13 +180,13 @@ export default function Membros() {
               text-gray-300 max-w-2xl mx-auto text-base sm:text-lg px-4 transition-all duration-700 delay-200
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
-              Conheça nossos membros, acompanhe o ranking e faça parte da maior comunidade
+              Conheça os nossos membros, acompanhe o ranking e faça parte da maior comunidade
               de xadrez de Moçambique!
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Main Content */}
+            {/* Conteúdo Principal */}
             <div className="lg:col-span-2 space-y-6 sm:space-y-8">
               {/* Ranking - Versão Desktop (Tabela) e Mobile (Cards) */}
               <div className={`
@@ -192,7 +202,7 @@ export default function Membros() {
                   <p className="text-gray-400 text-xs sm:text-sm mt-1">Classificação baseada no rating FIDE</p>
                 </div>
                 
-                {/* Desktop Table - hidden on mobile */}
+                {/* Tabela Desktop - escondida no mobile */}
                 <div className="hidden md:block overflow-x-auto">
                   <table className="w-full min-w-[600px]">
                     <thead className="bg-yellow-500/10">
@@ -264,7 +274,7 @@ export default function Membros() {
                   </table>
                 </div>
 
-                {/* Mobile Cards - visible only on mobile */}
+                {/* Cards Mobile - visíveis apenas no mobile */}
                 <div className="md:hidden divide-y divide-white/10">
                   {sortedMembers.map((member, index) => {
                     const winRate = getWinRate(member.wins, member.losses);
@@ -327,7 +337,7 @@ export default function Membros() {
                 </div>
               </div>
 
-              {/* Members List */}
+              {/* Lista de Membros */}
               <div className={`
                 bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20
                 transition-all duration-700 delay-400
@@ -335,7 +345,7 @@ export default function Membros() {
               `}>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-2">
                   <span className="w-1 h-5 sm:h-6 bg-yellow-500 rounded-full"></span>
-                  Lista de Membros Ativos
+                  Lista de Membros Activos
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {members.map((member) => (
@@ -372,13 +382,13 @@ export default function Membros() {
               </div>
             </div>
 
-            {/* Sidebar - Auth Form (idêntico ao login) */}
+            {/* Barra Lateral - Formulário de Autenticação */}
             <div className={`
               transition-all duration-700 delay-500
               ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}>
               <div className="sticky top-24 bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20">
-                {/* Toggle Buttons */}
+                {/* Botões de Alternância */}
                 <div className="flex gap-2 mb-4 sm:mb-6">
                   <button
                     onClick={() => setIsLogin(true)}
@@ -402,7 +412,7 @@ export default function Membros() {
                   </button>
                 </div>
 
-                {/* Login Form */}
+                {/* Formulário de Login */}
                 {isLogin && (
                   <form onSubmit={handleLoginSubmit} className="space-y-4 sm:space-y-5">
                     <div>
@@ -466,7 +476,7 @@ export default function Membros() {
                   </form>
                 )}
 
-                {/* Register Form */}
+                {/* Formulário de Registo */}
                 {!isLogin && (
                   <form onSubmit={handleRegisterSubmit} className="space-y-3 sm:space-y-4">
                     <div>
@@ -593,7 +603,7 @@ export default function Membros() {
                   </form>
                 )}
 
-                {/* Divider */}
+                {/* Divisor */}
                 <div className="relative my-4 sm:my-6">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-white/20"></div>
@@ -603,7 +613,7 @@ export default function Membros() {
                   </div>
                 </div>
 
-                {/* Social Login */}
+                {/* Login Social */}
                 <div className="space-y-2 sm:space-y-3">
                   <button
                     className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300"
@@ -622,14 +632,14 @@ export default function Membros() {
             </div>
           </div>
 
-          {/* Stats Banner */}
+          {/* Banner de Estatísticas */}
           <div className={`
             grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mt-8 sm:mt-12 transition-all duration-700 delay-600
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
           `}>
             <div className="text-center p-3 sm:p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <div className="text-xl sm:text-2xl font-bold text-yellow-500">{members.length}+</div>
-              <div className="text-xs text-gray-400 mt-1">Membros Ativos</div>
+              <div className="text-xl sm:text-2xl font-bold text-yellow-500">{members.length}</div>
+              <div className="text-xs text-gray-400 mt-1">Membros Activos</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
               <div className="text-xl sm:text-2xl font-bold text-yellow-500">
@@ -649,7 +659,7 @@ export default function Membros() {
             </div>
           </div>
 
-          {/* Member Details Modal */}
+          {/* Modal de Detalhes do Membro */}
           {selectedMember && (
             <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
               <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl p-5 sm:p-8 max-w-md w-full border border-white/20 shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">

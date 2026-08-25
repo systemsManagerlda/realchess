@@ -87,7 +87,7 @@ export default function Footer() {
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-yellow-600 flex items-center justify-center">
                   <Image
                     src="/images/realchesslogo.png"
-                    alt="Real Chess Club Logo"
+                    alt="Real Chess Mahotas Logo"
                     width={40}
                     height={40}
                     className="w-full h-full object-cover"
@@ -97,12 +97,12 @@ export default function Footer() {
                 <div className="absolute inset-0 bg-yellow-500 rounded-full blur-sm opacity-0 group-hover:opacity-30 transition-opacity duration-300 pointer-events-none" />
               </div>
               <h3 className="text-xl font-bold bg-linear-to-r from-white to-yellow-400 bg-clip-text text-transparent">
-                Real Chess Club
+                Real Chess Mahotas
               </h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               O mais tradicional clube de xadrez de Moçambique, formando
-              campeões e promovendo o esporte no país desde 2009.
+              campeões e promovendo o desporto no país desde 2009.
             </p>
             <div className="space-y-2 text-sm text-gray-300">
               <p className="flex items-start gap-2">
@@ -225,7 +225,7 @@ export default function Footer() {
               <div className="flex gap-2">
                 <input
                   type="email"
-                  placeholder="Seu e-mail"
+                  placeholder="O seu e-mail"
                   className="flex-1 px-3 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 text-white placeholder-gray-500"
                   aria-label="Email para newsletter"
                 />
@@ -244,13 +244,13 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-400">
-              © {currentYear} Real Chess Club - Moçambique. Todos os direitos
+              © {currentYear} Real Chess Mahotas - Moçambique. Todos os direitos
               reservados.
             </p>
             <div className="flex gap-4 text-xs text-gray-500">
               <span>🇲🇿 Orgulho Moçambicano</span>
               <span>•</span>
-              <span>Filiado à FMOX</span>
+              <span>Filiado à FMX</span>
               <span>•</span>
               <span>v1.0.0</span>
             </div>

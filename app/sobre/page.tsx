@@ -28,27 +28,33 @@ export default function Sobre() {
 
   const coaches: Coach[] = [
     { 
-      name: "Carlos Silva", 
-      title: "Mestre FIDE", 
-      bio: "20 anos de experiência em competições nacionais e internacionais. Especialista em aberturas e finais.", 
-      specialty: "Aberturas e Finais" 
-    },
-    { 
-      name: "Ana Oliveira", 
+      name: "Jubílio Mahassule", 
       title: "Treinadora Principal", 
-      bio: "Campeã nacional por 3 anos consecutivos. Formou mais de 50 alunos campeões estaduais.", 
-      specialty: "Estratégia e Tática" 
+      bio: "4 anos de experiência em competições nacionais e internacionais. Especialista em aberturas e finais.", 
+      specialty: "Aberturas, Meio-Jogo e Finais" 
     },
     { 
-      name: "Roberto Santos", 
+      name: "Bruno Artur Cardoso", 
       title: "Coach Juvenil", 
+      bio: "5 anos de experiência em competições nacionais. Formou mais de 30 alunos.", 
+      specialty: "Estratégia e Táctica" 
+    },
+    { 
+      name: "Bernardo Eduardo", 
+      title: "Coach Juvenil", 
+      bio: "Especialista em iniciação ao xadrez. Metodologia lúdica para crianças e iniciantes.", 
+      specialty: "Iniciação Infantil" 
+    },
+    { 
+      name: "Xavier Samusson Zandamela", 
+      title: "Treinadora Principal", 
       bio: "Especialista em iniciação ao xadrez. Metodologia lúdica para crianças e iniciantes.", 
       specialty: "Iniciação Infantil" 
     },
   ];
 
   const achievements: Achievement[] = [
-    { year: "2024", title: "Campeonato Nacional por Equipes", description: "1º lugar - Categoria Absoluta", icon: "🥇" },
+    { year: "2024", title: "Campeonato Nacional por Equipas", description: "1º lugar - Categoria Absoluta", icon: "🥇" },
     { year: "2023", title: "Circuito Mahotas", description: "Campeão geral do circuito", icon: "🏆" },
     { year: "2022", title: "Torneio Internacional da CPLP", description: "3º lugar - Delegação Moçambicana", icon: "🌍" },
     { year: "2021", title: "Campeonato Regional Sul", description: "Campeão invicto", icon: "👑" },
@@ -58,7 +64,7 @@ export default function Sobre() {
     { title: "Excelência", description: "Buscamos a perfeição em cada movimento, dentro e fora do tabuleiro.", icon: "⭐" },
     { title: "Disciplina", description: "A dedicação e o compromisso são fundamentais para o crescimento.", icon: "🎯" },
     { title: "Comunidade", description: "Valorizamos cada membro como parte de uma grande família.", icon: "🤝" },
-    { title: "Respeito", description: "Respeito ao adversário, ao esporte e a nós mesmos.", icon: "🙏" },
+    { title: "Respeito", description: "Respeito ao adversário, ao desporto e a nós mesmos.", icon: "🙏" },
   ];
 
 
@@ -66,7 +72,7 @@ export default function Sobre() {
     <>
       <Header />
       <main ref={pageRef} className="relative bg-linear-to-b from-gray-900 to-gray-950 mt-10">
-        {/* Background Pattern */}
+        {/* Padrão de Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -75,7 +81,7 @@ export default function Sobre() {
           }} />
         </div>
 
-        {/* Animated Chess Pieces Background */}
+        {/* Peças de Xadrez Animadas no Fundo */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-10 text-7xl animate-float">♔</div>
           <div className="absolute bottom-20 right-10 text-7xl animate-float-delayed">♕</div>
@@ -83,7 +89,7 @@ export default function Sobre() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
+          {/* Cabeçalho */}
           <div className="text-center mb-16">
             <div className={`
               inline-block mb-6 transition-all duration-700
@@ -111,12 +117,12 @@ export default function Sobre() {
             `}>
               Fundado em 2019 no <span className="text-yellow-400 font-semibold">Bairro das Mahotas, Maputo</span>, 
               o Real Chess Club nasceu da paixão de um grupo de amigos que queriam promover o xadrez 
-              em Moçambique. Hoje, somos referência no ensino e prática do esporte, formando campeões 
+              em Moçambique. Hoje, somos referência no ensino e prática do desporto, formando campeões 
               e promovendo a cultura enxadrista em nossa comunidade.
             </p>
           </div>
 
-          {/* Stats Banner */}
+          {/* Banner de Estatísticas */}
           <div className={`
             grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 transition-all duration-700 delay-250
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -126,20 +132,20 @@ export default function Sobre() {
               <div className="text-sm text-gray-400 mt-1">Ano de Fundação</div>
             </div>
             <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <div className="text-3xl font-bold text-yellow-500">100+</div>
-              <div className="text-sm text-gray-400 mt-1">Membros Ativos</div>
+              <div className="text-3xl font-bold text-yellow-500">20+</div>
+              <div className="text-sm text-gray-400 mt-1">Membros Activos</div>
             </div>
             <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <div className="text-3xl font-bold text-yellow-500">50+</div>
+              <div className="text-3xl font-bold text-yellow-500">5+</div>
               <div className="text-sm text-gray-400 mt-1">Torneios Realizados</div>
             </div>
             <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <div className="text-3xl font-bold text-yellow-500">10+</div>
+              <div className="text-3xl font-bold text-yellow-500">3+</div>
               <div className="text-sm text-gray-400 mt-1">Títulos Nacionais</div>
             </div>
           </div>
 
-          {/* Mission & Vision */}
+          {/* Missão e Visão */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className={`
               group relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-yellow-500/50
@@ -153,7 +159,7 @@ export default function Sobre() {
                 <p className="text-gray-300 leading-relaxed">
                   Promover o xadrez como ferramenta de desenvolvimento intelectual,
                   social e pessoal em Moçambique, formando jogadores competitivos
-                  e cidadãos exemplares através do esporte.
+                  e cidadãos exemplares através do desporto.
                 </p>
               </div>
             </div>
@@ -176,7 +182,7 @@ export default function Sobre() {
             </div>
           </div>
 
-          {/* Values */}
+          {/* Valores */}
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
               <span className="w-1 h-6 bg-yellow-500 rounded-full"></span>
@@ -202,7 +208,7 @@ export default function Sobre() {
             </div>
           </div>
 
-          {/* Coaches */}
+          {/* Treinadores */}
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
               <span className="w-1 h-6 bg-yellow-500 rounded-full"></span>
@@ -234,7 +240,7 @@ export default function Sobre() {
                     {coach.specialty}
                   </div>
 
-                  {/* Hover Glow */}
+                  {/* Brilho ao Pairar */}
                   {hoveredCoach === index && (
                     <div className="absolute inset-0 pointer-events-none">
                       <div className="absolute inset-0 bg-linear-to-t from-yellow-500/10 to-transparent rounded-2xl" />
@@ -245,7 +251,7 @@ export default function Sobre() {
             </div>
           </div>
 
-          {/* Achievements */}
+          {/* Conquistas */}
           <div>
             <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
               <span className="w-1 h-6 bg-yellow-500 rounded-full"></span>
@@ -272,7 +278,7 @@ export default function Sobre() {
             </div>
           </div>
 
-          {/* Location Card */}
+          {/* Cartão de Localização */}
           <div className={`
             mt-16 max-w-2xl mx-auto transition-all duration-700 delay-1200
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
@@ -315,7 +321,7 @@ export default function Sobre() {
             </div>
           </div>
 
-          {/* Trust Badge */}
+          {/* Selo de Confiança */}
           <div className={`
             mt-12 text-center transition-all duration-700 delay-1300
             ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}

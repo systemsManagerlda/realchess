@@ -17,7 +17,6 @@ import {
   TbSettings,
   TbBell,
   TbActivity,
-  TbTrendingUp,
   TbEdit,
   TbTrash,
   TbCheck,
@@ -26,50 +25,21 @@ import {
   TbDownload,
   TbRefresh,
   TbSearch,
-  TbFilter,
   TbMail,
   TbPhone,
   TbId,
   TbCalendarEvent,
   TbAward,
-  TbStar,
   TbClock,
   TbBook,
   TbUserCheck,
   TbUserX,
-  TbUserPlus,
-  TbVideo,
-  TbPhoto,
   TbChartLine,
 } from "react-icons/tb";
 
 const BASE_URL = "https://desktop-api-4f850b3f9733.herokuapp.com";
 
-interface Aula {
-  aulaId: string;
-  titulo: string;
-  descricao: string;
-  categoria: string;
-  nivel: string;
-  status: string;
-  visualizacoes: number;
-  totalExercicios: number;
-  totalVideos?: number;
-  totalImagens?: number;
-  duracaoEstimada?: number;
-  estatisticas: {
-    totalAlunosInscritos: number;
-    totalConcluintes: number;
-    avaliacaoMedia: number;
-    taxaConclusao?: number;
-  };
-  dataCriacao: string;
-  dataPublicacao?: string;
-  formadorId: string;
-  formadorNome: string;
-  tags?: string[];
-}
-
+// ========== INTERFACES ==========
 interface AdminDashboard {
   resumo: {
     totalMembros: number;
@@ -128,6 +98,31 @@ interface Candidato {
   };
 }
 
+interface Aula {
+  aulaId: string;
+  titulo: string;
+  descricao: string;
+  categoria: string;
+  nivel: string;
+  status: string;
+  visualizacoes: number;
+  totalExercicios: number;
+  totalVideos?: number;
+  totalImagens?: number;
+  duracaoEstimada?: number;
+  estatisticas: {
+    totalAlunosInscritos: number;
+    totalConcluintes: number;
+    avaliacaoMedia: number;
+    taxaConclusao?: number;
+  };
+  dataCriacao: string;
+  dataPublicacao?: string;
+  formadorId: string;
+  formadorNome: string;
+  tags?: string[];
+}
+
 interface EstatisticasAulas {
   totalAulas: number;
   totalPublicadas: number;
@@ -139,8 +134,11 @@ interface EstatisticasAulas {
   taxaAcertoMedia: number;
 }
 
+// ========== COMPONENTE PRINCIPAL ==========
 export default function DashboardAdmin() {
   const router = useRouter();
+
+  // ========== STATES ==========
   const [dashboardData, setDashboardData] = useState<AdminDashboard | null>(null);
   const [membros, setMembros] = useState<Membro[]>([]);
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -167,27 +165,11 @@ export default function DashboardAdmin() {
   const [showAulaModal, setShowAulaModal] = useState(false);
   const [selectedAula, setSelectedAula] = useState<Aula | null>(null);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const membroId = localStorage.getItem("membroId");
-      const tipoMembro = localStorage.getItem("tipoMembro");
-      
-      if (!membroId || tipoMembro !== "administrador") {
-        router.push("/login");
-        return;
-      }
-
-      await Promise.all([
-        fetchDashboard(),
-        fetchMembros(),
-        fetchCandidatos(),
-        fetchAulas(),
-        fetchEstatisticasAulas()
-      ]);
-    };
-
-    checkAuth();
-  }, [router]);
+  // ========== FUNÇÕES DE BUSCA ==========
+  const showNotification = (type: string, message: string) => {
+    setNotification({ type, message });
+    setTimeout(() => setNotification(null), 5000);
+  };
 
   const fetchDashboard = async () => {
     try {
@@ -198,13 +180,16 @@ export default function DashboardAdmin() {
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         setDashboardData(result.data);
+      } else {
+        console.error("Erro na API:", result.returnMsg);
+        showNotification("error", "Erro ao carregar dados do dashboard");
       }
     } catch (error) {
       console.error("Error fetching dashboard:", error);
-      showNotification("error", "Erro ao carregar dashboard");
+      showNotification("error", "Erro de conexão com o servidor");
     }
   };
 
@@ -217,7 +202,7 @@ export default function DashboardAdmin() {
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         setMembros(result.data.list);
       }
@@ -232,15 +217,15 @@ export default function DashboardAdmin() {
       const response = await fetch(`${BASE_URL}/getMembroList`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           tipoMembro: "candidato_formador",
-          curPage: 1, 
-          pageSize: 100 
+          curPage: 1,
+          pageSize: 100,
         }),
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         setCandidatos(result.data.list);
       }
@@ -259,7 +244,7 @@ export default function DashboardAdmin() {
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         setAulas(result.data.list);
       }
@@ -278,22 +263,16 @@ export default function DashboardAdmin() {
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         setEstatisticasAulas(result.data);
       }
     } catch (error) {
       console.error("Error fetching aulas statistics:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const showNotification = (type: string, message: string) => {
-    setNotification({ type, message });
-    setTimeout(() => setNotification(null), 5000);
-  };
-
+  // ========== FUNÇÕES DE AÇÃO ==========
   const handleLogout = () => {
     localStorage.clear();
     router.push("/login");
@@ -301,7 +280,7 @@ export default function DashboardAdmin() {
 
   const handleRegisterPayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch(`${BASE_URL}/registerPayment`, {
         method: "POST",
@@ -314,14 +293,14 @@ export default function DashboardAdmin() {
             referencia: paymentData.referencia,
             mesReferente: {
               mes: new Date().getMonth() + 1,
-              ano: new Date().getFullYear()
-            }
-          }
+              ano: new Date().getFullYear(),
+            },
+          },
         }),
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         showNotification("success", "Pagamento registrado com sucesso!");
         setShowPaymentModal(false);
@@ -347,12 +326,12 @@ export default function DashboardAdmin() {
           membroId: selectedCandidato.membroId,
           aprovado,
           parecer: parecerText,
-          analisadoPor: localStorage.getItem("nomeCompleto") || "Administrador"
+          analisadoPor: localStorage.getItem("nomeCompleto") || "Administrador",
         }),
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         showNotification("success", aprovado ? "Candidatura aprovada!" : "Candidatura rejeitada!");
         setShowCandidaturaModal(false);
@@ -376,12 +355,12 @@ export default function DashboardAdmin() {
         body: JSON.stringify({
           membroId: membro.membroId,
           ativo: !membro.ativo,
-          observacoes: membro.ativo ? "Membro desativado pelo administrador" : "Membro reativado pelo administrador"
+          observacoes: membro.ativo ? "Membro desativado pelo administrador" : "Membro reativado pelo administrador",
         }),
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         showNotification("success", membro.ativo ? "Membro desativado" : "Membro reativado");
         fetchMembros();
@@ -401,12 +380,12 @@ export default function DashboardAdmin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mes: new Date().getMonth() + 1,
-          ano: new Date().getFullYear()
+          ano: new Date().getFullYear(),
         }),
       });
 
       const result = await response.json();
-      
+
       if (result.returnCode === 200) {
         const blob = new Blob([JSON.stringify(result.data, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -427,52 +406,60 @@ export default function DashboardAdmin() {
     setShowAulaModal(true);
   };
 
-  const filteredMembros = membros.filter(membro => {
-    if (filterStatus !== "todos" && membro.cotas.statusPagamento !== filterStatus) return false;
-    if (searchTerm) {
-      const search = searchTerm.toLowerCase();
-      return membro.nomeCompleto.toLowerCase().includes(search) ||
-             membro.matricula.toLowerCase().includes(search) ||
-             membro.contato.email.toLowerCase().includes(search);
-    }
-    return true;
-  });
-
+  // ========== FUNÇÕES AUXILIARES ==========
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "em_dia": return "text-green-400 bg-green-500/20";
-      case "pendente": return "text-yellow-400 bg-yellow-500/20";
-      case "atrasado": return "text-red-400 bg-red-500/20";
-      default: return "text-gray-400 bg-gray-500/20";
+      case "em_dia":
+        return "text-green-400 bg-green-500/20";
+      case "pendente":
+        return "text-yellow-400 bg-yellow-500/20";
+      case "atrasado":
+        return "text-red-400 bg-red-500/20";
+      default:
+        return "text-gray-400 bg-gray-500/20";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case "em_dia": return "✅ Em dia";
-      case "pendente": return "⚠️ Pendente";
-      case "atrasado": return "❌ Atrasado";
-      default: return status;
+      case "em_dia":
+        return "✅ Em dia";
+      case "pendente":
+        return "⚠️ Pendente";
+      case "atrasado":
+        return "❌ Atrasado";
+      default:
+        return status;
     }
   };
 
   const getStatusAulaColor = (status: string) => {
     switch (status) {
-      case "publicado": return "text-green-400 bg-green-500/20";
-      case "rascunho": return "text-yellow-400 bg-yellow-500/20";
-      case "arquivado": return "text-gray-400 bg-gray-500/20";
-      case "em_revisao": return "text-blue-400 bg-blue-500/20";
-      default: return "text-gray-400 bg-gray-500/20";
+      case "publicado":
+        return "text-green-400 bg-green-500/20";
+      case "rascunho":
+        return "text-yellow-400 bg-yellow-500/20";
+      case "arquivado":
+        return "text-gray-400 bg-gray-500/20";
+      case "em_revisao":
+        return "text-blue-400 bg-blue-500/20";
+      default:
+        return "text-gray-400 bg-gray-500/20";
     }
   };
 
   const getNivelColor = (nivel: string) => {
     switch (nivel) {
-      case "iniciante": return "text-green-400 bg-green-500/20";
-      case "intermediario": return "text-blue-400 bg-blue-500/20";
-      case "avancado": return "text-purple-400 bg-purple-500/20";
-      case "mestre": return "text-orange-400 bg-orange-500/20";
-      default: return "text-gray-400 bg-gray-500/20";
+      case "iniciante":
+        return "text-green-400 bg-green-500/20";
+      case "intermediario":
+        return "text-blue-400 bg-blue-500/20";
+      case "avancado":
+        return "text-purple-400 bg-purple-500/20";
+      case "mestre":
+        return "text-orange-400 bg-orange-500/20";
+      default:
+        return "text-gray-400 bg-gray-500/20";
     }
   };
 
@@ -481,7 +468,7 @@ export default function DashboardAdmin() {
       aberturas: "Aberturas",
       meio_jogo: "Meio Jogo",
       finais: "Finais",
-      tatica: "Tática",
+      tatica: "Táctica",
       estrategia: "Estratégia",
       analise_partidas: "Análise de Partidas",
       historia_xadrez: "História do Xadrez",
@@ -492,6 +479,44 @@ export default function DashboardAdmin() {
     return categorias[categoria] || categoria;
   };
 
+  const filteredMembros = membros.filter((membro) => {
+    if (filterStatus !== "todos" && membro.cotas.statusPagamento !== filterStatus) return false;
+    if (searchTerm) {
+      const search = searchTerm.toLowerCase();
+      return (
+        membro.nomeCompleto.toLowerCase().includes(search) ||
+        membro.matricula.toLowerCase().includes(search) ||
+        membro.contato.email.toLowerCase().includes(search)
+      );
+    }
+    return true;
+  });
+
+  // ========== LOADING E VERIFICAÇÃO DE DADOS ==========
+  // Buscar dados ao montar o componente
+  useEffect(() => {
+    const checkAuth = async () => {
+      const membroId = localStorage.getItem("membroId");
+      const tipoMembro = localStorage.getItem("tipoMembro");
+
+      if (!membroId || tipoMembro !== "administrador") {
+        router.push("/login");
+        return;
+      }
+
+      setLoading(true);
+      await fetchDashboard();
+      await fetchMembros();
+      await fetchCandidatos();
+      await fetchAulas();
+      await fetchEstatisticasAulas();
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, [router]);
+
+  // ✅ VERIFICAÇÃO DE LOADING
   if (loading) {
     return (
       <>
@@ -507,14 +532,19 @@ export default function DashboardAdmin() {
     );
   }
 
+  // ✅ VERIFICAÇÃO DE DADOS
   if (!dashboardData) {
     return (
       <>
         <Header />
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 pt-20 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-red-400">Erro ao carregar dados</p>
-            <button onClick={() => window.location.reload()} className="mt-4 px-4 py-2 bg-yellow-600 rounded-lg">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-yellow-500 border-t-transparent"></div>
+            <p className="mt-4 text-gray-400">Aguardando dados do servidor...</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition"
+            >
               Tentar novamente
             </button>
           </div>
@@ -524,15 +554,18 @@ export default function DashboardAdmin() {
     );
   }
 
+  // ========== RENDERIZAÇÃO PRINCIPAL ==========
   return (
     <>
       <Header />
       <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 pt-20">
         {/* Notification Toast */}
         {notification && (
-          <div className={`fixed top-24 right-4 z-50 p-4 rounded-lg shadow-lg ${
-            notification.type === "success" ? "bg-green-500/90" : "bg-red-500/90"
-          } text-white animate-slide-in`}>
+          <div
+            className={`fixed top-24 right-4 z-50 p-4 rounded-lg shadow-lg ${
+              notification.type === "success" ? "bg-green-500/90" : "bg-red-500/90"
+            } text-white animate-slide-in`}
+          >
             {notification.message}
           </div>
         )}
@@ -547,58 +580,113 @@ export default function DashboardAdmin() {
           </button>
 
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar */}
-            <div className={`
-              fixed lg:relative inset-y-0 left-0 z-40 w-72 bg-gray-800/95 backdrop-blur-sm border-r border-white/10 transform transition-transform duration-300 overflow-y-auto
-              ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-            `}>
+            {/* ========== SIDEBAR ========== */}
+            <div
+              className={`fixed lg:relative inset-y-0 left-0 z-40 w-72 bg-gray-800/95 backdrop-blur-sm border-r border-white/10 transform transition-transform duration-300 overflow-y-auto ${
+                sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+              }`}
+            >
               <div className="p-6">
                 <div className="text-center mb-6">
                   <div className="w-24 h-24 mx-auto bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center mb-4">
                     <TbChess className="w-12 h-12 text-white" />
                   </div>
                   <h3 className="text-white font-semibold">Administrador</h3>
-                  <p className="text-sm text-gray-400">Real Chess Club</p>
+                  <p className="text-sm text-gray-400">Real Chess Mahotas</p>
                   <p className="text-xs text-yellow-500 mt-1">{localStorage.getItem("nomeCompleto")}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <button onClick={() => { setActiveTab("overview"); setSidebarOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("overview");
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbChartBar className="w-5 h-5" />
                     <span>Visão Geral</span>
                   </button>
-                  <button onClick={() => { setActiveTab("membros"); setSidebarOpen(false); fetchMembros(); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("membros");
+                      setSidebarOpen(false);
+                      fetchMembros();
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbUsers className="w-5 h-5" />
                     <span>Membros</span>
                   </button>
-                  <button onClick={() => { setActiveTab("aulas"); setSidebarOpen(false); fetchAulas(); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("aulas");
+                      setSidebarOpen(false);
+                      fetchAulas();
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbBook className="w-5 h-5" />
                     <span>Aulas</span>
                   </button>
-                  <button onClick={() => { setActiveTab("financeiro"); setSidebarOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("financeiro");
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbCoin className="w-5 h-5" />
                     <span>Financeiro</span>
                   </button>
-                  <button onClick={() => { setActiveTab("cursos"); setSidebarOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("cursos");
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbSchool className="w-5 h-5" />
                     <span>Cursos</span>
                   </button>
-                  <button onClick={() => { setActiveTab("candidaturas"); setSidebarOpen(false); fetchCandidatos(); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("candidaturas");
+                      setSidebarOpen(false);
+                      fetchCandidatos();
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbFileText className="w-5 h-5" />
                     <span>Candidaturas</span>
                   </button>
-                  <button onClick={() => { setActiveTab("relatorios"); setSidebarOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("relatorios");
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbActivity className="w-5 h-5" />
                     <span>Relatórios</span>
                   </button>
-                  <button onClick={() => { setActiveTab("configuracoes"); setSidebarOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10">
+                  <button
+                    onClick={() => {
+                      setActiveTab("configuracoes");
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10"
+                  >
                     <TbSettings className="w-5 h-5" />
                     <span>Configurações</span>
                   </button>
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-white/10">
-                  <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10"
+                  >
                     <TbLogout className="w-5 h-5" />
                     <span>Sair</span>
                   </button>
@@ -606,9 +694,9 @@ export default function DashboardAdmin() {
               </div>
             </div>
 
-            {/* Conteúdo Principal */}
+            {/* ========== CONTEÚDO PRINCIPAL ========== */}
             <div className="flex-1">
-              {/* Visão Geral */}
+              {/* ===== VISÃO GERAL ===== */}
               {activeTab === "overview" && (
                 <div className="space-y-6">
                   <div className="bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 rounded-2xl p-6 border border-yellow-500/30">
@@ -622,10 +710,10 @@ export default function DashboardAdmin() {
                       <div className="flex items-center justify-between mb-2">
                         <TbUsers className="w-6 h-6 text-yellow-500" />
                       </div>
-                      <p className="text-2xl font-bold text-white">{dashboardData.resumo.totalMembros}</p>
+                      <p className="text-2xl font-bold text-white">{dashboardData?.resumo?.totalMembros ?? 0}</p>
                       <p className="text-sm text-gray-400">Total de Membros</p>
                       <div className="text-xs text-gray-500 mt-1">
-                        {dashboardData.resumo.totalAlunos} alunos | {dashboardData.resumo.totalFormadores} formadores
+                        {dashboardData?.resumo?.totalAlunos ?? 0} alunos | {dashboardData?.resumo?.totalFormadores ?? 0} formadores
                       </div>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20 hover:border-yellow-500/50 transition-all">
@@ -639,15 +727,15 @@ export default function DashboardAdmin() {
                       <div className="flex items-center justify-between mb-2">
                         <TbCoin className="w-6 h-6 text-yellow-500" />
                       </div>
-                      <p className="text-2xl font-bold text-white">{dashboardData.resumo.arrecadacaoMes.toLocaleString()} MZN</p>
+                      <p className="text-2xl font-bold text-white">{dashboardData?.resumo?.arrecadacaoMes?.toLocaleString() ?? 0} MZN</p>
                       <p className="text-sm text-gray-400">Arrecadação do Mês</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20 hover:border-yellow-500/50 transition-all">
                       <div className="flex items-center justify-between mb-2">
                         <TbBell className="w-6 h-6 text-red-400" />
                       </div>
-                      <p className="text-2xl font-bold text-white">{dashboardData.resumo.inadimplentes}</p>
-                      <p className="text-sm text-gray-400">Inadimplentes ({dashboardData.resumo.taxaInadimplencia}%)</p>
+                      <p className="text-2xl font-bold text-white">{dashboardData?.resumo?.inadimplentes ?? 0}</p>
+                      <p className="text-sm text-gray-400">Inadimplentes ({dashboardData?.resumo?.taxaInadimplencia ?? 0}%)</p>
                     </div>
                   </div>
 
@@ -660,11 +748,11 @@ export default function DashboardAdmin() {
                       <div className="space-y-2">
                         <div className="flex justify-between p-2 bg-white/5 rounded-lg">
                           <span className="text-gray-300">Presenças</span>
-                          <span className="text-white font-semibold">{dashboardData.resumo.totalPresencasMes}</span>
+                          <span className="text-white font-semibold">{dashboardData?.resumo?.totalPresencasMes ?? 0}</span>
                         </div>
                         <div className="flex justify-between p-2 bg-white/5 rounded-lg">
                           <span className="text-gray-300">Horas de Aula</span>
-                          <span className="text-white font-semibold">{dashboardData.resumo.totalHorasMes}</span>
+                          <span className="text-white font-semibold">{dashboardData?.resumo?.totalHorasMes ?? 0}</span>
                         </div>
                       </div>
                     </div>
@@ -690,8 +778,10 @@ export default function DashboardAdmin() {
                         <div className="flex justify-between p-2 bg-white/5 rounded-lg">
                           <span className="text-gray-300">Taxa de Conclusão</span>
                           <span className="text-white font-semibold">
-                            {estatisticasAulas?.totalAlunosInscritos ? 
-                              ((estatisticasAulas.totalConcluintes / estatisticasAulas.totalAlunosInscritos) * 100).toFixed(1) : 0}%
+                            {estatisticasAulas?.totalAlunosInscritos
+                              ? ((estatisticasAulas.totalConcluintes / estatisticasAulas.totalAlunosInscritos) * 100).toFixed(1)
+                              : 0}
+                            %
                           </span>
                         </div>
                       </div>
@@ -701,7 +791,7 @@ export default function DashboardAdmin() {
                   <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                     <h3 className="text-lg font-semibold text-white mb-4">Distribuição por Nível de Xadrez</h3>
                     <div className="space-y-3">
-                      {dashboardData.distribuicaoNivel.map((nivel) => (
+                      {dashboardData?.distribuicaoNivel?.map((nivel) => (
                         <div key={nivel._id}>
                           <div className="flex justify-between text-sm mb-1">
                             <span className="text-gray-300 capitalize">{nivel._id}</span>
@@ -710,7 +800,7 @@ export default function DashboardAdmin() {
                           <div className="w-full bg-white/10 rounded-full h-2">
                             <div
                               className="bg-yellow-500 rounded-full h-2 transition-all duration-500"
-                              style={{ width: `${(nivel.count / dashboardData.resumo.totalAlunos) * 100}%` }}
+                              style={{ width: `${(nivel.count / (dashboardData?.resumo?.totalAlunos || 1)) * 100}%` }}
                             />
                           </div>
                         </div>
@@ -721,7 +811,7 @@ export default function DashboardAdmin() {
                   <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                     <h3 className="text-lg font-semibold text-white mb-4">Top Alunos (Pontuação)</h3>
                     <div className="space-y-2">
-                      {dashboardData.topAlunos.map((aluno, idx) => (
+                      {dashboardData?.topAlunos?.map((aluno, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition">
                           <div className="flex items-center gap-3">
                             <span className="text-yellow-500 font-bold">#{idx + 1}</span>
@@ -731,8 +821,8 @@ export default function DashboardAdmin() {
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
-                            <span className="text-sm text-gray-400">Nível {aluno.gamificacao.nivel}</span>
-                            <span className="text-yellow-500 font-semibold">{aluno.gamificacao.pontos} pts</span>
+                            <span className="text-sm text-gray-400">Nível {aluno.gamificacao?.nivel || 1}</span>
+                            <span className="text-yellow-500 font-semibold">{aluno.gamificacao?.pontos || 0} pts</span>
                           </div>
                         </div>
                       ))}
@@ -741,7 +831,7 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Gestão de Membros */}
+              {/* ===== MEMBROS ===== */}
               {activeTab === "membros" && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between flex-wrap gap-4">
@@ -800,7 +890,11 @@ export default function DashboardAdmin() {
                                 </span>
                               </td>
                               <td className="p-3">
-                                <span className={`px-2 py-1 rounded-full text-xs ${membro.ativo ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs ${
+                                    membro.ativo ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
+                                  }`}
+                                >
                                   {membro.ativo ? "Ativo" : "Inativo"}
                                 </span>
                               </td>
@@ -842,15 +936,13 @@ export default function DashboardAdmin() {
                       </table>
                     </div>
                     {filteredMembros.length === 0 && (
-                      <div className="text-center py-8 text-gray-400">
-                        Nenhum membro encontrado
-                      </div>
+                      <div className="text-center py-8 text-gray-400">Nenhum membro encontrado</div>
                     )}
                   </div>
                 </div>
               )}
 
-              {/* Aulas */}
+              {/* ===== AULAS ===== */}
               {activeTab === "aulas" && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between flex-wrap gap-4">
@@ -868,17 +960,20 @@ export default function DashboardAdmin() {
                             <div className="flex items-center gap-2 mb-2 flex-wrap">
                               <h3 className="text-lg font-semibold text-white">{aula.titulo}</h3>
                               <span className={`text-xs px-2 py-0.5 rounded-full ${getStatusAulaColor(aula.status)}`}>
-                                {aula.status === "publicado" ? "Publicado" : 
-                                 aula.status === "rascunho" ? "Rascunho" : 
-                                 aula.status === "arquivado" ? "Arquivado" : 
-                                 aula.status === "em_revisao" ? "Em Revisão" : aula.status}
+                                {aula.status === "publicado"
+                                  ? "Publicado"
+                                  : aula.status === "rascunho"
+                                  ? "Rascunho"
+                                  : aula.status === "arquivado"
+                                  ? "Arquivado"
+                                  : aula.status === "em_revisao"
+                                  ? "Em Revisão"
+                                  : aula.status}
                               </span>
                             </div>
                             <p className="text-sm text-gray-400 line-clamp-2">{aula.descricao}</p>
                             <div className="flex items-center gap-3 mt-2 flex-wrap">
-                              <span className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(aula.nivel)}`}>
-                                {aula.nivel}
-                              </span>
+                              <span className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(aula.nivel)}`}>{aula.nivel}</span>
                               <span className="text-xs text-gray-500">{getCategoriaText(aula.categoria)}</span>
                               <span className="text-xs text-gray-500">👁️ {aula.visualizacoes}</span>
                               <span className="text-xs text-gray-500">👨‍🏫 {aula.formadorNome}</span>
@@ -926,7 +1021,7 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Financeiro */}
+              {/* ===== FINANCEIRO ===== */}
               {activeTab === "financeiro" && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
@@ -943,13 +1038,13 @@ export default function DashboardAdmin() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                       <p className="text-gray-400 text-sm">Arrecadação Total</p>
-                      <p className="text-3xl font-bold text-white">{dashboardData.resumo.arrecadacaoMes.toLocaleString()} MZN</p>
+                      <p className="text-3xl font-bold text-white">{dashboardData?.resumo?.arrecadacaoMes?.toLocaleString() ?? 0} MZN</p>
                       <p className="text-xs text-gray-500 mt-2">Mês atual</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                       <p className="text-gray-400 text-sm">Inadimplência</p>
-                      <p className="text-3xl font-bold text-red-400">{dashboardData.resumo.taxaInadimplencia}%</p>
-                      <p className="text-xs text-gray-500 mt-2">{dashboardData.resumo.inadimplentes} membros</p>
+                      <p className="text-3xl font-bold text-red-400">{dashboardData?.resumo?.taxaInadimplencia ?? 0}%</p>
+                      <p className="text-xs text-gray-500 mt-2">{dashboardData?.resumo?.inadimplentes ?? 0} membros</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                       <p className="text-gray-400 text-sm">Valor em Atraso</p>
@@ -961,27 +1056,29 @@ export default function DashboardAdmin() {
                   <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                     <h3 className="text-lg font-semibold text-white mb-4">Membros Inadimplentes</h3>
                     <div className="space-y-2">
-                      {membros.filter(m => m.cotas.statusPagamento === "atrasado").map((membro) => (
-                        <div key={membro.membroId} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                          <div>
-                            <p className="text-white">{membro.nomeCompleto}</p>
-                            <p className="text-xs text-gray-400">{membro.matricula}</p>
+                      {membros
+                        .filter((m) => m.cotas.statusPagamento === "atrasado")
+                        .map((membro) => (
+                          <div key={membro.membroId} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                            <div>
+                              <p className="text-white">{membro.nomeCompleto}</p>
+                              <p className="text-xs text-gray-400">{membro.matricula}</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-red-400 font-semibold">{membro.cotas.valorTotalDevido} MZN</span>
+                              <button
+                                onClick={() => {
+                                  setPaymentData({ ...paymentData, membroId: membro.membroId });
+                                  setShowPaymentModal(true);
+                                }}
+                                className="px-3 py-1 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-sm transition"
+                              >
+                                Registrar Pagamento
+                              </button>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-red-400 font-semibold">{membro.cotas.valorTotalDevido} MZN</span>
-                            <button
-                              onClick={() => {
-                                setPaymentData({ ...paymentData, membroId: membro.membroId });
-                                setShowPaymentModal(true);
-                              }}
-                              className="px-3 py-1 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-sm transition"
-                            >
-                              Registrar Pagamento
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                      {membros.filter(m => m.cotas.statusPagamento === "atrasado").length === 0 && (
+                        ))}
+                      {membros.filter((m) => m.cotas.statusPagamento === "atrasado").length === 0 && (
                         <p className="text-gray-400 text-center py-4">Nenhum membro inadimplente</p>
                       )}
                     </div>
@@ -989,12 +1086,12 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Cursos */}
+              {/* ===== CURSOS ===== */}
               {activeTab === "cursos" && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-white">Gestão de Cursos</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {dashboardData.cursosAtivos.map((curso, idx) => (
+                    {dashboardData?.cursosAtivos?.map((curso, idx) => (
                       <div key={idx} className="bg-white/10 rounded-xl p-4 border border-white/20 hover:border-yellow-500/50 transition-all">
                         <div className="flex items-start justify-between mb-3">
                           <div>
@@ -1021,7 +1118,7 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Candidaturas */}
+              {/* ===== CANDIDATURAS ===== */}
               {activeTab === "candidaturas" && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-white">Candidaturas a Formador</h2>
@@ -1038,9 +1135,7 @@ export default function DashboardAdmin() {
                             </p>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">
-                              Pendente
-                            </span>
+                            <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">Pendente</span>
                             <button
                               onClick={() => {
                                 setSelectedCandidato(candidato);
@@ -1065,7 +1160,7 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Relatórios */}
+              {/* ===== RELATÓRIOS ===== */}
               {activeTab === "relatorios" && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-white">Relatórios do Sistema</h2>
@@ -1080,7 +1175,10 @@ export default function DashboardAdmin() {
                     <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                       <h3 className="text-lg font-semibold text-white mb-3">Relatório Financeiro</h3>
                       <p className="text-gray-400 text-sm mb-4">Exportar relatório de pagamentos</p>
-                      <button onClick={handleExportRelatorio} className="w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition">
+                      <button
+                        onClick={handleExportRelatorio}
+                        className="w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition"
+                      >
                         Exportar Financeiro
                       </button>
                     </div>
@@ -1102,7 +1200,7 @@ export default function DashboardAdmin() {
                 </div>
               )}
 
-              {/* Configurações */}
+              {/* ===== CONFIGURAÇÕES ===== */}
               {activeTab === "configuracoes" && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-white">Configurações do Sistema</h2>
@@ -1115,6 +1213,8 @@ export default function DashboardAdmin() {
           </div>
         </div>
       </div>
+
+      {/* ========== MODAIS ========== */}
 
       {/* Modal de Detalhes do Membro */}
       {showMembroModal && selectedMembro && (
@@ -1244,10 +1344,7 @@ export default function DashboardAdmin() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <button
-                  onClick={() => setShowAulaModal(false)}
-                  className="flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition"
-                >
+                <button onClick={() => setShowAulaModal(false)} className="flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition">
                   Fechar
                 </button>
               </div>
@@ -1303,10 +1400,17 @@ export default function DashboardAdmin() {
                 />
               </div>
               <div className="flex gap-3 mt-6">
-                <button type="button" onClick={() => setShowPaymentModal(false)} className="flex-1 px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition">
+                <button
+                  type="button"
+                  onClick={() => setShowPaymentModal(false)}
+                  className="flex-1 px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition"
+                >
                   Cancelar
                 </button>
-                <button type="submit" className="flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition font-semibold">
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition font-semibold"
+                >
                   Confirmar
                 </button>
               </div>

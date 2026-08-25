@@ -12,7 +12,7 @@ interface MenuItem {
 }
 
 const MENU_ITEMS: MenuItem[] = [
-  { name: "Home", path: "/" },
+  { name: "Início", path: "/" },
   { name: "Sobre", path: "/sobre" },
   { name: "Eventos", path: "/eventos" },
   { name: "Membros", path: "/membros" },
@@ -31,7 +31,7 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Verificar autenticação real do usuário
+  // Verificar autenticação real do utilizador
   useEffect(() => {
     const checkAuth = () => {
       const membroId = localStorage.getItem("membroId");
@@ -54,7 +54,7 @@ export default function Header() {
 
     checkAuth();
 
-    // Escutar mudanças no localStorage (quando login/ logout ocorrer em outra aba)
+    // Ouvir mudanças no localStorage (quando login/logout ocorrer noutra aba)
     window.addEventListener("storage", checkAuth);
     
     return () => {
@@ -63,7 +63,7 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
-    // Remover todos os dados do usuário
+    // Remover todos os dados do utilizador
     localStorage.removeItem("membroId");
     localStorage.removeItem("matricula");
     localStorage.removeItem("nomeCompleto");
@@ -77,11 +77,11 @@ export default function Header() {
     setUserType("");
     setUserMatricula("");
     
-    // Redirecionar para home
+    // Redirecionar para a página inicial
     router.push("/");
   };
 
-  // Handle scroll effect
+  // Efeito de scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -90,13 +90,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
+  // Fechar menu móvel quando a rota muda
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
+  // Prevenir scroll do corpo quando o menu móvel está aberto
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -113,7 +113,7 @@ export default function Header() {
     return pathname.startsWith(path);
   };
 
-  // Obter itens do menu baseado no status de login
+  // Obter itens do menu com base no estado de login
   const getMenuItems = () => {
     if (isLoggedIn) {
       // Quando logado, mostra apenas o Dashboard
@@ -123,7 +123,7 @@ export default function Header() {
     return MENU_ITEMS;
   };
 
-  // Obter texto do botão baseado no tipo de usuário
+  // Obter texto do botão com base no tipo de utilizador
   const getDashboardButtonText = () => {
     switch (userType) {
       case "formador":
@@ -152,18 +152,18 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
-            {/* Logo */}
+            {/* Logótipo */}
             <Link
               href={isLoggedIn ? "/dashboard" : "/"}
               className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-lg"
-              aria-label="Real Chess Club - Página inicial"
+              aria-label="Real Chess Mahotas - Página inicial"
             >
-              {/* Logo Circular */}
+              {/* Logótipo Circular */}
               <div className="relative">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-yellow-600 flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
                   <Image
                     src="/images/realchesslogo.png"
-                    alt="Real Chess Club Logo"
+                    alt="Real Chess Mahotas Logótipo"
                     width={40}
                     height={40}
                     className="w-full h-full object-cover"
@@ -174,15 +174,15 @@ export default function Header() {
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-lg md:text-2xl font-bold tracking-tight text-white">
-                  Real Chess Club
+                  Real Chess Mahotas
                 </h1>
                 <p className="text-xs text-gray-300 hidden md:block">
-                  Onde campeões são feitos
+                  Onde os campeões são feitos
                 </p>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Navegação para Desktop */}
             <nav
               className="hidden md:flex items-center space-x-1 lg:space-x-2"
               aria-label="Navegação principal"
@@ -213,11 +213,11 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Desktop Auth Button - Versão com autenticação real */}
+            {/* Botão de Autenticação para Desktop - Versão com autenticação real */}
             <div className="hidden md:block">
               {isLoggedIn ? (
                 <div className="flex items-center gap-4">
-                  {/* User Info */}
+                  {/* Informação do Utilizador */}
                   <div className="flex flex-col items-end">
                     <span className="text-gray-300 text-sm">
                       Olá,{" "}
@@ -233,7 +233,7 @@ export default function Header() {
                     </span>
                   </div>
                   
-                  {/* Logout Button */}
+                  {/* Botão de Sair */}
                   <button
                     onClick={handleLogout}
                     className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-semibold transition-all duration-300"
@@ -246,18 +246,18 @@ export default function Header() {
                 <Link href="/login">
                   <button
                     className="relative group overflow-hidden px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                    aria-label="Entrar ou registrar no clube"
+                    aria-label="Entrar ou registar no clube"
                   >
                     <span className="absolute inset-0 bg-yellow-600 group-hover:bg-yellow-700 transition-colors duration-300" />
                     <span className="relative text-white">
-                      Entrar / Registrar
+                      Entrar / Registar
                     </span>
                   </button>
                 </Link>
               )}
             </div>
 
-            {/* Mobile Menu Button - só mostra se não estiver logado ou se tiver menu pra mostrar */}
+            {/* Botão do Menu Móvel - só mostra se não estiver logado ou se houver menu para mostrar */}
             {(!isLoggedIn || menuItems.length > 0) && (
               <button
                 className="md:hidden relative w-10 h-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
@@ -294,7 +294,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - só mostra se tiver itens no menu */}
+      {/* Overlay do Menu Móvel - só mostra se houver itens no menu */}
       {isMenuOpen && menuItems.length > 0 && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div
@@ -303,7 +303,7 @@ export default function Header() {
             aria-hidden="true"
           />
           <div className="absolute top-16 right-0 bottom-0 w-64 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl animate-slide-in-right">
-            <nav className="flex flex-col p-4" aria-label="Menu mobile">
+            <nav className="flex flex-col p-4" aria-label="Menu móvel">
               {menuItems.map((item) => {
                 const isActive = isActiveRoute(item.path);
                 return (
@@ -360,10 +360,10 @@ export default function Header() {
                 <Link href="/login">
                   <button
                     className="w-full bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    aria-label="Entrar ou registrar no clube"
+                    aria-label="Entrar ou registar no clube"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Entrar / Registrar
+                    Entrar / Registar
                   </button>
                 </Link>
               )}
