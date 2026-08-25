@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/login/page.tsx
 "use client";
 
@@ -15,8 +16,10 @@ export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const router = useRouter();
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -49,22 +52,18 @@ export default function Login() {
 
   // Função para validar BI Moçambique (12 números + 1 letra = 13 caracteres)
   const validateBI = (bi: string) => {
-    // Formato: 12 dígitos + 1 letra (ex: 123456789012A)
     const biRegex = /^[0-9]{12}[A-Za-z]$/;
     return biRegex.test(bi.toUpperCase());
   };
 
   // Função para formatar BI automaticamente
   const handleBIChange = (value: string) => {
-    // Remove caracteres não numéricos/letras
     let cleaned = value.replace(/[^0-9A-Za-z]/g, '');
     
-    // Limita a 13 caracteres
     if (cleaned.length > 13) {
       cleaned = cleaned.slice(0, 13);
     }
     
-    // Converte a última letra para maiúscula se for letra
     if (cleaned.length === 13) {
       const numbers = cleaned.slice(0, 12);
       const letter = cleaned.slice(12, 13).toUpperCase();
@@ -92,10 +91,34 @@ export default function Login() {
     return age;
   };
 
+  // Função para limpar mensagens após alguns segundos
+  const clearMessages = () => {
+    setTimeout(() => {
+      setErrorMessage("");
+      setFieldErrors({});
+    }, 8000);
+  };
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
+    setFieldErrors({});
+
+    // Validar campos de login
+    if (!loginData.username.trim()) {
+      setErrorMessage("❌ Por favor, informe o seu nome de usuário.");
+      setIsSubmitting(false);
+      clearMessages();
+      return;
+    }
+
+    if (!loginData.password.trim()) {
+      setErrorMessage("❌ Por favor, informe a sua senha.");
+      setIsSubmitting(false);
+      clearMessages();
+      return;
+    }
 
     try {
       const response = await fetch(`${BASE_URL}/validateMembro`, {
@@ -112,7 +135,6 @@ export default function Login() {
       const result = await response.json();
 
       if (result.returnCode === 200) {
-        // Login bem-sucedido
         localStorage.setItem("membroId", result.data.membro.membroId);
         localStorage.setItem("matricula", result.data.membro.matricula);
         localStorage.setItem("nomeCompleto", result.data.membro.nomeCompleto);
@@ -128,96 +150,136 @@ export default function Login() {
         }
 
         setSuccessMessage("✅ Login realizado com sucesso! Bem-vindo ao Real Chess Club.");
+        clearMessages();
         
-        // Redirecionar baseado no tipo de membro
         setTimeout(() => {
-          if (result.data.membro.tipoMembro === "formador") {
-            router.push("/dashboard");
-          } else if (result.data.membro.tipoMembro === "administrador") {
-            router.push("/dashboard");
-          } else {
-            router.push("/dashboard");
-          }
+          router.push("/dashboard");
         }, 1500);
+      } else if (result.returnCode === 403) {
+        setErrorMessage(`❌ ${result.returnMsg || "Acesso bloqueado. Regularize suas cotas."}`);
+        clearMessages();
       } else {
-        setErrorMessage(result.returnMsg || "Erro ao fazer login. Verifique as suas credenciais.");
+        setErrorMessage(result.returnMsg || "❌ Usuário ou senha inválidos. Tente novamente.");
+        clearMessages();
       }
     } catch (error) {
       console.error("Login error:", error);
-      setErrorMessage("Erro de conexão com o servidor. Tente novamente.");
+      setErrorMessage("❌ Erro de conexão com o servidor. Verifique sua internet e tente novamente.");
+      clearMessages();
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMessage("");
-    setSuccessMessage("");
+  const validateRegisterForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    let hasError = false;
 
-    // Validações
-    if (registerData.password !== registerData.confirmPassword) {
-      setErrorMessage("❌ As senhas não coincidem. Por favor, verifique.");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.nomeCompleto.trim()) {
+      errors.nomeCompleto = "Nome completo é obrigatório";
+      hasError = true;
     }
 
-    if (registerData.password.length < 6) {
-      setErrorMessage("❌ A senha deve ter no mínimo 6 caracteres.");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.username.trim()) {
+      errors.username = "Nome de usuário é obrigatório";
+      hasError = true;
     }
 
-    if (!registerData.acceptTerms) {
-      setErrorMessage("❌ Precisa de aceitar os Termos de Uso e Política de Privacidade.");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.email.trim()) {
+      errors.email = "Email é obrigatório";
+      hasError = true;
+    } else if (!registerData.email.includes("@")) {
+      errors.email = "Email inválido. Deve conter @";
+      hasError = true;
     }
 
-    // Validar BI (12 números + 1 letra = 13 caracteres)
-    if (!validateBI(registerData.bi)) {
-      setErrorMessage("❌ BI inválido. Deve conter 12 números e terminar com uma letra (ex: 123456789012A).");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.bi.trim()) {
+      errors.bi = "BI é obrigatório";
+      hasError = true;
+    } else if (!validateBI(registerData.bi)) {
+      errors.bi = "BI inválido. Deve conter 12 números e terminar com uma letra (ex: 123456789012A)";
+      hasError = true;
     }
 
-    if (!registerData.telefone) {
-      setErrorMessage("❌ Telefone é obrigatório.");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.password) {
+      errors.password = "Senha é obrigatória";
+      hasError = true;
+    } else if (registerData.password.length < 6) {
+      errors.password = "A senha deve ter no mínimo 6 caracteres";
+      hasError = true;
     }
 
-    if (!validatePhone(registerData.telefone)) {
-      setErrorMessage("❌ Telefone inválido. Use o formato: 84XXXXXXX, 85XXXXXXX, etc.");
-      setIsSubmitting(false);
-      return;
+    if (!registerData.confirmPassword) {
+      errors.confirmPassword = "Confirme a sua senha";
+      hasError = true;
+    } else if (registerData.password !== registerData.confirmPassword) {
+      errors.confirmPassword = "As senhas não coincidem";
+      hasError = true;
+    }
+
+    if (!registerData.telefone.trim()) {
+      errors.telefone = "Telefone é obrigatório";
+      hasError = true;
+    } else if (!validatePhone(registerData.telefone)) {
+      errors.telefone = "Telefone inválido. Use o formato: 84XXXXXXX, 85XXXXXXX, etc.";
+      hasError = true;
     }
 
     if (!registerData.dataNascimento) {
-      setErrorMessage("❌ Data de nascimento é obrigatória.");
-      setIsSubmitting(false);
-      return;
+      errors.dataNascimento = "Data de nascimento é obrigatória";
+      hasError = true;
+    } else {
+      const age = calculateAge(registerData.dataNascimento);
+      if (age < 5) {
+        errors.dataNascimento = "Idade mínima para cadastro é 5 anos";
+        hasError = true;
+      }
     }
 
-    const age = calculateAge(registerData.dataNascimento);
-    if (age < 5) {
-      setErrorMessage("❌ Idade mínima para cadastro é 5 anos.");
+    if (!registerData.acceptTerms) {
+      errors.acceptTerms = "Você precisa aceitar os Termos de Uso e Política de Privacidade";
+      hasError = true;
+    }
+
+    setFieldErrors(errors);
+    return !hasError;
+  };
+
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    console.log("🚀 Iniciando cadastro...");
+    setIsSubmitting(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+    setFieldErrors({});
+
+    // Validar formulário
+    if (!validateRegisterForm()) {
       setIsSubmitting(false);
+      // Mostrar mensagem de erro geral
+      setErrorMessage("❌ Por favor, corrija os campos destacados em vermelho.");
+      clearMessages();
+      // Scroll para o primeiro erro
+      const firstError = document.querySelector(".border-red-500");
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
 
     try {
       // Preparar dados para API
       const membroData = {
-        nomeCompleto: registerData.nomeCompleto,
+        nomeCompleto: registerData.nomeCompleto.trim(),
         dataNascimento: registerData.dataNascimento,
         genero: registerData.genero,
-        bi: registerData.bi.toUpperCase(), // Converter para maiúsculas
+        bi: registerData.bi.toUpperCase(),
         nuit: registerData.nuit || undefined,
         contato: {
           telefone: registerData.telefone,
-          email: registerData.email,
+          email: registerData.email.toLowerCase().trim(),
           endereco: {
             rua: registerData.endereco || "",
             bairro: registerData.bairro || "",
@@ -226,7 +288,7 @@ export default function Login() {
           },
         },
         usuario: {
-          username: registerData.username,
+          username: registerData.username.trim(),
           password: registerData.password,
           ativo: true,
         },
@@ -238,7 +300,7 @@ export default function Login() {
         origem: "web",
       };
 
-      console.log("Enviando dados:", membroData);
+      console.log("📤 Enviando dados para API:", membroData);
 
       const response = await fetch(`${BASE_URL}/createMembro`, {
         method: "POST",
@@ -249,9 +311,14 @@ export default function Login() {
       });
 
       const result = await response.json();
+      console.log("📥 Resposta da API:", result);
 
-      if (result.returnCode === 201) {
+      if (result.returnCode === 201 || result.returnCode === 200) {
         setSuccessMessage("✅ Cadastro realizado com sucesso! Bem-vindo ao Real Chess Club. Já pode fazer login.");
+        clearMessages();
+        
+        // Salvar o username para facilitar o login
+        setLoginData(prev => ({ ...prev, username: registerData.username.trim() }));
         
         // Limpar formulário
         setRegisterData({
@@ -273,20 +340,32 @@ export default function Login() {
           acceptTerms: false,
         });
         
-        // Preencher username no login para facilitar
-        setLoginData(prev => ({ ...prev, username: registerData.username }));
-        
-        // Mudar para tela de login após 2 segundos
+        // Mudar para tela de login após 2.5 segundos
         setTimeout(() => {
           setIsLogin(true);
           setSuccessMessage("");
-        }, 2000);
+        }, 2500);
       } else {
-        setErrorMessage(result.returnMsg || "Erro ao realizar cadastro. Verifique os dados e tente novamente.");
+        // Mostrar erro específico da API
+        const errorMsg = result.returnMsg || "Erro ao realizar cadastro. Verifique os dados e tente novamente.";
+        setErrorMessage(`❌ ${errorMsg}`);
+        clearMessages();
+        
+        // Se houver campos específicos com erro, destacá-los
+        if (result.errors && Array.isArray(result.errors)) {
+          const fieldErrors: Record<string, string> = {};
+          result.errors.forEach((err: any) => {
+            if (err.field) {
+              fieldErrors[err.field] = err.message;
+            }
+          });
+          setFieldErrors(fieldErrors);
+        }
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      setErrorMessage("Erro de conexão com o servidor. Tente novamente.");
+      console.error("❌ Registration error:", error);
+      setErrorMessage("❌ Erro de conexão com o servidor. Verifique sua internet e tente novamente.");
+      clearMessages();
     } finally {
       setIsSubmitting(false);
     }
@@ -295,13 +374,21 @@ export default function Login() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     
+    // Limpar erro do campo quando o usuário começa a digitar
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+    
     if (isLogin) {
       setLoginData({
         ...loginData,
         [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
       });
     } else {
-      // Aplicar formatação especial para o campo BI
       if (name === 'bi') {
         const formattedValue = handleBIChange(value);
         setRegisterData({
@@ -324,6 +411,18 @@ export default function Login() {
       setLoginData(prev => ({ ...prev, username: savedUsername, rememberMe: true }));
     }
   }, []);
+
+  // Função para renderizar erro do campo
+  const renderFieldError = (fieldName: string) => {
+    if (fieldErrors[fieldName]) {
+      return (
+        <p className="text-red-400 text-xs mt-1 flex items-center gap-1">
+          <span>⚠️</span> {fieldErrors[fieldName]}
+        </p>
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -348,82 +447,61 @@ export default function Login() {
         <div className="relative max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Cabeçalho */}
           <div className="text-center mb-8">
-            <div className={`
-              inline-block mb-6 transition-all duration-700
-              ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-            `}>
+            <div className={`inline-block mb-6 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-yellow-500/20 text-yellow-400 backdrop-blur-sm border border-yellow-500/30">
                 <TbChess className="mr-2 w-5 h-5" />
                 Real Chess Club
               </span>
             </div>
-            <h1 className={`
-              text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 delay-100
-              bg-linear-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent
-              ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-            `}>
+            <h1 className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 delay-100 bg-linear-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
               {isLogin ? "Bem-vindo de Volta" : "Crie a sua Conta"}
             </h1>
-            <div className={`
-              w-24 h-1 bg-yellow-500 mx-auto mb-4 rounded-full transition-all duration-700 delay-150
-              ${isVisible ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'}
-            `} />
-            <p className={`
-              text-gray-300 text-sm transition-all duration-700 delay-200
-              ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-            `}>
+            <div className={`w-24 h-1 bg-yellow-500 mx-auto mb-4 rounded-full transition-all duration-700 delay-150 ${isVisible ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'}`} />
+            <p className={`text-gray-300 text-sm transition-all duration-700 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
               {isLogin 
                 ? "Aceda à sua conta para participar de torneios e eventos" 
                 : "Preencha os dados abaixo para se tornar membro do clube"}
             </p>
           </div>
 
-          {/* Mensagens */}
+          {/* Mensagens de Erro/Sucesso */}
           {errorMessage && (
-            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm text-center">
+            <div className="mb-4 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm text-center animate-slide-in">
               {errorMessage}
             </div>
           )}
           
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300 text-sm text-center">
+            <div className="mb-4 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300 text-sm text-center animate-slide-in">
               {successMessage}
             </div>
           )}
 
           {/* Cartão do Formulário */}
-          <div className={`
-            bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20
-            transition-all duration-700 delay-300
-            ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-          `}>
+          <div className={`bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-700 delay-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
             {/* Botões de Alternância */}
             <div className="flex gap-2 mb-6">
               <button
+                type="button"
                 onClick={() => {
                   setIsLogin(true);
                   setErrorMessage("");
                   setSuccessMessage("");
+                  setFieldErrors({});
                 }}
-                className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                  isLogin 
-                    ? 'bg-linear-to-r from-yellow-600 to-yellow-700 text-white' 
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
+                className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${isLogin ? 'bg-linear-to-r from-yellow-600 to-yellow-700 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}
               >
                 Entrar
               </button>
               <button
+                type="button"
                 onClick={() => {
                   setIsLogin(false);
                   setErrorMessage("");
                   setSuccessMessage("");
+                  setFieldErrors({});
                 }}
-                className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                  !isLogin 
-                    ? 'bg-linear-to-r from-yellow-600 to-yellow-700 text-white' 
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
+                className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${!isLogin ? 'bg-linear-to-r from-yellow-600 to-yellow-700 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}
               >
                 Registrar
               </button>
@@ -440,9 +518,10 @@ export default function Login() {
                     required
                     value={loginData.username}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.username ? 'border-red-500' : 'border-white/20'}`}
                     placeholder="O seu nome de usuário"
                   />
+                  {renderFieldError('username')}
                 </div>
 
                 <div>
@@ -454,7 +533,7 @@ export default function Login() {
                       required
                       value={loginData.password}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors pr-10"
+                      className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors pr-10 ${fieldErrors.password ? 'border-red-500' : 'border-white/20'}`}
                       placeholder="••••••••"
                     />
                     <button
@@ -465,6 +544,7 @@ export default function Login() {
                       {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
                     </button>
                   </div>
+                  {renderFieldError('password')}
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -504,9 +584,10 @@ export default function Login() {
                     required
                     value={registerData.nomeCompleto}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.nomeCompleto ? 'border-red-500' : 'border-white/20'}`}
                     placeholder="O seu nome completo"
                   />
+                  {renderFieldError('nomeCompleto')}
                 </div>
 
                 <div>
@@ -517,10 +598,11 @@ export default function Login() {
                     required
                     value={registerData.username}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.username ? 'border-red-500' : 'border-white/20'}`}
                     placeholder="Escolha um nome de usuário"
                   />
                   <p className="text-xs text-gray-500 mt-1">Usado para fazer login no sistema</p>
+                  {renderFieldError('username')}
                 </div>
 
                 <div>
@@ -531,9 +613,10 @@ export default function Login() {
                     required
                     value={registerData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.email ? 'border-red-500' : 'border-white/20'}`}
                     placeholder="seu@email.com"
                   />
+                  {renderFieldError('email')}
                 </div>
 
                 <div>
@@ -545,36 +628,57 @@ export default function Login() {
                     value={registerData.bi}
                     onChange={handleChange}
                     maxLength={13}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors uppercase"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors uppercase ${fieldErrors.bi ? 'border-red-500' : 'border-white/20'}`}
                     placeholder="123456789012A (12 números + 1 letra)"
                   />
                   <p className="text-xs text-gray-500 mt-1">12 números + 1 letra (ex: 123456789012A)</p>
+                  {renderFieldError('bi')}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-gray-300 mb-2 text-sm">Senha *</label>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      required
-                      value={registerData.password}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
-                      placeholder="Mínimo 6 caracteres"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        required
+                        value={registerData.password}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors pr-10 ${fieldErrors.password ? 'border-red-500' : 'border-white/20'}`}
+                        placeholder="Mínimo 6 caracteres"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-yellow-400 transition-colors"
+                      >
+                        {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                      </button>
+                    </div>
+                    {renderFieldError('password')}
                   </div>
                   <div>
                     <label className="block text-gray-300 mb-2 text-sm">Confirmar Senha *</label>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      required
-                      value={registerData.confirmPassword}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
-                      placeholder="••••••••"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        required
+                        value={registerData.confirmPassword}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors pr-10 ${fieldErrors.confirmPassword ? 'border-red-500' : 'border-white/20'}`}
+                        placeholder="••••••••"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-yellow-400 transition-colors"
+                      >
+                        {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                      </button>
+                    </div>
+                    {renderFieldError('confirmPassword')}
                   </div>
                 </div>
 
@@ -587,9 +691,10 @@ export default function Login() {
                       required
                       value={registerData.telefone}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors"
+                      className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.telefone ? 'border-red-500' : 'border-white/20'}`}
                       placeholder="84XXXXXXX"
                     />
+                    {renderFieldError('telefone')}
                   </div>
                   <div>
                     <label className="block text-gray-300 mb-2 text-sm">Data de Nascimento *</label>
@@ -599,12 +704,12 @@ export default function Login() {
                       required
                       value={registerData.dataNascimento}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-yellow-500 transition-colors"
+                      className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.dataNascimento ? 'border-red-500' : 'border-white/20'}`}
                     />
+                    {renderFieldError('dataNascimento')}
                   </div>
                 </div>
 
-                {/* Campo Gênero */}
                 <div>
                   <label className="block text-gray-300 mb-2 text-sm">Gênero *</label>
                   <select
@@ -612,12 +717,13 @@ export default function Login() {
                     required
                     value={registerData.genero}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-yellow-500 transition-colors"
+                    className={`w-full px-4 py-2 bg-white/10 border rounded-lg text-white focus:outline-none focus:border-yellow-500 transition-colors ${fieldErrors.genero ? 'border-red-500' : 'border-white/20'}`}
                   >
                     <option value="masculino" className="text-black">Masculino</option>
                     <option value="feminino" className="text-black">Feminino</option>
                     <option value="outro" className="text-black">Outro</option>
                   </select>
+                  {renderFieldError('genero')}
                 </div>
 
                 <div>
@@ -692,7 +798,7 @@ export default function Login() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2">
+                <div className={`flex items-start gap-2 p-3 rounded-lg ${fieldErrors.acceptTerms ? 'bg-red-500/10 border border-red-500/30' : ''}`}>
                   <input
                     type="checkbox"
                     name="acceptTerms"
@@ -713,13 +819,21 @@ export default function Login() {
                     *
                   </label>
                 </div>
+                {renderFieldError('acceptTerms')}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "Criando conta..." : "Criar Conta"}
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+                      Criando conta...
+                    </span>
+                  ) : (
+                    "Criar Conta"
+                  )}
                 </button>
               </form>
             )}
@@ -737,18 +851,22 @@ export default function Login() {
             {/* Login Social */}
             <div className="space-y-3">
               <button
+                type="button"
                 className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300"
                 onClick={() => {
-                  setErrorMessage("Funcionalidade em desenvolvimento. Use cadastro tradicional.");
+                  setErrorMessage("ℹ️ Funcionalidade em desenvolvimento. Use o cadastro tradicional.");
+                  clearMessages();
                 }}
               >
                 <AiFillFacebook className="text-blue-600 w-5 h-5" />
                 <span className="text-gray-300">Continuar com Facebook</span>
               </button>
               <button
+                type="button"
                 className="w-full flex items-center justify-center gap-3 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300"
                 onClick={() => {
-                  setErrorMessage("Funcionalidade em desenvolvimento. Use cadastro tradicional.");
+                  setErrorMessage("ℹ️ Funcionalidade em desenvolvimento. Use o cadastro tradicional.");
+                  clearMessages();
                 }}
               >
                 <AiOutlineGoogle className="text-red-500 w-5 h-5" />
@@ -758,10 +876,7 @@ export default function Login() {
           </div>
 
           {/* Nota Informativa */}
-          <div className={`
-            mt-6 text-center transition-all duration-700 delay-400
-            ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-          `}>
+          <div className={`mt-6 text-center transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
             <p className="text-xs text-gray-500">
               Ao criar uma conta, você concorda em receber comunicações sobre eventos, torneios e novidades do clube.
             </p>
@@ -800,6 +915,16 @@ export default function Login() {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-15px); }
         }
+        @keyframes slide-in {
+          from {
+            transform: translateY(-10px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
@@ -808,6 +933,9 @@ export default function Login() {
         }
         .animate-float-slow {
           animation: float-slow 10s ease-in-out infinite;
+        }
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out;
         }
         .uppercase {
           text-transform: uppercase;
