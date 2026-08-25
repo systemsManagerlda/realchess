@@ -29,7 +29,7 @@ export default function Sobre() {
   const coaches: Coach[] = [
     { 
       name: "Jubílio Mahassule", 
-      title: "Treinadora Principal", 
+      title: "Treinador Principal", 
       bio: "4 anos de experiência em competições nacionais e internacionais. Especialista em aberturas e finais.", 
       specialty: "Aberturas, Meio-Jogo e Finais" 
     },
@@ -47,7 +47,7 @@ export default function Sobre() {
     },
     { 
       name: "Xavier Samusson Zandamela", 
-      title: "Treinadora Principal", 
+      title: "Treinador Principal", 
       bio: "Especialista em iniciação ao xadrez. Metodologia lúdica para crianças e iniciantes.", 
       specialty: "Iniciação Infantil" 
     },
