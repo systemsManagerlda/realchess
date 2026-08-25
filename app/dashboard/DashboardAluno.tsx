@@ -40,6 +40,7 @@ import {
   TbPlus,
   TbEye,
   TbSearch,
+  TbUpload,
 } from "react-icons/tb";
 
 const BASE_URL = "https://desktop-api-4f850b3f9733.herokuapp.com";
@@ -133,11 +134,18 @@ interface PerfilData {
   provincia: string;
 }
 
+interface PagamentoPendente {
+  pagamentoId: string;
+  valor: number;
+  dataPagamento: string;
+  status: string;
+  referencia: string;
+  formaPagamento: string;
+}
+
 export default function DashboardAluno() {
   const router = useRouter();
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(
-    null,
-  );
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [perfilData, setPerfilData] = useState<PerfilData | null>(null);
   const [aulasData, setAulasData] = useState<Aula[]>([]);
   const [aulasDisponiveis, setAulasDisponiveis] = useState<Aula[]>([]);
@@ -147,10 +155,12 @@ export default function DashboardAluno() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [editingPerfil, setEditingPerfil] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentData, setPaymentData] = useState({
     valor: 100,
     formaPagamento: "M-Pesa",
     referencia: "",
+    comprovante: "",
   });
   const [notification, setNotification] = useState<{
     type: string;
@@ -159,6 +169,8 @@ export default function DashboardAluno() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterNivel, setFilterNivel] = useState("todos");
   const [filterCategoria, setFilterCategoria] = useState("todas");
+  const [pagamentosPendentes, setPagamentosPendentes] = useState<PagamentoPendente[]>([]);
+  const [showPagamentosPendentes, setShowPagamentosPendentes] = useState(false);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -170,7 +182,6 @@ export default function DashboardAluno() {
       }
 
       try {
-        // Buscar dados do dashboard
         const response = await fetch(`${BASE_URL}/getDashboardAluno`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -183,7 +194,6 @@ export default function DashboardAluno() {
           setDashboardData(result.data);
         }
 
-        // Buscar dados completos do perfil
         const perfilResponse = await fetch(`${BASE_URL}/getMembroDetail`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -199,9 +209,7 @@ export default function DashboardAluno() {
             email: membro.contato.email,
             telefone: membro.contato.telefone,
             bi: membro.bi,
-            dataNascimento: new Date(
-              membro.dataNascimento,
-            ).toLocaleDateString(),
+            dataNascimento: new Date(membro.dataNascimento).toLocaleDateString(),
             endereco: membro.contato.endereco?.rua || "",
             bairro: membro.contato.endereco?.bairro || "",
             cidade: membro.contato.endereco?.cidade || "Maputo",
@@ -209,11 +217,9 @@ export default function DashboardAluno() {
           });
         }
 
-        // Buscar aulas do aluno (inscritas)
         await fetchMinhasAulas(membroId);
-
-        // Buscar aulas disponíveis
         await fetchAulasDisponiveis(membroId);
+        await fetchPagamentosPendentes(membroId);
       } catch (error) {
         console.error("Error fetching dashboard:", error);
         showNotification("error", "Erro ao carregar dados. Tente novamente.");
@@ -224,6 +230,24 @@ export default function DashboardAluno() {
 
     fetchDashboard();
   }, [router]);
+
+  const fetchPagamentosPendentes = async (membroId: string) => {
+    try {
+      const response = await fetch(`${BASE_URL}/getPagamentosPendentesByAluno`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ membroId }),
+      });
+
+      const result = await response.json();
+
+      if (result.returnCode === 200) {
+        setPagamentosPendentes(result.data);
+      }
+    } catch (error) {
+      console.error("Error fetching pending payments:", error);
+    }
+  };
 
   const fetchMinhasAulas = async (membroId: string) => {
     try {
@@ -265,7 +289,7 @@ export default function DashboardAluno() {
       if (result.returnCode === 200) {
         const aulasInscritasIds = aulasData.map((a) => a.aulaId);
         const aulasNaoInscritas = result.data.list.filter(
-          (aula: Aula) => !aulasInscritasIds.includes(aula.aulaId),
+          (aula: Aula) => !aulasInscritasIds.includes(aula.aulaId)
         );
         setAulasDisponiveis(aulasNaoInscritas);
       }
@@ -315,10 +339,7 @@ export default function DashboardAluno() {
         showNotification("success", "Perfil actualizado com sucesso!");
         setEditingPerfil(false);
       } else {
-        showNotification(
-          "error",
-          result.returnMsg || "Erro ao actualizar perfil",
-        );
+        showNotification("error", result.returnMsg || "Erro ao actualizar perfil");
       }
     } catch (error) {
       showNotification("error", "Erro de conexão com o servidor");
@@ -326,51 +347,100 @@ export default function DashboardAluno() {
   };
 
   const handleRegisterPayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const membroId = localStorage.getItem("membroId");
+  e.preventDefault();
+  const membroId = localStorage.getItem("membroId");
 
-    try {
-      const response = await fetch(`${BASE_URL}/registerCotaPayment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          membroId,
-          paymentData: {
-            valor: paymentData.valor,
-            formaPagamento: paymentData.formaPagamento,
-            referencia: paymentData.referencia,
-            mesReferente: {
-              mes: new Date().getMonth() + 1,
-              ano: new Date().getFullYear(),
-            },
+  if (!membroId) {
+    showNotification("error", "Sessão expirada. Faça login novamente.");
+    router.push("/login");
+    return;
+  }
+
+  // Validar dados
+  if (!paymentData.referencia.trim()) {
+    showNotification("error", "Por favor, informe a referência da transação.");
+    return;
+  }
+
+  if (paymentData.valor <= 0) {
+    showNotification("error", "Por favor, informe um valor válido.");
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  try {
+    console.log("📤 Enviando pagamento:", {
+      membroId,
+      paymentData: {
+        valor: paymentData.valor,
+        formaPagamento: paymentData.formaPagamento,
+        referencia: paymentData.referencia,
+        comprovante: paymentData.comprovante || null,
+        mesReferente: {
+          mes: new Date().getMonth() + 1,
+          ano: new Date().getFullYear(),
+        },
+      },
+    });
+
+    const response = await fetch(`${BASE_URL}/registerPayment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        membroId,
+        paymentData: {
+          valor: paymentData.valor,
+          formaPagamento: paymentData.formaPagamento,
+          referencia: paymentData.referencia,
+          comprovante: paymentData.comprovante || null,
+          mesReferente: {
+            mes: new Date().getMonth() + 1,
+            ano: new Date().getFullYear(),
           },
-        }),
+        },
+      }),
+    });
+
+    // Verificar se a resposta é JSON
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await response.text();
+      console.error("❌ Resposta não é JSON:", text.substring(0, 200));
+      throw new Error("Servidor retornou erro. Tente novamente mais tarde.");
+    }
+
+    const result = await response.json();
+
+    if (result.returnCode === 200) {
+      showNotification(
+        "success",
+        "✅ Pagamento registrado! Aguardando confirmação da tesouraria."
+      );
+      setShowPaymentModal(false);
+      setPaymentData({
+        valor: 100,
+        formaPagamento: "M-Pesa",
+        referencia: "",
+        comprovante: "",
       });
 
-      const result = await response.json();
-
-      if (result.returnCode === 200) {
-        showNotification("success", "Pagamento registrado com sucesso!");
-        setShowPaymentModal(false);
-        setPaymentData({
-          valor: 100,
-          formaPagamento: "M-Pesa",
-          referencia: "",
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      } else {
-        showNotification(
-          "error",
-          result.returnMsg || "Erro ao registrar pagamento",
-        );
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      showNotification("error", "Erro de conexão com o servidor");
+      // Recarregar dados
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      showNotification("error", result.returnMsg || "Erro ao registrar pagamento");
     }
-  };
+  } catch (error) {
+    console.error("❌ Payment error:", error);
+    showNotification("error", "Erro de conexão com o servidor. Tente novamente.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const handleInscreverAula = async (aula: Aula) => {
     const membroId = localStorage.getItem("membroId");
@@ -399,27 +469,19 @@ export default function DashboardAluno() {
       if (result.returnCode === 200) {
         showNotification(
           "success",
-          `Inscrição na aula "${aula.titulo}" realizada com sucesso!`,
+          `Inscrição na aula "${aula.titulo}" realizada com sucesso!`
         );
 
-        // Atualizar a lista de aulas com os dados retornados
         if (result.data.aulas) {
           setAulasData(result.data.aulas);
         } else {
-          // Se não veio na resposta, buscar novamente
           await fetchMinhasAulas(membroId);
         }
 
-        // Recarregar aulas disponíveis
         await fetchAulasDisponiveis(membroId);
-
-        // Mudar para a aba "Minhas Aulas"
         setActiveTab("aulas");
       } else {
-        showNotification(
-          "error",
-          result.returnMsg || "Erro ao inscrever na aula",
-        );
+        showNotification("error", result.returnMsg || "Erro ao inscrever na aula");
       }
     } catch (error) {
       console.error("Enrollment error:", error);
@@ -456,12 +518,10 @@ export default function DashboardAluno() {
     }
   };
 
-  // Função para redirecionar para a página da aula
   const handleVerAula = (aula: Aula) => {
     router.push(`/aula/${aula.aulaId}`);
   };
 
-  // Função para visualizar aula disponível (sem inscrição)
   const handleVisualizarAulaDisponivel = (aula: Aula) => {
     router.push(`/aula/${aula.aulaId}`);
   };
@@ -489,6 +549,8 @@ export default function DashboardAluno() {
         return "text-yellow-400 bg-yellow-500/20";
       case "atrasado":
         return "text-red-400 bg-red-500/20";
+      case "aguardando_confirmacao":
+        return "text-blue-400 bg-blue-500/20 animate-pulse";
       default:
         return "text-gray-400 bg-gray-500/20";
     }
@@ -502,6 +564,8 @@ export default function DashboardAluno() {
         return "⚠️ Pendente";
       case "atrasado":
         return "❌ Atrasado";
+      case "aguardando_confirmacao":
+        return "⏳ Aguardando confirmação";
       default:
         return status;
     }
@@ -731,8 +795,7 @@ export default function DashboardAluno() {
                 <div className="space-y-6">
                   <div className="bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 rounded-2xl p-6 border border-yellow-500/30">
                     <h1 className="text-2xl font-bold text-white mb-2">
-                      Bem-vindo,{" "}
-                      {dashboardData.dadosPessoais.nome.split(" ")[0]}!
+                      Bem-vindo, {dashboardData.dadosPessoais.nome.split(" ")[0]}!
                     </h1>
                     <p className="text-gray-300">
                       Continue evoluindo no xadrez. Hoje é um óptimo dia para
@@ -767,7 +830,13 @@ export default function DashboardAluno() {
                         <span className="text-xs text-gray-400">Cota</span>
                       </div>
                       <p
-                        className={`text-2xl font-bold ${dashboardData.financeiro.statusCota === "em_dia" ? "text-green-400" : "text-red-400"}`}
+                        className={`text-2xl font-bold ${
+                          dashboardData.financeiro.statusCota === "em_dia"
+                            ? "text-green-400"
+                            : dashboardData.financeiro.statusCota === "aguardando_confirmacao"
+                            ? "text-blue-400"
+                            : "text-red-400"
+                        }`}
                       >
                         {dashboardData.financeiro.valorDevido} MZN
                       </p>
@@ -796,13 +865,15 @@ export default function DashboardAluno() {
                         <p className="text-sm opacity-90">
                           Próximo vencimento:{" "}
                           {new Date(
-                            dashboardData.financeiro.proximoVencimento,
+                            dashboardData.financeiro.proximoVencimento
                           ).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
                         <span
-                          className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(dashboardData.financeiro.statusCota)}`}
+                          className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(
+                            dashboardData.financeiro.statusCota
+                          )}`}
                         >
                           {getStatusText(dashboardData.financeiro.statusCota)}
                         </span>
@@ -811,7 +882,9 @@ export default function DashboardAluno() {
                             onClick={() => setShowPaymentModal(true)}
                             className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-sm font-semibold transition"
                           >
-                            Regularizar
+                            {dashboardData.financeiro.statusCota === "aguardando_confirmacao"
+                              ? "Verificar Status"
+                              : "Regularizar"}
                           </button>
                         )}
                       </div>
@@ -869,12 +942,24 @@ export default function DashboardAluno() {
                                 </p>
                                 <p className="text-xs text-gray-400">
                                   {new Date(
-                                    pagamento.dataPagamento,
+                                    pagamento.dataPagamento
                                   ).toLocaleDateString()}
                                 </p>
                               </div>
-                              <span className="text-xs text-green-400">
-                                Confirmado
+                              <span
+                                className={`text-xs px-2 py-1 rounded ${
+                                  pagamento.status === "confirmado"
+                                    ? "bg-green-500/20 text-green-400"
+                                    : pagamento.status === "aguardando_confirmacao"
+                                    ? "bg-blue-500/20 text-blue-400 animate-pulse"
+                                    : "bg-red-500/20 text-red-400"
+                                }`}
+                              >
+                                {pagamento.status === "confirmado"
+                                  ? "✅ Confirmado"
+                                  : pagamento.status === "aguardando_confirmacao"
+                                  ? "⏳ Aguardando"
+                                  : "❌ Cancelado"}
                               </span>
                             </div>
                           ))}
@@ -900,13 +985,16 @@ export default function DashboardAluno() {
                                 <div
                                   className="w-full bg-yellow-500 rounded-t-lg transition-all duration-500 hover:bg-yellow-400"
                                   style={{
-                                    height: `${Math.min((item.rating / 2000) * 100, 100)}%`,
+                                    height: `${Math.min(
+                                      (item.rating / 2000) * 100,
+                                      100
+                                    )}%`,
                                   }}
                                 />
                                 <p className="text-xs text-gray-400 mt-2 text-center">
                                   {new Date(item.data).toLocaleDateString(
                                     undefined,
-                                    { month: "short", day: "numeric" },
+                                    { month: "short", day: "numeric" }
                                   )}
                                 </p>
                                 <p className="text-xs text-yellow-500 font-semibold">
@@ -928,8 +1016,7 @@ export default function DashboardAluno() {
                     <h2 className="text-2xl font-bold text-white">
                       Minhas Aulas
                     </h2>
-                    <button
-                      onClick={async () => {
+                    <button                      onClick={async () => {
                         const membroId = localStorage.getItem("membroId");
                         if (membroId) await fetchMinhasAulas(membroId);
                       }}
@@ -953,7 +1040,9 @@ export default function DashboardAluno() {
                                   {aula.titulo}
                                 </h3>
                                 <span
-                                  className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(aula.nivel)}`}
+                                  className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(
+                                    aula.nivel
+                                  )}`}
                                 >
                                   {aula.nivel}
                                 </span>
@@ -989,7 +1078,9 @@ export default function DashboardAluno() {
                             </div>
                             <div className="w-full bg-white/10 rounded-full h-2">
                               <div
-                                className={`${getProgressoColor(aula.progresso || 0)} rounded-full h-2 transition-all duration-500`}
+                                className={`${getProgressoColor(
+                                  aula.progresso || 0
+                                )} rounded-full h-2 transition-all duration-500`}
                                 style={{ width: `${aula.progresso || 0}%` }}
                               />
                             </div>
@@ -1013,7 +1104,7 @@ export default function DashboardAluno() {
                                   </p>
                                   <p className="text-white font-semibold">
                                     {aula.estatisticas.avaliacaoMedia.toFixed(
-                                      1,
+                                      1
                                     )}{" "}
                                     ★
                                   </p>
@@ -1154,7 +1245,9 @@ export default function DashboardAluno() {
                                   {aula.titulo}
                                 </h3>
                                 <span
-                                  className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(aula.nivel)}`}
+                                  className={`text-xs px-2 py-0.5 rounded-full ${getNivelColor(
+                                    aula.nivel
+                                  )}`}
                                 >
                                   {aula.nivel}
                                 </span>
@@ -1196,7 +1289,7 @@ export default function DashboardAluno() {
                                 </p>
                                 <p className="text-white font-semibold">
                                   {aula.estatisticas?.avaliacaoMedia?.toFixed(
-                                    1,
+                                    1
                                   ) || 0}{" "}
                                   ★
                                 </p>
@@ -1282,12 +1375,16 @@ export default function DashboardAluno() {
                               </div>
                             </div>
                             <span
-                              className={`text-xs px-2 py-1 rounded ${presenca.presente ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}
+                              className={`text-xs px-2 py-1 rounded ${
+                                presenca.presente
+                                  ? "bg-green-500/20 text-green-400"
+                                  : "bg-red-500/20 text-red-400"
+                              }`}
                             >
                               {presenca.presente ? "Presente" : "Falta"}
                             </span>
                           </div>
-                        ),
+                        )
                       )}
                     </div>
                   </div>
@@ -1309,6 +1406,38 @@ export default function DashboardAluno() {
                     </button>
                   </div>
 
+                  {/* Pagamentos Pendentes */}
+                  {pagamentosPendentes.length > 0 && (
+                    <div className="bg-blue-500/10 rounded-xl p-4 border border-blue-500/30">
+                      <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                        <TbClock className="w-5 h-5 text-blue-400 animate-pulse" />
+                        Pagamentos Aguardando Confirmação
+                      </h3>
+                      <div className="space-y-2">
+                        {pagamentosPendentes.map((pagamento) => (
+                          <div
+                            key={pagamento.pagamentoId}
+                            className="flex items-center justify-between p-2 bg-white/5 rounded-lg"
+                          >
+                            <div>
+                              <p className="text-white font-semibold">
+                                {pagamento.valor} MZN
+                              </p>
+                              <p className="text-xs text-gray-400">
+                                {new Date(
+                                  pagamento.dataPagamento
+                                ).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <span className="text-blue-400 text-xs font-medium animate-pulse">
+                              ⏳ Aguardando confirmação
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="bg-white/10 rounded-xl p-4 border border-white/20">
                     <div className="space-y-3">
                       {dashboardData.ultimasAtividades.pagamentos.map(
@@ -1323,15 +1452,27 @@ export default function DashboardAluno() {
                               </p>
                               <p className="text-sm text-gray-400">
                                 {new Date(
-                                  pagamento.dataPagamento,
+                                  pagamento.dataPagamento
                                 ).toLocaleString()}
                               </p>
                             </div>
-                            <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">
-                              Confirmado
+                            <span
+                              className={`px-2 py-1 rounded text-xs ${
+                                pagamento.status === "confirmado"
+                                  ? "bg-green-500/20 text-green-400"
+                                  : pagamento.status === "aguardando_confirmacao"
+                                  ? "bg-blue-500/20 text-blue-400 animate-pulse"
+                                  : "bg-red-500/20 text-red-400"
+                              }`}
+                            >
+                              {pagamento.status === "confirmado"
+                                ? "✅ Confirmado"
+                                : pagamento.status === "aguardando_confirmacao"
+                                ? "⏳ Aguardando"
+                                : "❌ Cancelado"}
                             </span>
                           </div>
-                        ),
+                        )
                       )}
                     </div>
                   </div>
@@ -1353,7 +1494,7 @@ export default function DashboardAluno() {
                         E-mola, Transferência
                       </p>
                       <p>
-                        • Após 3 meses de inadimplência, o acesso é bloqueado
+                        • Após o pagamento, aguarde a confirmação da tesouraria
                       </p>
                       <p>• Para mais informações, contacte a tesouraria</p>
                     </div>
@@ -1431,12 +1572,12 @@ export default function DashboardAluno() {
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
                               {new Date(
-                                insignia.dataConquista,
+                                insignia.dataConquista
                               ).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
-                      ),
+                      )
                     )}
                   </div>
 
@@ -1627,8 +1768,10 @@ export default function DashboardAluno() {
                           <div>
                             <p className="text-gray-400 text-sm">Endereço</p>
                             <p className="text-white">
-                              {perfilData?.endereco && `${perfilData.endereco}, `}
-                              {perfilData?.bairro && `${perfilData.bairro}, `}
+                              {perfilData?.endereco &&
+                                `${perfilData.endereco}, `}
+                              {perfilData?.bairro &&
+                                `${perfilData.bairro}, `}
                               {perfilData?.cidade}, {perfilData?.provincia}
                             </p>
                           </div>
@@ -1717,6 +1860,23 @@ export default function DashboardAluno() {
                   required
                 />
               </div>
+              <div>
+                <label className="block text-gray-300 mb-2 text-sm">
+                  Comprovante (opcional)
+                </label>
+                <input
+                  type="text"
+                  value={paymentData.comprovante}
+                  onChange={(e) =>
+                    setPaymentData({
+                      ...paymentData,
+                      comprovante: e.target.value,
+                    })
+                  }
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-yellow-500"
+                  placeholder="URL ou código do comprovante"
+                />
+              </div>
               <div className="flex gap-3 mt-6">
                 <button
                   type="button"
@@ -1727,10 +1887,26 @@ export default function DashboardAluno() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition font-semibold"
+                  disabled={isSubmitting}
+                  className={`flex-1 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition font-semibold ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
                 >
-                  Confirmar Pagamento
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+                      Processando...
+                    </span>
+                  ) : (
+                    "Registrar Pagamento"
+                  )}
                 </button>
+              </div>
+              <div className="mt-2 p-3 bg-blue-500/10 rounded-lg border border-blue-500/30">
+                <p className="text-xs text-blue-300 text-center">
+                  ⏳ Após o registro, aguarde a confirmação da tesouraria.
+                  Você será notificado quando for aprovado.
+                </p>
               </div>
             </form>
           </div>
@@ -1772,6 +1948,13 @@ export default function DashboardAluno() {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
     </>
