@@ -37,19 +37,19 @@ export default function Sobre() {
       name: "Bruno Artur Cardoso", 
       title: "Coach Juvenil", 
       bio: "5 anos de experiência em competições nacionais. Formou mais de 30 alunos.", 
-      specialty: "Estratégia e Táctica" 
+      specialty: "Estratégia e Táctica." 
     },
     { 
       name: "Bernardo Eduardo", 
       title: "Coach Juvenil", 
       bio: "Especialista em iniciação ao xadrez. Metodologia lúdica para crianças e iniciantes.", 
-      specialty: "Iniciação Infantil" 
+      specialty: "Iniciação Infantil." 
     },
     { 
       name: "Xavier Samusson Zandamela", 
       title: "Treinador Principal", 
       bio: "Especialista em iniciação ao xadrez. Metodologia lúdica para crianças e iniciantes.", 
-      specialty: "Iniciação Infantil" 
+      specialty: "Iniciação Infantil." 
     },
   ];
 
