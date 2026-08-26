@@ -18,6 +18,10 @@ interface Member {
   draws?: number;
   title?: string;
   avatar?: string;
+  fideId?: string;
+  birthYear?: number;
+  gender?: string;
+  fideTitle?: string;
 }
 
 export default function Membros() {
@@ -30,20 +34,216 @@ export default function Membros() {
   const isVisible = true;
 
   const [members] = useState<Member[]>([
-    { id: 1, name: "Lourenço Augusto Jangua", rating: 0, joinedDate: "2021-03-15", wins: 52, losses: 18, draws: 10, title: "Mestre Nacional" },
-    { id: 2, name: "Lucas Coutinho Marcelino", rating: 0, joinedDate: "2021-05-20", wins: 48, losses: 15, draws: 12, title: "Candidato a Mestre" },
-    { id: 3, name: "Afonso Octávio Macuacua", rating: 0, joinedDate: "2022-01-10", wins: 42, losses: 20, draws: 8, title: "Classe A" },
-    { id: 4, name: "Jubílio Mahassule", rating: 0, joinedDate: "2022-03-15", wins: 38, losses: 22, draws: 10, title: "Treinadora Principal" },
-    { id: 5, name: "Xavier Samusson Zandamela", rating: 0, joinedDate: "2022-06-20", wins: 35, losses: 18, draws: 7, title: "Treinadora Principal" },
-    { id: 6, name: "Bernardo Eduardo", rating: 0, joinedDate: "2022-08-10", wins: 30, losses: 15, draws: 5, title: "Coach Juvenil" },
-    { id: 7, name: "Miguel Godi Nhumaio", rating: 0, joinedDate: "2023-01-15", wins: 28, losses: 20, draws: 8, title: "Classe B" },
-    { id: 8, name: "Lídia Sozinho", rating: 0, joinedDate: "2023-03-20", wins: 25, losses: 18, draws: 6, title: "Classe B" },
-    { id: 9, name: "Egídio Chongue", rating: 0, joinedDate: "2023-06-10", wins: 22, losses: 25, draws: 5, title: "Classe C" },
-    { id: 10, name: "Eminêncio da Cruz Alexandre", rating: 0, joinedDate: "2023-08-15", wins: 20, losses: 22, draws: 4, title: "Classe C" },
-    { id: 11, name: "Acácio António Júnior", rating: 0, joinedDate: "2024-01-10", wins: 18, losses: 20, draws: 3, title: "Classe D" },
-    { id: 12, name: "Bruno Artur Cardoso", rating: 0, joinedDate: "2024-02-15", wins: 15, losses: 18, draws: 2, title: "Coach Juvenil" },
-    { id: 13, name: "Stelio Uamusse", rating: 0, joinedDate: "2024-03-20", wins: 12, losses: 15, draws: 3, title: "Classe D" },
-    { id: 14, name: "Luís Manuel Cossa", rating: 0, joinedDate: "2024-04-10", wins: 10, losses: 12, draws: 2, title: "Iniciante" },
+    { 
+      id: 1, 
+      name: "Lourenço Augusto Jangua", 
+      rating: 1585, 
+      joinedDate: "2021-03-15", 
+      wins: 52, 
+      losses: 18, 
+      draws: 10, 
+      title: "Mestre Nacional",
+      fideId: "14809931",
+      birthYear: 1999,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 2, 
+      name: "Lucas Coutinho Marcelino", 
+      rating: 1624, 
+      joinedDate: "2021-05-20", 
+      wins: 48, 
+      losses: 15, 
+      draws: 12, 
+      title: "Candidato a Mestre",
+      fideId: "14810743",
+      birthYear: 1995,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 3, 
+      name: "Afonso Octávio Macuacua", 
+      rating: 0, 
+      joinedDate: "2022-01-10", 
+      wins: 42, 
+      losses: 20, 
+      draws: 8, 
+      title: "Classe A",
+      fideId: "14807785",
+      birthYear: 1996,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 4, 
+      name: "Jubílio Alberto Mahassule", 
+      rating: 1697, 
+      joinedDate: "2022-03-15", 
+      wins: 38, 
+      losses: 22, 
+      draws: 10, 
+      title: "Treinador Principal",
+      fideId: "14802023",
+      birthYear: 2000,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 5, 
+      name: "Xavier Samusson Zandamela", 
+      rating: 0, 
+      joinedDate: "2022-06-20", 
+      wins: 35, 
+      losses: 18, 
+      draws: 7, 
+      title: "Treinador Principal",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 6, 
+      name: "Bernardo Eduardo", 
+      rating: 0, 
+      joinedDate: "2022-08-10", 
+      wins: 30, 
+      losses: 15, 
+      draws: 5, 
+      title: "Coach Juvenil",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 7, 
+      name: "Miguel Godi Nhumaio", 
+      rating: 0, 
+      joinedDate: "2023-01-15", 
+      wins: 28, 
+      losses: 20, 
+      draws: 8, 
+      title: "Classe B",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 8, 
+      name: "Lídia Sozinho", 
+      rating: 1528, 
+      joinedDate: "2023-03-20", 
+      wins: 25, 
+      losses: 18, 
+      draws: 6, 
+      title: "Classe B",
+      fideId: "14807564",
+      birthYear: 2003,
+      gender: "Feminino",
+      fideTitle: "None"
+    },
+    { 
+      id: 9, 
+      name: "Egídio Chongue", 
+      rating: 0, 
+      joinedDate: "2023-06-10", 
+      wins: 22, 
+      losses: 25, 
+      draws: 5, 
+      title: "Classe C",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 10, 
+      name: "Eminêncio da Cruz Alexandre", 
+      rating: 0, 
+      joinedDate: "2023-08-15", 
+      wins: 20, 
+      losses: 22, 
+      draws: 4, 
+      title: "Classe C",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 11, 
+      name: "Acácio António Chicalangane Júnior", 
+      rating: 1760, 
+      joinedDate: "2024-01-10", 
+      wins: 18, 
+      losses: 20, 
+      draws: 3, 
+      title: "Classe D",
+      fideId: "14802201",
+      birthYear: 2000,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 12, 
+      name: "Bruno Artur Cardoso", 
+      rating: 0, 
+      joinedDate: "2024-02-15", 
+      wins: 15, 
+      losses: 18, 
+      draws: 2, 
+      title: "Coach Juvenil",
+      fideId: "",
+      birthYear: 0,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 13, 
+      name: "Stélio Henriques Uamusse", 
+      rating: 1861, 
+      joinedDate: "2024-03-20", 
+      wins: 12, 
+      losses: 15, 
+      draws: 3, 
+      title: "Classe D",
+      fideId: "14805839",
+      birthYear: 1994,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 14, 
+      name: "Luís Manuel Cossa", 
+      rating: 1702, 
+      joinedDate: "2024-04-10", 
+      wins: 10, 
+      losses: 12, 
+      draws: 2, 
+      title: "Iniciante",
+      fideId: "14807688",
+      birthYear: 1995,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
+    { 
+      id: 15, 
+      name: "Bento Bulande", 
+      rating: 1569, 
+      joinedDate: "2024-05-15", 
+      wins: 8, 
+      losses: 10, 
+      draws: 2, 
+      title: "Classe C",
+      fideId: "14801655",
+      birthYear: 1971,
+      gender: "Masculino",
+      fideTitle: "None"
+    },
   ]);
 
   const [loginData, setLoginData] = useState({
@@ -392,21 +592,21 @@ export default function Membros() {
                 <div className="flex gap-2 mb-4 sm:mb-6">
                   <button
                     onClick={() => setIsLogin(true)}
-                    className={`flex-1 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${
+                    className={`flex-1 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${(
                       isLogin 
                         ? 'bg-gradient-to-r from-yellow-600 to-yellow-700 text-white' 
                         : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                    }`}
+                    )}`}
                   >
                     Entrar
                   </button>
                   <button
                     onClick={() => setIsLogin(false)}
-                    className={`flex-1 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${
+                    className={`flex-1 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${(
                       !isLogin 
                         ? 'bg-gradient-to-r from-yellow-600 to-yellow-700 text-white' 
                         : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                    }`}
+                    )}`}
                   >
                     Registrar
                   </button>
@@ -669,6 +869,9 @@ export default function Membros() {
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold text-white">{selectedMember.name}</h2>
                   <p className="text-yellow-500 text-xs sm:text-sm mt-1">{selectedMember.title}</p>
+                  {selectedMember.fideId && (
+                    <p className="text-xs text-gray-500 mt-1">FIDE ID: {selectedMember.fideId}</p>
+                  )}
                 </div>
                 
                 <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
@@ -688,6 +891,18 @@ export default function Membros() {
                     <span className="text-gray-400">Aproveitamento</span>
                     <span className="text-white">{getWinRate(selectedMember.wins, selectedMember.losses)}%</span>
                   </div>
+                  {selectedMember.birthYear && selectedMember.birthYear > 0 && (
+                    <div className="flex justify-between p-2 sm:p-3 bg-white/5 rounded-lg text-sm">
+                      <span className="text-gray-400">Ano de Nascimento</span>
+                      <span className="text-white">{selectedMember.birthYear}</span>
+                    </div>
+                  )}
+                  {selectedMember.gender && (
+                    <div className="flex justify-between p-2 sm:p-3 bg-white/5 rounded-lg text-sm">
+                      <span className="text-gray-400">Gênero</span>
+                      <span className="text-white">{selectedMember.gender}</span>
+                    </div>
+                  )}
                 </div>
 
                 <button

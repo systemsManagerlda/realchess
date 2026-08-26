@@ -19,6 +19,7 @@ interface DownloadFile {
   type: string;
   category: string;
   icon?: string;
+  description?: string;
 }
 
 interface Product {
@@ -27,6 +28,7 @@ interface Product {
   description: string;
   category: string;
   inStock: boolean;
+  image?: string;
 }
 
 export default function Recursos() {
@@ -34,7 +36,7 @@ export default function Recursos() {
     { 
       id: 1, 
       user: "Admin", 
-      text: "Bem-vindo ao fórum do Real Chess Club! Fique à vontade para discutir sobre xadrez, tirar dúvidas e partilhar conhecimento.", 
+      text: "Bem-vindo ao fórum do Real Chess Mahotas! Fique à vontade para discutir sobre xadrez, tirar dúvidas e partilhar conhecimento. Este espaço é dedicado a todos os membros e entusiastas do xadrez moçambicano.", 
       timestamp: new Date(),
       isAdmin: true 
     }
@@ -69,21 +71,122 @@ export default function Recursos() {
   };
 
   const downloads: DownloadFile[] = [
-    { name: "Regulamento do Clube", size: "1.2 MB", type: "PDF", category: "Documentos", icon: "📄" },
-    { name: "Ficha de Inscrição", size: "0.5 MB", type: "DOC", category: "Formulários", icon: "📝" },
-    { name: "Tabela de Ratings FIDE", size: "0.8 MB", type: "PDF", category: "Documentos", icon: "📊" },
-    { name: "Calendário de Torneios 2025", size: "0.3 MB", type: "XLSX", category: "Calendários", icon: "📅" },
-    { name: "Guia de Aberturas", size: "2.1 MB", type: "PDF", category: "Materiais de Estudo", icon: "📚" },
-    { name: "Lista de Exercícios", size: "1.5 MB", type: "PDF", category: "Materiais de Estudo", icon: "✏️" },
+    { 
+      name: "Regulamento do Clube", 
+      size: "1.2 MB", 
+      type: "PDF", 
+      category: "Documentos", 
+      icon: "📄",
+      description: "Regulamento interno do Real Chess Mahotas - Atualizado 2025"
+    },
+    { 
+      name: "Ficha de Inscrição", 
+      size: "0.5 MB", 
+      type: "DOC", 
+      category: "Formulários", 
+      icon: "📝",
+      description: "Formulário para admissão de novos membros"
+    },
+    { 
+      name: "Tabela de Ratings FIDE - Moçambique", 
+      size: "0.8 MB", 
+      type: "PDF", 
+      category: "Documentos", 
+      icon: "📊",
+      description: "Lista atualizada dos ratings FIDE dos jogadores moçambicanos"
+    },
+    { 
+      name: "Calendário de Torneios 2026", 
+      size: "0.3 MB", 
+      type: "XLSX", 
+      category: "Calendários", 
+      icon: "📅",
+      description: "Calendário oficial dos torneios do Real Chess Mahotas para 2026"
+    },
+    { 
+      name: "Guia de Aberturas - Edição Mahotas", 
+      size: "2.1 MB", 
+      type: "PDF", 
+      category: "Materiais de Estudo", 
+      icon: "📚",
+      description: "Guia completo com as principais aberturas do xadrez"
+    },
+    { 
+      name: "Lista de Exercícios Táticos", 
+      size: "1.5 MB", 
+      type: "PDF", 
+      category: "Materiais de Estudo", 
+      icon: "✏️",
+      description: "100 exercícios de tática para todos os níveis"
+    },
+    { 
+      name: "Resultados Real Chess Mahotas TWO 2026", 
+      size: "0.2 MB", 
+      type: "PDF", 
+      category: "Resultados", 
+      icon: "🏆",
+      description: "Tabela completa de resultados do torneio REAL CHESS MAHOTAS TWO 2026"
+    },
+    { 
+      name: "Resultados Super Real Chess 2025", 
+      size: "0.2 MB", 
+      type: "PDF", 
+      category: "Resultados", 
+      icon: "🏆",
+      description: "Tabela completa de resultados do TORNEO DE XADREZ SUPER REAL CHESS 2025"
+    },
   ];
 
   const products: Product[] = [
-    { name: "Tabuleiro Profissional", price: "2.500 MT", description: "Tabuleiro de madeira 50x50cm com acabamento premium", category: "Equipamentos", inStock: true },
-    { name: "Peças de Torneio", price: "3.500 MT", description: "Peças de madeira estilo Staunton, peso regulamentar", category: "Equipamentos", inStock: true },
-    { name: "Livro: Estratégias Avançadas", price: "1.200 MT", description: "Por GM Garry Kasparov - 300 páginas", category: "Livros", inStock: true },
-    { name: "Relógio Digital", price: "4.500 MT", description: "Relógio de xadrez profissional com funções avançadas", category: "Equipamentos", inStock: true },
-    { name: "Kit Iniciante", price: "5.000 MT", description: "Tabuleiro + Peças + Livro básico", category: "Kits", inStock: true },
-    { name: "Curso Online", price: "2.000 MT", description: "Acesso a 20 videoaulas com Mestres FIDE", category: "Cursos", inStock: true },
+    { 
+      name: "Tabuleiro Profissional - Mahotas", 
+      price: "2.500 MT", 
+      description: "Tabuleiro de madeira 50x50cm com acabamento premium, ideal para treinos e torneios", 
+      category: "Equipamentos", 
+      inStock: true 
+    },
+    { 
+      name: "Peças de Torneio Staunton", 
+      price: "3.500 MT", 
+      description: "Peças de madeira estilo Staunton, peso regulamentar para competições oficiais", 
+      category: "Equipamentos", 
+      inStock: true 
+    },
+    { 
+      name: "Livro: Estratégias Avançadas - GM Kasparov", 
+      price: "1.200 MT", 
+      description: "Por GM Garry Kasparov - 300 páginas com análises profundas de partidas clássicas", 
+      category: "Livros", 
+      inStock: true 
+    },
+    { 
+      name: "Relógio Digital Profissional", 
+      price: "4.500 MT", 
+      description: "Relógio de xadrez profissional com funções avançadas, ideal para torneios", 
+      category: "Equipamentos", 
+      inStock: true 
+    },
+    { 
+      name: "Kit Iniciante - Real Chess", 
+      price: "5.000 MT", 
+      description: "Tabuleiro + Peças + Livro básico de xadrez, perfeito para quem está começando", 
+      category: "Kits", 
+      inStock: true 
+    },
+    { 
+      name: "Curso Online - Táticas Avançadas", 
+      price: "2.000 MT", 
+      description: "Acesso a 20 videoaulas com Mestres FIDE, incluindo exercícios práticos", 
+      category: "Cursos", 
+      inStock: true 
+    },
+    { 
+      name: "Uniforme Oficial Real Chess", 
+      price: "1.800 MT", 
+      description: "Camiseta oficial do Real Chess Mahotas, com logo e design exclusivo", 
+      category: "Equipamentos", 
+      inStock: true 
+    },
   ];
 
   const filteredProducts = selectedCategory === "todos" 
@@ -106,6 +209,11 @@ export default function Recursos() {
     } else {
       return date.toLocaleDateString('pt-MZ', { day: 'numeric', month: 'short' });
     }
+  };
+
+  const getCategoryCount = (category: string) => {
+    if (category === "todos") return products.length;
+    return products.filter(p => p.category.toLowerCase() === category).length;
   };
 
   return (
@@ -273,6 +381,9 @@ export default function Recursos() {
                         <div className="text-3xl">{file.icon}</div>
                         <div>
                           <p className="font-semibold text-white">{file.name}</p>
+                          {file.description && (
+                            <p className="text-xs text-gray-400 mt-0.5">{file.description}</p>
+                          )}
                           <div className="flex gap-3 mt-1">
                             <span className="text-xs text-gray-500">{file.size}</span>
                             <span className="text-xs px-2 py-0.5 bg-white/10 rounded-full text-yellow-400">{file.type}</span>
@@ -306,7 +417,7 @@ export default function Recursos() {
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  Todos
+                  Todos ({getCategoryCount("todos")})
                 </button>
                 <button
                   onClick={() => setSelectedCategory("equipamentos")}
@@ -316,7 +427,7 @@ export default function Recursos() {
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  Equipamentos
+                  Equipamentos ({getCategoryCount("equipamentos")})
                 </button>
                 <button
                   onClick={() => setSelectedCategory("livros")}
@@ -326,7 +437,7 @@ export default function Recursos() {
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  Livros
+                  Livros ({getCategoryCount("livros")})
                 </button>
                 <button
                   onClick={() => setSelectedCategory("kits")}
@@ -336,7 +447,7 @@ export default function Recursos() {
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  Kits
+                  Kits ({getCategoryCount("kits")})
                 </button>
                 <button
                   onClick={() => setSelectedCategory("cursos")}
@@ -346,7 +457,7 @@ export default function Recursos() {
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  Cursos
+                  Cursos ({getCategoryCount("cursos")})
                 </button>
               </div>
 
@@ -365,23 +476,40 @@ export default function Recursos() {
                         <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">
                           {product.name}
                         </h3>
-                        {product.inStock && (
+                        {product.inStock ? (
                           <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full">
                             Em stock
                           </span>
+                        ) : (
+                          <span className="text-xs px-2 py-1 bg-red-500/20 text-red-400 rounded-full">
+                            Esgotado
+                          </span>
                         )}
                       </div>
-                      <p className="text-gray-400 text-sm mb-3">{product.description}</p>
+                      <p className="text-gray-400 text-sm mb-3 line-clamp-2">{product.description}</p>
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-bold text-yellow-500">{product.price}</span>
-                        <button className="bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                          Comprar
+                        <button 
+                          className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
+                            product.inStock 
+                              ? 'bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white' 
+                              : 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                          }`}
+                          disabled={!product.inStock}
+                        >
+                          {product.inStock ? 'Comprar' : 'Indisponível'}
                         </button>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
+
+              {filteredProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-400">Nenhum produto encontrado nesta categoria.</p>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -15,11 +15,25 @@ interface Article {
   author?: string;
   image?: string;
   readTime?: string;
+  tournamentResults?: {
+    position: number;
+    name: string;
+    rating: number;
+    points: number;
+    fideId?: string;
+  }[];
+  tournamentDetails?: {
+    totalPlayers: number;
+    rounds: number;
+    date: string;
+    location: string;
+  };
 }
 
 export default function Noticias() {
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const [email, setEmail] = useState("");
+  const [expandedTournament, setExpandedTournament] = useState<number | null>(null);
   const pageRef = useRef<HTMLDivElement>(null);
 
   const isVisible = true;
@@ -27,64 +41,153 @@ export default function Noticias() {
   const news: Article[] = [
     {
       id: 1,
-      title: "João Silva vence Torneio Rápido de Janeiro",
-      date: "2025-01-20",
+      title: "REAL CHESS MAHOTAS TWO 2026: FM Donaldo Paiva conquista o título",
+      date: "2026-05-23",
       category: "Resultados",
-      excerpt: "Em uma emocionante final, João Silva derrotou Maria Santos em uma partida de 45 lances, conquistando o título do primeiro torneio do ano.",
+      excerpt: "O Mestre FIDE Donaldo Paiva venceu o torneio REAL CHESS MAHOTAS TWO 2026, que contou com a participação de 27 enxadristas. Ivan Andrade ficou em segundo lugar e João Rubene Guambe completou o pódio.",
       author: "Departamento de Comunicação",
-      readTime: "3 min",
-      content: "O torneio contou com a participação de 32 enxadristas de todo o país..."
+      readTime: "4 min",
+      tournamentDetails: {
+        totalPlayers: 27,
+        rounds: 7,
+        date: "23 de Maio de 2026",
+        location: "Sede do Real Chess Mahotas, Maputo"
+      },
+      tournamentResults: [
+        { position: 1, name: "FM Paiva, Donaldo", rating: 2255, points: 6.5, fideId: "14800098" },
+        { position: 2, name: "FM Andrade, Ivan", rating: 2108, points: 6.0, fideId: "14800039" },
+        { position: 3, name: "Guambe, Joao Rubene", rating: 2029, points: 5.5, fideId: "14806339" },
+        { position: 4, name: "CM Napoleao, Lourenco", rating: 1964, points: 5.0, fideId: "14801302" },
+        { position: 5, name: "Chirindza, Rafael Bernardo", rating: 1940, points: 4.5, fideId: "14800764" },
+        { position: 6, name: "CM Joao, Farisse", rating: 1920, points: 4.5, fideId: "14800730" },
+        { position: 7, name: "Magagule, Senzo Frederico", rating: 1910, points: 4.0, fideId: "14802287" },
+        { position: 8, name: "Cardoso, Bruno Artur", rating: 1828, points: 4.0, fideId: "14802279" },
+        { position: 9, name: "Macuacua, Marcos Simao", rating: 1828, points: 3.5, fideId: "14801248" },
+        { position: 10, name: "Uamusse, Stelio Henriques", rating: 1809, points: 3.5, fideId: "14805839" },
+        { position: 11, name: "Carquete, Galilei", rating: 1807, points: 3.5, fideId: "14804174" },
+        { position: 12, name: "Mahassule, Jubilio Alberto", rating: 1761, points: 3.5, fideId: "14802023" },
+        { position: 13, name: "Cossa, Luis Manuel", rating: 1734, points: 3.0, fideId: "14807688" },
+        { position: 14, name: "Mabote, Sa Adolfo", rating: 1673, points: 3.0, fideId: "14801159" },
+        { position: 15, name: "Gaspar Martins, Pedro Miguel", rating: 1650, points: 2.5, fideId: "17702208" },
+        { position: 16, name: "Mucavel, Marcelo Joao", rating: 1633, points: 2.5, fideId: "14810034" },
+        { position: 17, name: "Marcelo, Lucas Coutinho", rating: 1624, points: 2.0, fideId: "14810743" },
+        { position: 18, name: "Tule, Zefanias Manuel", rating: 1600, points: 2.0, fideId: "14810565" },
+        { position: 19, name: "Jakissone, Alvin Mateus", rating: 0, points: 2.0, fideId: "14810808" },
+        { position: 20, name: "Macuacua, Afonso Octavio", rating: 0, points: 1.5, fideId: "14807785" },
+        { position: 21, name: "Cossa, Wesly", rating: 0, points: 1.5, fideId: "" },
+        { position: 22, name: "Goenha, Antonio", rating: 0, points: 1.0, fideId: "" },
+        { position: 23, name: "Pambo, Alberto", rating: 0, points: 1.0, fideId: "" },
+        { position: 24, name: "Cimino, Francesco", rating: 0, points: 1.0, fideId: "" },
+        { position: 25, name: "Sozinho, Lidia", rating: 0, points: 0.5, fideId: "" },
+        { position: 26, name: "Cossa, Remigio", rating: 0, points: 0.5, fideId: "" },
+        { position: 27, name: "Tualifa, Briany", rating: 0, points: 0.0, fideId: "" }
+      ]
     },
     {
       id: 2,
-      title: "Dica de Xadrez: Como melhorar o seu rating",
-      date: "2025-01-18",
-      category: "Dicas",
-      excerpt: "Confira 5 dicas essenciais para elevar o seu rating e se tornar um jogador mais forte. Desde estudo de aberturas até análise de partidas.",
-      author: "GM Carlos Silva",
-      readTime: "5 min",
-      content: "1. Estude finais diariamente... 2. Analise as suas partidas..."
+      title: "TORNEIO DE XADREZ FIM DO ANO 2025: FM Donaldo Paiva campeão",
+      date: "2025-12-20",
+      category: "Resultados",
+      excerpt: "FM Donaldo Paiva (2199) venceu o TORNEIO DE XADREZ FIM DO ANO 2025, com Ivan Andrade (2158) em segundo e CM Lourenço Napoleão (1969) em terceiro. O torneio teve 46 participantes.",
+      author: "Departamento de Comunicação",
+      readTime: "4 min",
+      tournamentDetails: {
+        totalPlayers: 46,
+        rounds: 7,
+        date: "20 de Dezembro de 2025",
+        location: "Sede do Real Chess Mahotas, Maputo"
+      },
+      tournamentResults: [
+        { position: 1, name: "FM Paiva, Donaldo", rating: 2199, points: 6.5, fideId: "14800098" },
+        { position: 2, name: "FM Andrade, Ivan", rating: 2158, points: 6.0, fideId: "14800039" },
+        { position: 3, name: "CM Napoleao, Lourenco", rating: 1969, points: 5.5, fideId: "14801302" },
+        { position: 4, name: "CM Joao, Farisse", rating: 1959, points: 5.0, fideId: "14800730" },
+        { position: 5, name: "Guambe, Joao Rubene", rating: 1868, points: 4.5, fideId: "14806339" },
+        { position: 6, name: "Macuacua, Marcos Simao", rating: 1839, points: 4.5, fideId: "14801248" },
+        { position: 7, name: "Magagule, Senzo Frederico", rating: 1839, points: 4.0, fideId: "14802287" },
+        { position: 8, name: "Carquete, Galilei", rating: 1806, points: 4.0, fideId: "14804174" },
+        { position: 9, name: "Cossa, Remigio Enoque", rating: 1790, points: 3.5, fideId: "14803607" },
+        { position: 10, name: "Alar, Yuran Edgar", rating: 1789, points: 3.5, fideId: "14809435" },
+        { position: 11, name: "Manhica, Heldo Luis", rating: 1711, points: 3.0, fideId: "14803488" },
+        { position: 12, name: "Fernandes, Miguel Eduardo Taibo", rating: 1705, points: 3.0, fideId: "14806746" },
+        { position: 13, name: "Mabote, Sa Adolfo", rating: 1702, points: 3.0, fideId: "14801159" },
+        { position: 14, name: "Mahassule, Jubilio Alberto", rating: 1700, points: 3.0, fideId: "14802023" },
+        { position: 15, name: "WCM Castro, Neusa Aridas De", rating: 1692, points: 2.5, fideId: "14800250" },
+        { position: 16, name: "Jacinto, Humberto Fonseca", rating: 1593, points: 2.5, fideId: "1937316" },
+        { position: 17, name: "Ngovene, Alberto Jose", rating: 1587, points: 2.0, fideId: "14802945" },
+        { position: 18, name: "Bulande, Bento", rating: 1581, points: 2.0, fideId: "14801655" },
+        { position: 19, name: "Malenda, Ana", rating: 1555, points: 2.0, fideId: "14800209" },
+        { position: 20, name: "Zimba, Domingos Fabiao", rating: 1551, points: 1.5, fideId: "14802902" },
+        { position: 21, name: "Victorino Mafuca, Amelia Carlos", rating: 1465, points: 1.5, fideId: "14803704" },
+        { position: 22, name: "Mangumo, Helder Moiseis", rating: 1415, points: 1.0, fideId: "14804441" },
+        { position: 23, name: "Aziz, Nazir Abdul", rating: 0, points: 1.0, fideId: "14810417" },
+        { position: 24, name: "Bazilio, Danial Manzur", rating: 0, points: 1.0, fideId: "14810352" },
+        { position: 25, name: "Cossa, Luis Manuel", rating: 0, points: 1.0, fideId: "14807688" },
+        { position: 26, name: "Ernesto, Tiago Liam Banze", rating: 0, points: 0.5, fideId: "14805790" },
+        { position: 27, name: "Farooq, Adam Nurmohomed", rating: 0, points: 0.5, fideId: "14810042" },
+        { position: 28, name: "Farooq, Lais Nurmohamed", rating: 0, points: 0.0, fideId: "14810050" },
+        { position: 29, name: "Gemo, Eileen Geovanni Pedro", rating: 0, points: 0.0, fideId: "14808404" },
+        { position: 30, name: "Guambe, Beneth Carlos", rating: 0, points: 0.0, fideId: "14807211" },
+        { position: 31, name: "Guambe, Ketlyn Carlos", rating: 0, points: 0.0, fideId: "14806061" },
+        { position: 32, name: "Guambe, Lizzy Carlos", rating: 0, points: 0.0, fideId: "14807637" },
+        { position: 33, name: "Jonasse, Fiquelque Jose", rating: 0, points: 0.0, fideId: "14810360" },
+        { position: 34, name: "Junior, Emilio Eduardo Mabjaia", rating: 0, points: 0.0, fideId: "14810344" },
+        { position: 35, name: "Malate, Malik Menelik Da Silva", rating: 0, points: 0.0, fideId: "14810387" },
+        { position: 36, name: "Malate, Marron Marcelo Da Silva", rating: 0, points: 0.0, fideId: "14810395" },
+        { position: 37, name: "Meireles, Alessandro De Henrique", rating: 0, points: 0.0, fideId: "14809109" },
+        { position: 38, name: "Meireles, Guilherme De Henrique", rating: 0, points: 0.0, fideId: "14809095" },
+        { position: 39, name: "Momade, Ismayk Ismael", rating: 0, points: 0.0, fideId: "14807246" },
+        { position: 40, name: "Mucavel, Marcelo Joao", rating: 0, points: 0.0, fideId: "14810034" },
+        { position: 41, name: "Neto, Anasse Alima Omar", rating: 0, points: 0.0, fideId: "14809214" },
+        { position: 42, name: "Silva, Sanes Lacerda", rating: 0, points: 0.0, fideId: "14808986" },
+        { position: 43, name: "Sozinho, Lidia Jose", rating: 0, points: 0.0, fideId: "14807564" },
+        { position: 44, name: "Zimila, Antonio Joao", rating: 0, points: 0.0, fideId: "14810379" },
+        { position: 45, name: "Alejandro, Petur Weng Petursson", rating: 0, points: 0.0, fideId: "14805480" },
+        { position: 46, name: "CM Jamal, Hamid Harmon Gulamo", rating: 2001, points: 0.0, fideId: "14801221" }
+      ]
     },
     {
       id: 3,
-      title: "Análise: A partida imortal de Bobby Fischer",
-      date: "2025-01-15",
-      category: "Análises",
-      excerpt: "Uma análise detalhada da famosa partida entre Fischer e Spassky de 1972, considerada uma das mais brilhantes da história do xadrez.",
-      author: "Mestre Internacional Ana Oliveira",
-      readTime: "8 min",
-      content: "A partida começou com a abertura Siciliana..."
-    },
-    {
-      id: 4,
-      title: "Real Chess Club promove torneio beneficente",
-      date: "2025-01-12",
-      category: "Eventos do Clube",
-      excerpt: "O nosso clube realizará um torneio beneficente em fevereiro para arrecadar fundos para escolas locais em Maputo.",
-      author: "Diretoria do Clube",
-      readTime: "2 min",
-      content: "O evento acontecerá no dia 15 de fevereiro..."
-    },
-    {
-      id: 5,
-      title: "Novo curso de xadrez para iniciantes",
-      date: "2025-01-10",
-      category: "Eventos do Clube",
-      excerpt: "Estão abertas as inscrições para o novo curso de xadrez para iniciantes. As aulas começam em março.",
-      author: "Coordenação Pedagógica",
-      readTime: "2 min",
-      content: "O curso terá duração de 3 meses..."
-    },
-    {
-      id: 6,
-      title: "Técnica de finais: Rei e peão vs rei",
-      date: "2025-01-08",
-      category: "Dicas",
-      excerpt: "Aprenda a técnica fundamental de finais de rei e peão, essencial para jogadores de todos os níveis.",
-      author: "MF Roberto Santos",
-      readTime: "6 min",
-      content: "O final de rei e peão é um dos mais importantes..."
-    },
+      title: "TORNEO DE XADREZ SUPER REAL CHESS 2025: FM Ivan Andrade vence",
+      date: "2025-11-03",
+      category: "Resultados",
+      excerpt: "FM Ivan Andrade (2136) conquistou o título do TORNEO DE XADREZ SUPER REAL CHESS 2025. João Rubene Guambe (2002) e CM Hamid Jamal (1993) completaram os três primeiros lugares.",
+      author: "Departamento de Comunicação",
+      readTime: "3 min",
+      tournamentDetails: {
+        totalPlayers: 25,
+        rounds: 7,
+        date: "03 de Novembro de 2025",
+        location: "Sede do Real Chess Mahotas, Maputo"
+      },
+      tournamentResults: [
+        { position: 1, name: "FM Andrade, Ivan", rating: 2136, points: 6.5, fideId: "14800039" },
+        { position: 2, name: "Guambe, Joao Rubene", rating: 2002, points: 6.0, fideId: "14806339" },
+        { position: 3, name: "CM Jamal, Hamid Harmon Gulamo", rating: 1993, points: 5.5, fideId: "14801221" },
+        { position: 4, name: "CM Napoleao, Lourenco", rating: 1958, points: 5.0, fideId: "14801302" },
+        { position: 5, name: "Rafael, Chirinza", rating: 1868, points: 4.5, fideId: "14800764" },
+        { position: 6, name: "Alberto, Ananias Pambo", rating: 1854, points: 4.0, fideId: "14803291" },
+        { position: 7, name: "Magagule, Senzo Frederico", rating: 1839, points: 4.0, fideId: "14802287" },
+        { position: 8, name: "Uamusse, Stelio Henriques", rating: 1834, points: 4.0, fideId: "14805839" },
+        { position: 9, name: "Cardoso, Bruno Artur", rating: 1823, points: 3.5, fideId: "14802279" },
+        { position: 10, name: "Carquete, Galilei", rating: 1809, points: 3.5, fideId: "14804174" },
+        { position: 11, name: "Cossa, Luis Manuel", rating: 1807, points: 3.0, fideId: "14807688" },
+        { position: 12, name: "Cossa Cossa, Remigio Enoque", rating: 1788, points: 3.0, fideId: "14803607" },
+        { position: 13, name: "Mabote, Sa Adolfo", rating: 1738, points: 2.5, fideId: "14801159" },
+        { position: 14, name: "Mahassule, Jubilio Alberto", rating: 1679, points: 2.5, fideId: "14802023" },
+        { position: 15, name: "WCM Castro, Neusa Aridas De", rating: 1672, points: 2.5, fideId: "14800250" },
+        { position: 16, name: "Jacinto, Humberto Fonseca", rating: 1593, points: 2.0, fideId: "1937316" },
+        { position: 17, name: "Sitoe, Sheila Judite Jacinto", rating: 1581, points: 2.0, fideId: "14800470" },
+        { position: 18, name: "Malenda, Ana", rating: 1520, points: 1.5, fideId: "14800209" },
+        { position: 19, name: "Gaspar Martins, Pedro Miguel", rating: 0, points: 1.5, fideId: "17702208" },
+        { position: 20, name: "Gulele, Claudio Henriques", rating: 0, points: 1.0, fideId: "14810107" },
+        { position: 21, name: "Gulele, Edilson Henriques", rating: 0, points: 1.0, fideId: "14810115" },
+        { position: 22, name: "Jangua, Lourenco Augusto", rating: 0, points: 1.0, fideId: "14809931" },
+        { position: 23, name: "Leal Freitas, Joao Pedro", rating: 0, points: 0.5, fideId: "14810131" },
+        { position: 24, name: "Mucavel, Marcelo Joao", rating: 0, points: 0.5, fideId: "14810034" },
+        { position: 25, name: "Sozinho, Lidia Jose", rating: 0, points: 0.0, fideId: "14807564" }
+      ]
+    }
   ];
 
   const categories = ["Todos", "Resultados", "Dicas", "Análises", "Eventos do Clube"];
@@ -117,6 +220,112 @@ export default function Noticias() {
       alert(`✅ Inscrição realizada com sucesso! Você receberá as nossas novidades em ${email}`);
       setEmail("");
     }
+  };
+
+  const toggleTournament = (id: number) => {
+    setExpandedTournament(expandedTournament === id ? null : id);
+  };
+
+  const renderTournamentTable = (article: Article) => {
+    if (!article.tournamentResults || article.tournamentResults.length === 0) return null;
+
+    // Separar top 10 e restante
+    const top10 = article.tournamentResults.slice(0, 10);
+    const rest = article.tournamentResults.slice(10);
+
+    return (
+      <div className="mt-4 space-y-4">
+        <button
+          onClick={() => toggleTournament(article.id)}
+          className="w-full flex items-center justify-between px-4 py-2 bg-yellow-600/20 hover:bg-yellow-600/30 rounded-lg text-yellow-400 font-semibold transition-all duration-300"
+        >
+          <span>📊 Ver Tabela de Classificação</span>
+          <svg className={`w-5 h-5 transition-transform duration-300 ${expandedTournament === article.id ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {expandedTournament === article.id && (
+          <div className="bg-white/5 rounded-xl overflow-hidden border border-white/10">
+            {/* Detalhes do Torneio */}
+            {article.tournamentDetails && (
+              <div className="p-4 bg-yellow-500/10 border-b border-white/10">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                  <div>
+                    <p className="text-gray-400">Participantes</p>
+                    <p className="text-white font-semibold">{article.tournamentDetails.totalPlayers}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Rodadas</p>
+                    <p className="text-white font-semibold">{article.tournamentDetails.rounds}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Data</p>
+                    <p className="text-white text-xs">{article.tournamentDetails.date}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Local</p>
+                    <p className="text-white text-xs truncate">{article.tournamentDetails.location}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tabela */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-yellow-500/10">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-gray-300 text-sm font-semibold">#</th>
+                    <th className="px-4 py-3 text-left text-gray-300 text-sm font-semibold">Jogador</th>
+                    <th className="px-4 py-3 text-center text-gray-300 text-sm font-semibold">Rating</th>
+                    <th className="px-4 py-3 text-center text-gray-300 text-sm font-semibold">Pontos</th>
+                    <th className="px-4 py-3 text-center text-gray-300 text-sm font-semibold">FIDE ID</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {top10.map((player) => (
+                    <tr key={player.position} className="hover:bg-white/5 transition-colors">
+                      <td className="px-4 py-3">
+                        <span className={`
+                          inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold
+                          ${player.position === 1 ? 'bg-yellow-500/20 text-yellow-400' : 
+                            player.position === 2 ? 'bg-gray-500/20 text-gray-300' :
+                            player.position === 3 ? 'bg-orange-500/20 text-orange-400' :
+                            'text-gray-400'}
+                        `}>
+                          {player.position}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-white text-sm font-medium">{player.name}</td>
+                      <td className="px-4 py-3 text-center text-gray-300 text-sm">{player.rating || '-'}</td>
+                      <td className="px-4 py-3 text-center text-yellow-400 text-sm font-semibold">{player.points}</td>
+                      <td className="px-4 py-3 text-center text-gray-500 text-xs font-mono">{player.fideId || '-'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                {rest.length > 0 && (
+                  <tbody className="divide-y divide-white/5 border-t border-white/10">
+                    {rest.map((player) => (
+                      <tr key={player.position} className="hover:bg-white/5 transition-colors opacity-70">
+                        <td className="px-4 py-2 text-gray-500 text-xs">{player.position}</td>
+                        <td className="px-4 py-2 text-gray-400 text-xs">{player.name}</td>
+                        <td className="px-4 py-2 text-center text-gray-500 text-xs">{player.rating || '-'}</td>
+                        <td className="px-4 py-2 text-center text-yellow-400/70 text-xs font-semibold">{player.points}</td>
+                        <td className="px-4 py-2 text-center text-gray-600 text-xs font-mono">{player.fideId || '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            </div>
+            <div className="p-3 bg-white/5 text-xs text-gray-500 text-center border-t border-white/10">
+              {article.tournamentResults.length} jogadores • {article.tournamentDetails?.rounds || 0} rodadas
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -228,8 +437,11 @@ export default function Noticias() {
                       {article.excerpt}
                     </p>
 
+                    {/* Tabela do Torneio */}
+                    {article.category === "Resultados" && renderTournamentTable(article)}
+
                     {/* Autor e Leia Mais */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-4">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center">
                           <span className="text-sm">✍️</span>
@@ -333,13 +545,13 @@ export default function Noticias() {
                 </h2>
                 <div className="space-y-3">
                   <h3 className="text-lg font-semibold text-yellow-400">
-                    Dica do Mestre
+                    Torneio REAL CHESS MAHOTAS TWO 2026
                   </h3>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    &quot;Analise as suas partidas perdidas com mais atenção do que as vencidas. 
-                    É nos erros que mais aprendemos!&quot;
+                    &quot;FM Donaldo Paiva sagrou-se campeão com 2255 pontos e 6.5 pontos, 
+                    consolidando seu domínio no xadrez moçambicano.&quot;
                   </p>
-                  <p className="text-xs text-gray-500">- GM Carlos Silva</p>
+                  <p className="text-xs text-gray-500">- 23 de Maio de 2026</p>
                 </div>
               </div>
 

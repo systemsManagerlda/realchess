@@ -26,31 +26,32 @@ export default function Partidas() {
   const [movesList, setMovesList] = useState<string[]>([]);
   const pageRef = useRef<HTMLDivElement>(null);
   const [boardWidth, setBoardWidth] = useState(350);
-  useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth < 640) {
-      setBoardWidth(window.innerWidth - 40);
-    } else if (window.innerWidth < 768) {
-      setBoardWidth(320);
-    } else {
-      setBoardWidth(350);
-    }
-  };
   
-  handleResize();
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setBoardWidth(window.innerWidth - 40);
+      } else if (window.innerWidth < 768) {
+        setBoardWidth(320);
+      } else {
+        setBoardWidth(350);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const isVisible = true;
 
   const recentMatches: Match[] = [
     { 
-      date: "2025-01-15", 
-      white: "Lourenço Augusto Jangua", 
-      black: "Lucas Coutinho Marcelino", 
+      date: "2025-08-20", 
+      white: "Stélio Henriques Uamusse", 
+      black: "Acácio António Chicalangane Júnior", 
       result: "1-0", 
-      moves: "52",
+      moves: "48",
       tournament: "Torneio Rápido de Verão",
       pgn: `1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 
 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 
@@ -68,11 +69,11 @@ export default function Partidas() {
 40. Qd2 Rh1#`
     },
     { 
-      date: "2025-01-14", 
-      white: "Afonso Octávio Macuacua", 
-      black: "Jubílio Mahassule", 
-      result: "1/2-1/2", 
-      moves: "38",
+      date: "2025-08-18", 
+      white: "Jubílio Alberto Mahassule", 
+      black: "Lídia Sozinho", 
+      result: "1-0", 
+      moves: "42",
       tournament: "Circuito Mahotas",
       pgn: `1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 
 4. Qc2 O-O 5. a3 Bxc3+ 6. Qxc3 b6 
@@ -86,11 +87,11 @@ export default function Partidas() {
 28. Qd5 Qe2 29. Qxf5+ Kh8 30. Rxd6 Qf1#`
     },
     { 
-      date: "2025-01-13", 
-      white: "Xavier Samusson Zandamela", 
-      black: "Bernardo Eduardo", 
-      result: "1-0", 
-      moves: "28",
+      date: "2025-08-15", 
+      white: "Lourenço Augusto Jangua", 
+      black: "Lucas Coutinho Marcelino", 
+      result: "1/2-1/2", 
+      moves: "56",
       tournament: "Campeonato Nacional",
       pgn: `1. e4 c5 2. Nf3 d6 3. d4 cxd4 
 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 
@@ -102,10 +103,10 @@ export default function Partidas() {
 22. Bxc5 dxc5 23. Qg5 Rh5 24. Qxg7#`
     },
     { 
-      date: "2025-01-12", 
-      white: "Miguel Godi Nhumaio", 
-      black: "Lídia Sozinho", 
-      result: "0-1", 
+      date: "2025-08-12", 
+      white: "Luís Manuel Cossa", 
+      black: "Bento Bulande", 
+      result: "1-0", 
       moves: "34",
       tournament: "Torneio Rápido de Verão",
       pgn: `1. e4 c5 2. Nf3 d6 3. d4 cxd4 
@@ -118,6 +119,27 @@ export default function Partidas() {
 22. h3 Qf4 23. Bd3 Rfe8 24. Bc4 Bxc4 
 25. bxc5 dxc5 26. Rxe5 Rxe5 27. Qxf4 Rxe1+ 
 28. Kh2 Rxf4 29. g3 hxg3+ 30. Kxg3 Rxf3+`
+    },
+    { 
+      date: "2025-08-10", 
+      white: "Afonso Octávio Macuacua", 
+      black: "Xavier Samusson Zandamela", 
+      result: "0-1", 
+      moves: "39",
+      tournament: "Circuito Mahotas",
+      pgn: `1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 
+4. e4 d6 5. Be2 O-O 6. Nf3 e5 
+7. d5 Nbd7 8. O-O Nc5 9. Qc2 a5 
+10. Rd1 Bd7 11. b3 Qe7 12. Bb2 Rfb8 
+13. Rad1 b5 14. cxb5 Nfd7 15. Nb1 Nxb5 
+16. a4 Nc7 17. Nbd2 f5 18. exf5 gxf5 
+19. Ne1 e4 20. f3 exf3 21. Nxf3 Ne5 
+22. Nxe5 Bxe5 23. Bxe5 Qxe5 24. Bf3 Qe7 
+25. Qc5 Nxd5 26. Bxd5+ Bxd5 27. Qxd5+ Kh8 
+28. Qf7 Qe8 29. Qf6+ Kg8 30. Ne4 Qe7 
+31. Qg5+ Kf8 32. Qh6+ Ke8 33. Ng5 Qf8 
+34. Qh5+ Ke7 35. Qg5+ Ke6 36. Qg4+ Kd5 
+37. Rxd5+ cxd5 38. Ne4 Qe8 39. Qf4 Qh8#`
     },
   ];
 
@@ -310,28 +332,37 @@ export default function Partidas() {
             `}>
               <div className="p-4 sm:p-6 border-b border-white/20">
                 <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                  <span className="text-2xl sm:text-3xl">🔴</span>
-                  Transmissões ao Vivo
+                  <span className="text-2xl sm:text-3xl">📺</span>
+                  Transmissões
                 </h2>
-                <p className="text-gray-400 text-xs sm:text-sm mt-1">Acompanhe as partidas em tempo real</p>
+                <p className="text-gray-400 text-xs sm:text-sm mt-1">Acompanhe as partidas gravadas e futuras transmissões</p>
               </div>
               <div className="p-4 sm:p-6">
                 <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-4 sm:p-8 text-center overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-yellow-500/10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-600/10 to-gray-400/10" />
                   <div className="relative">
                     <div className="inline-block mb-3 sm:mb-4">
-                      <div className="flex items-center gap-2 bg-red-500/20 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full animate-pulse" />
-                        <span className="text-red-400 text-xs sm:text-sm font-semibold">AO VIVO</span>
+                      <div className="flex items-center gap-2 bg-gray-600/30 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-500 rounded-full" />
+                        <span className="text-gray-400 text-xs sm:text-sm font-semibold">OFFLINE</span>
                       </div>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Torneio Rápido de Verão</h3>
-                    <p className="text-gray-400 text-sm sm:text-base mb-3 sm:mb-4">Final: Lourenço Augusto Jangua vs Lucas Coutinho Marcelino</p>
-                    <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">📅 20 de Fevereiro às 14:00</p>
-                    <button className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
-                      <span>🔴</span>
-                      Assistir ao Vivo
-                    </button>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Sem Transmissão no Momento</h3>
+                    <p className="text-gray-400 text-sm sm:text-base mb-3 sm:mb-4">As transmissões serão anunciadas em breve</p>
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+                      <span className="flex items-center gap-1">📅 Próximas transmissões em breve</span>
+                      <span className="flex items-center gap-1">🎬 Partidas gravadas disponíveis</span>
+                    </div>
+                    <div className="mt-4 flex flex-wrap justify-center gap-3">
+                      <button className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 rounded-xl font-semibold transition-all duration-300 text-sm">
+                        <span>📹</span>
+                        Ver Partidas Gravadas
+                      </button>
+                      <button className="inline-flex items-center gap-2 bg-yellow-600/20 hover:bg-yellow-600/30 text-yellow-400 px-4 sm:px-6 py-2 rounded-xl font-semibold transition-all duration-300 text-sm border border-yellow-500/30">
+                        <span>🔔</span>
+                        Receber Notificações
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -389,184 +420,184 @@ export default function Partidas() {
 
         {/* Modal de Análise - Responsivo */}
         {selectedMatch && (
-  <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 z-50">
-    <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl w-full max-w-full md:max-w-4xl max-h-[95vh] overflow-y-auto border border-white/20 shadow-2xl animate-fade-in-up">
-      {/* Cabeçalho fixo */}
-      <div className="sticky top-0 bg-gradient-to-b from-gray-900 to-gray-950 z-10 px-4 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-white/20">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Análise da Partida</h2>
-          <button 
-            onClick={() => setSelectedMatch(null)} 
-            className="text-gray-400 hover:text-white transition-colors text-2xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
-          >
-            ✕
-          </button>
-        </div>
-      </div>
-
-      {/* Conteúdo com scroll */}
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-        {/* Tabuleiro e Controles - Layout responsivo */}
-        <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
-          {/* Coluna do Tabuleiro */}
-          <div className="flex-1 space-y-3 sm:space-y-4">
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <div className="flex justify-center">
-                <div className="w-full max-w-87.5 sm:max-w-100 mx-auto">
-                  <Chessboard
-                    position={game.fen()}
-                    onPieceDrop={onMove}
-                    boardWidth={boardWidth}
-                    boardOrientation="white"
-                    customBoardStyle={{ 
-                      borderRadius: '8px', 
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
-                    }}
-                  />
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 z-50">
+            <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl w-full max-w-full md:max-w-4xl max-h-[95vh] overflow-y-auto border border-white/20 shadow-2xl animate-fade-in-up">
+              {/* Cabeçalho fixo */}
+              <div className="sticky top-0 bg-gradient-to-b from-gray-900 to-gray-950 z-10 px-4 sm:px-6 pt-4 sm:pt-6 pb-2 border-b border-white/20">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Análise da Partida</h2>
+                  <button 
+                    onClick={() => setSelectedMatch(null)} 
+                    className="text-gray-400 hover:text-white transition-colors text-2xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
-            </div>
 
-            {/* Controles de Navegação */}
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <div className="flex items-center justify-center gap-2 flex-wrap">
-                <button 
-                  onClick={firstMove} 
-                  className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-                  title="Primeiro lance"
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button 
-                  onClick={prevMove} 
-                  className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-                  title="Lance anterior"
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <div className="px-3 py-1.5 bg-white/10 rounded-lg">
-                  <span className="text-white font-semibold text-xs sm:text-sm">
-                    {currentMove} / {totalMoves}
-                  </span>
-                </div>
-                <button 
-                  onClick={nextMove} 
-                  className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-                  title="Próximo lance"
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-                <button 
-                  onClick={lastMove} 
-                  className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-                  title="Último lance"
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+              {/* Conteúdo com scroll */}
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                {/* Tabuleiro e Controles - Layout responsivo */}
+                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+                  {/* Coluna do Tabuleiro */}
+                  <div className="flex-1 space-y-3 sm:space-y-4">
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <div className="flex justify-center">
+                        <div className="w-full max-w-87.5 sm:max-w-100 mx-auto">
+                          <Chessboard
+                            position={game.fen()}
+                            onPieceDrop={onMove}
+                            boardWidth={boardWidth}
+                            boardOrientation="white"
+                            customBoardStyle={{ 
+                              borderRadius: '8px', 
+                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-            {/* Lista de Movimentos - Rolagem horizontal em mobile */}
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <p className="text-gray-400 text-xs sm:text-sm mb-2">Lista de Movimentos</p>
-              <div className="overflow-x-auto">
-                <div className="flex flex-wrap gap-1 sm:gap-2 min-w-[200px]">
-                  {movesList.map((move, idx) => {
-                    const moveNumber = Math.floor(idx / 2) + 1;
-                    const isWhiteMove = idx % 2 === 0;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => goToMove(idx + 1)}
-                        className={`
-                          inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs sm:text-sm transition-colors
-                          ${idx + 1 === currentMove 
-                            ? 'bg-yellow-500/30 text-yellow-400 font-semibold' 
-                            : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                          }
-                        `}
-                      >
-                        {isWhiteMove && <span className="text-gray-500 text-xs">{moveNumber}.</span>}
-                        <span>{move}</span>
-                      </button>
-                    );
-                  })}
+                    {/* Controles de Navegação */}
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <div className="flex items-center justify-center gap-2 flex-wrap">
+                        <button 
+                          onClick={firstMove} 
+                          className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          title="Primeiro lance"
+                        >
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <button 
+                          onClick={prevMove} 
+                          className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          title="Lance anterior"
+                        >
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <div className="px-3 py-1.5 bg-white/10 rounded-lg">
+                          <span className="text-white font-semibold text-xs sm:text-sm">
+                            {currentMove} / {totalMoves}
+                          </span>
+                        </div>
+                        <button 
+                          onClick={nextMove} 
+                          className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          title="Próximo lance"
+                        >
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                        <button 
+                          onClick={lastMove} 
+                          className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          title="Último lance"
+                        >
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Lista de Movimentos - Rolagem horizontal em mobile */}
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <p className="text-gray-400 text-xs sm:text-sm mb-2">Lista de Movimentos</p>
+                      <div className="overflow-x-auto">
+                        <div className="flex flex-wrap gap-1 sm:gap-2 min-w-[200px]">
+                          {movesList.map((move, idx) => {
+                            const moveNumber = Math.floor(idx / 2) + 1;
+                            const isWhiteMove = idx % 2 === 0;
+                            return (
+                              <button
+                                key={idx}
+                                onClick={() => goToMove(idx + 1)}
+                                className={`
+                                  inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs sm:text-sm transition-colors
+                                  ${idx + 1 === currentMove 
+                                    ? 'bg-yellow-500/30 text-yellow-400 font-semibold' 
+                                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                                  }
+                                `}
+                              >
+                                {isWhiteMove && <span className="text-gray-500 text-xs">{moveNumber}.</span>}
+                                <span>{move}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Coluna das Informações */}
+                  <div className="flex-1 space-y-3 sm:space-y-4">
+                    {/* Jogadores */}
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="text-center">
+                          <p className="text-gray-400 text-xs sm:text-sm mb-1">⚪ Brancas</p>
+                          <p className="text-white font-bold text-sm sm:text-base truncate">{selectedMatch.white}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-gray-400 text-xs sm:text-sm mb-1">⚫ Pretas</p>
+                          <p className="text-white font-bold text-sm sm:text-base truncate">{selectedMatch.black}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detalhes da Partida */}
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <p className="text-gray-400 text-xs">Torneio</p>
+                          <p className="text-white text-xs sm:text-sm font-medium truncate">{selectedMatch.tournament}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-xs">Data</p>
+                          <p className="text-white text-xs sm:text-sm">{formatDate(selectedMatch.date)}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-xs">Resultado</p>
+                          <p className={`font-bold text-sm ${getResultColor(selectedMatch.result)}`}>
+                            {getResultIcon(selectedMatch.result)} {selectedMatch.result}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-xs">Lances</p>
+                          <p className="text-white text-sm">{selectedMatch.moves}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* PGN - Rolagem horizontal */}
+                    <div className="bg-white/5 rounded-lg p-3 sm:p-4">
+                      <p className="text-gray-400 text-xs sm:text-sm mb-2">PGN</p>
+                      <div className="overflow-x-auto">
+                        <pre className="text-[10px] sm:text-xs text-gray-300 font-mono bg-black/30 p-2 sm:p-3 rounded-lg whitespace-pre-wrap break-words max-h-40 overflow-y-auto">
+                          {selectedMatch.pgn}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Botão Fechar */}
+                <button
+                  onClick={() => setSelectedMatch(null)}
+                  className="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white py-2.5 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base sticky bottom-0 mt-2"
+                >
+                  Fechar
+                </button>
               </div>
             </div>
           </div>
-
-          {/* Coluna das Informações */}
-          <div className="flex-1 space-y-3 sm:space-y-4">
-            {/* Jogadores */}
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="text-center">
-                  <p className="text-gray-400 text-xs sm:text-sm mb-1">⚪ Brancas</p>
-                  <p className="text-white font-bold text-sm sm:text-base truncate">{selectedMatch.white}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-gray-400 text-xs sm:text-sm mb-1">⚫ Pretas</p>
-                  <p className="text-white font-bold text-sm sm:text-base truncate">{selectedMatch.black}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Detalhes da Partida */}
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-gray-400 text-xs">Torneio</p>
-                  <p className="text-white text-xs sm:text-sm font-medium truncate">{selectedMatch.tournament}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-xs">Data</p>
-                  <p className="text-white text-xs sm:text-sm">{formatDate(selectedMatch.date)}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-xs">Resultado</p>
-                  <p className={`font-bold text-sm ${getResultColor(selectedMatch.result)}`}>
-                    {getResultIcon(selectedMatch.result)} {selectedMatch.result}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-xs">Lances</p>
-                  <p className="text-white text-sm">{selectedMatch.moves}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* PGN - Rolagem horizontal */}
-            <div className="bg-white/5 rounded-lg p-3 sm:p-4">
-              <p className="text-gray-400 text-xs sm:text-sm mb-2">PGN</p>
-              <div className="overflow-x-auto">
-                <pre className="text-[10px] sm:text-xs text-gray-300 font-mono bg-black/30 p-2 sm:p-3 rounded-lg whitespace-pre-wrap break-words max-h-40 overflow-y-auto">
-                  {selectedMatch.pgn}
-                </pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Botão Fechar */}
-        <button
-          onClick={() => setSelectedMatch(null)}
-          className="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white py-2.5 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base sticky bottom-0 mt-2"
-        >
-          Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        )}
       </main>
       <Footer />
     </>
