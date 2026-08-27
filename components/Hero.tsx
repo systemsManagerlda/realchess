@@ -13,6 +13,18 @@ const HERO_IMAGES: HeroImage[] = [
   { src: "/images/heropage1.jpg", alt: "Real Chess Club - Ambiente principal" },
   { src: "/images/heropage2.jpg", alt: "Real Chess Club - Torneio em andamento" },
   { src: "/images/heropage3.jpg", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0625.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0673.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0674.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0713.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0718.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_0735.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_2614.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_2616.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_E0675.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_E0679.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_E0707.JPG", alt: "Real Chess Club - Membros a jogar" },
+  { src: "/images/IMG_E0731.JPG", alt: "Real Chess Club - Membros a jogar" },
 ];
 
 const SLIDE_INTERVAL = 5000;
